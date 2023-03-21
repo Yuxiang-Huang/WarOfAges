@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class SpawnButton : MonoBehaviour
 {
-    [SerializeField] Image image;
+    [SerializeField] Image displayImage;
 
     public string path;
 
@@ -61,7 +61,7 @@ public class SpawnButton : MonoBehaviour
             //not during taking turn phase
             if (!PlayerController.instance.turnEnded)
             {
-                SpawnManager.instance.spawn(image, path,
+                SpawnManager.instance.spawn(displayImage, path,
                     goldNeedToSpawn * (int)Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age),
                     spawnImage, unit);
                 UIManager.instance.updateInfoTabSpawn(unit.GetComponent<IUnit>());
@@ -123,6 +123,8 @@ public class SpawnButton : MonoBehaviour
         spawnImage.transform.GetChild(PlayerController.instance.age).gameObject.SetActive(true);
     }
 
+    #region Hovering (Lock and description)
+
     public void OnPointerEnter()
     {
         if (SpawnManager.instance.keys > 0)
@@ -137,4 +139,6 @@ public class SpawnButton : MonoBehaviour
 
         description.SetActive(false);
     }
+
+    #endregion
 }

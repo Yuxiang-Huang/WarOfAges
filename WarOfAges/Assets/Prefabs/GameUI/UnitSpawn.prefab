@@ -30,7 +30,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6482474985683649510}
+  - {fileID: 7020914168415029614}
   - {fileID: 7877318750246591152}
   - {fileID: 1405537764166471073}
   - {fileID: 6935980288780010733}
@@ -153,43 +153,6 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -98.3}
   m_SizeDelta: {x: 200, y: 103.4}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1602392005706482812
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6482474985683649510}
-  m_Layer: 5
-  m_Name: Icon Section
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &6482474985683649510
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602392005706482812}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.71770996, y: 0.71770996, z: 0.71770996}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7020914168415029614}
-  m_Father: {fileID: 195891942802153982}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 70, y: 55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1981828075137195030
 GameObject:
@@ -550,7 +513,7 @@ GameObject:
   - component: {fileID: 8256704296108091914}
   - component: {fileID: 8412051663507282502}
   m_Layer: 5
-  m_Name: Melee Icon
+  m_Name: Icon Selection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -565,15 +528,15 @@ RectTransform:
   m_GameObject: {fileID: 5112154465818616059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.71770996, y: 0.71770996, z: 0.71770996}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6482474985683649510}
+  m_Father: {fileID: 195891942802153982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 20.5}
+  m_AnchoredPosition: {x: 0, y: 64.97604}
   m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &607281031367629679

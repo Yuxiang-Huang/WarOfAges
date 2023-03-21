@@ -9,7 +9,7 @@ public class SpawnManager : MonoBehaviour
 
     public static SpawnManager instance;
 
-    public Image lastImage;
+    public Image lastSpawnButtonImage;
 
     [SerializeField] GameObject testObject;
 
@@ -23,24 +23,34 @@ public class SpawnManager : MonoBehaviour
         instance = this;
     }
 
-    public void spawn(Image image, string path, int goldNeedToSpawn, GameObject spawnImage, GameObject unit)
+    public void spawn(Image spawnButtonImage, string path, int goldNeedToSpawn, GameObject spawnImage, GameObject unit)
     {
         //image color transition
-        if (lastImage != null)
+        if (lastSpawnButtonImage != null)
         {
-            lastImage.color = Color.white;
+            lastSpawnButtonImage.color = Color.white;
         }
 
-        image.color = Color.grey;
+        spawnButtonImage.color = Color.grey;
 
-        lastImage = image;
+        lastSpawnButtonImage = spawnButtonImage;
 
         //give the path to the prefab
         PlayerController.instance.mode = "spawn";
         PlayerController.instance.toSpawnPath = path;
         PlayerController.instance.toSpawnImage = spawnImage;
         PlayerController.instance.goldNeedToSpawn = goldNeedToSpawn;
-        PlayerController.instance.spawnButtonSelected = lastImage;
         PlayerController.instance.toSpawnUnit = unit;
+    }
+
+    public void resetSpawnButtonImage()
+    {
+        //image color transition
+        if (lastSpawnButtonImage != null)
+        {
+            lastSpawnButtonImage.color = Color.white;
+        }
+
+        lastSpawnButtonImage = null;
     }
 }

@@ -43,9 +43,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Header("Spawn")]
     public bool[,] canSpawn;
     public Vector2[,] spawnDirection;
-
-    public Image spawnButtonSelected;
-
     public string toSpawnPath;
     public GameObject toSpawnImage;
     public GameObject toSpawnUnit;
@@ -391,11 +388,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     mode = "select";
 
                     //clear selection
-                    SpawnManager.instance.lastImage.GetComponent<Image>().color = Color.white;
-                    SpawnManager.instance.lastImage = null;
+                    SpawnManager.instance.resetSpawnButtonImage();
 
                     //clear gray
-                    foreach(Tile tile in visibleTiles)
+                    foreach (Tile tile in visibleTiles)
                     {
                         if (tile != null)
                             tile.setGray(false);
@@ -417,7 +413,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (mode == "spawn")
         {
             //set color of the spawn button selected back to white
-            spawnButtonSelected.color = Color.white;
+            SpawnManager.instance.resetSpawnButtonImage();
 
             //clear gray
             foreach (Tile tile in visibleTiles)
