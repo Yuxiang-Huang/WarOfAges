@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Config
 {
-    public static bool offlineMode = false;
+    public static bool offlineMode = true;
 
     public static int ageIncomeOffset = 5;
     public static int ageCostFactor = 2;
