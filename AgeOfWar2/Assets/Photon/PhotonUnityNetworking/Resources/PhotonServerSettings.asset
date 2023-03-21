@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
+  m_Name: PhotonServerSettings
+  m_EditorClassIdentifier: 
+  AppSettings:
+    AppIdRealtime: c1f5f6b2-3ee5-415a-9085-4789d94b82e0
+    AppIdFusion: 
+    AppIdChat: 
+    AppIdVoice: 
+    AppVersion: 
+    UseNameServer: 1
+    FixedRegion: 
+    Server: 
+    Port: 0
+    ProxyServer: 
+    Protocol: 0
+    EnableProtocolFallback: 1
+    AuthMode: 0
+    EnableLobbyStatistics: 0
+    NetworkLogging: 1
+  DevRegion: us
+  PunLogging: 0
+  EnableSupportLogger: 0
+  RunInBackground: 1
+  StartInOfflineMode: 0
+  RpcList:
+  - ClickRpc
+  - DestroyRpc
+  - updateId
+  - updateID_All
+  - updateID
+  - ready
+  - syncPlayerList
+  - startGame
+  - startGame_all
+  - makeGrid_RPC
+  - updateTile
+  - Init
+  - updateStatus_RPC
+  - moveUpdate_RPC
+  - takeDamage
+  - checkTurn
+  - startTurn
+  - nextTurn
+  - getReady
+  - takeTurn
+  - takeTurn_Player
+  - spawn
+  - checkAlive
+  - deadTroop
+  - checkDeath
+  - checkTroopDeath
+  - troopAttack
+  - troopMove
+  - updateTimeText
+  - updateHealth
+  - updateVisibility
+  - updateTerritory
+  - updateTileUnit
+  - removeTileUnit
+  - reveal
+  - ageUpdateInfo
+  - updateAgeText
+  - updatePlayerInfo
+  - kill
+  - endCheck
+  - turnPhase
+  - endTurn
+  - firstTurnOver
+  - setup
+  - updateGoldText
+  - setCheckmark
+  - fillInfoTab
+  - fillPlayerInfoTab
+  - updateTotalPlayer
+  - setSkull
+  - resetTerritory
+  - upgrade
+  - removeFromPlayerList
+  - attack
+  - removeSpellTileReveal
+  - createColorList
+  DisableAutoOpenWizard: 1
+  ShowSettings: 1
+  DevRegionSetOnce: 1
