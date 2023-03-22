@@ -308,7 +308,7 @@ public class TileManager : MonoBehaviourPunCallbacks
                 //skip bottom row
                 if (!(row % 2 == 0 && col == 0))
                 {
-                    List<Tile> neighbors = tiles[row, col].GetComponent<Tile>().neighbors;
+                    List<Tile> neighbors = tiles[row, col].neighbors;
 
                     //left and right
                     if (row >= 2)

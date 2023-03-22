@@ -124,19 +124,30 @@ public class GameManager : MonoBehaviourPunCallbacks
                 new Vector2(tiles.GetLength(0) - 1 - xOffset, yOffset + 1)
             };
 
-            //shuffle
-            List<Vector2> randomSpawnLocations = new List<Vector2>();
-            while (spawnLocations.Count > 0)
+            if (Config.sameSpawnPlaceTestMode)
             {
-                int index = Random.Range(0, spawnLocations.Count);
-                randomSpawnLocations.Add(spawnLocations[index]);
-                spawnLocations.RemoveAt(index);
+                //ask all player to start game
+                for (int i = 0; i < allPlayers.Count; i++)
+                {
+                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, spawnLocations[0]);
+                }
             }
-
-            //ask all player to start game
-            for (int i = 0; i < allPlayers.Count; i++)
+            else
             {
-                allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, randomSpawnLocations[i]);
+                //shuffle 
+                List<Vector2> randomSpawnLocations = new List<Vector2>();
+                while (spawnLocations.Count > 0)
+                {
+                    int index = Random.Range(0, spawnLocations.Count);
+                    randomSpawnLocations.Add(spawnLocations[index]);
+                    spawnLocations.RemoveAt(index);
+                }
+
+                //ask all player to start game
+                for (int i = 0; i < allPlayers.Count; i++)
+                {
+                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, randomSpawnLocations[i]);
+                }
             }
         }
     }

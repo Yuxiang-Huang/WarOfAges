@@ -387,5 +387,8 @@ public class UIManager : MonoBehaviour
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
         PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
+
+        //last update in player info tab
+        PlayerController.instance.PV.RPC(nameof(PlayerController.instance.fillInfoTab), PV.Owner);
     }
 }

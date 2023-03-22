@@ -585,8 +585,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 if (allBuildings[i].GetComponent<MainBase>() != null)
                 {
-                    end();
                     allBuildings.Remove(allBuildings[i]);
+                    end();
                     break;
                 }
                 allBuildings.Remove(allBuildings[i]);
