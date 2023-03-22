@@ -31,7 +31,7 @@ public class SpawnButton : MonoBehaviour
     {
         costText.text = goldNeedToSpawn + " gold";
 
-        GetComponent<Image>().sprite = unitImages[0];
+        displayImage.sprite = unitImages[0];
 
         //set all ages inactive except the current one
         foreach (Transform cur in spawnImage.transform)
@@ -113,7 +113,7 @@ public class SpawnButton : MonoBehaviour
         * (int) Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age)
         +" gold";
 
-        GetComponent<Image>().sprite = unitImages[PlayerController.instance.age];
+        displayImage.sprite = unitImages[PlayerController.instance.age];
 
         //set all ages inactive except the current one
         foreach (Transform cur in spawnImage.transform)

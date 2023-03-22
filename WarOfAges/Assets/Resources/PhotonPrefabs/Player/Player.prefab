@@ -82,7 +82,6 @@ MonoBehaviour:
   allBuildings: []
   allSpells: []
   landTerritory: 0
-  spawnButtonSelected: {fileID: 0}
   toSpawnPath: 
   toSpawnImage: {fileID: 0}
   toSpawnUnit: {fileID: 0}
