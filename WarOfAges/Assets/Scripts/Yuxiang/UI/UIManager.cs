@@ -49,8 +49,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
 
-    [SerializeField] GameObject playerList;
-    [SerializeField] List<TextMeshProUGUI> playerNameList;
+    [SerializeField] GameObject playerInfoCanvas;
+    [SerializeField] List<PlayerUIManager> playerUIManagerList;
 
     [SerializeField] GameObject infoTabPlayer;
     [SerializeField] List<TextMeshProUGUI> playerInfoText;
@@ -81,16 +81,16 @@ public class UIManager : MonoBehaviour
         cancelTurnBtn.SetActive(false);
         IntroText.SetActive(true);
         timeText.gameObject.SetActive(false);
-        //playerList.SetActive(false);
+        playerInfoCanvas.SetActive(false);
         turnNumText.gameObject.SetActive(false);
         sellBtn.SetActive(false);
         upgradeBtn.SetActive(false);
         leaveBtn.SetActive(false);
 
-        //foreach (TextMeshProUGUI text in playerNameList)
-        //{
-        //    text.gameObject.transform.parent.gameObject.SetActive(false);
-        //}
+        foreach (GameObject icon in readyIconList)
+        {
+            icon.SetActive(false);
+        }
 
         //initialize color to string
         colorToString = new Dictionary<Color, string>
@@ -119,11 +119,12 @@ public class UIManager : MonoBehaviour
         turnNumText.gameObject.SetActive(true);
 
         //Player list
-        playerList.SetActive(true);
+        playerInfoCanvas.SetActive(true);
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
-            playerNameList[i].text = GameManager.instance.allPlayersOriginal[i].PV.Owner.NickName;
-            playerNameList[i].gameObject.transform.parent.gameObject.SetActive(true);
+            //playerNameList[i].text = GameManager.instance.allPlayersOriginal[i].PV.Owner.NickName;
+            //playerNameList[i].gameObject.transform.parent.gameObject.SetActive(true);
+            readyIconList[i].SetActive(true);
         }
 
         goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";

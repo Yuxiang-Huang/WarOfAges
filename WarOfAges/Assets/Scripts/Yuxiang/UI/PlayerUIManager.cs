@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerUI : MonoBehaviour
+public class PlayerUIManager : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI ageText;
@@ -11,4 +11,5 @@ public class PlayerUI : MonoBehaviour
     public TextMeshProUGUI troopText;
     public TextMeshProUGUI buildingText;
     public TextMeshProUGUI timeText;
+    public GameObject sideColor;
 }
