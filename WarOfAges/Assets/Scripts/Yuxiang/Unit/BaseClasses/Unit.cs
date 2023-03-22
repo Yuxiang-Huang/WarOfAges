@@ -17,6 +17,8 @@ public interface IUnit
 
     int age { get; }
 
+    int upgradeGold { get; }
+
     public void takeDamage(int incomingDamage);
 
     public void setHealthBar(bool status);

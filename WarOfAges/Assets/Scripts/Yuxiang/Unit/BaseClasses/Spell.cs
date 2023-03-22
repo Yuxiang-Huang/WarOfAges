@@ -22,8 +22,8 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     [SerializeField] int turnNeeded;
 
     [Header("UI")]
-    [SerializeField] int upgradeGold;
     [SerializeField] int sellGold;
+    public int upgradeGold { get; set; }
 
     public SpriteRenderer imageRenderer;
 

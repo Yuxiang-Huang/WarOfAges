@@ -18,8 +18,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     public int age { get; set; }
 
     [Header("UI")]
-    [SerializeField] int upgradeGold;
     [SerializeField] int sellGold;
+    public int upgradeGold { get; set; }
 
     public SpriteRenderer imageRenderer;
 
@@ -174,12 +174,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     [PunRPC]
     public void upgrade()
     {
-        if (PlayerController.instance.id == ownerID)
-        {
-            PlayerController.instance.gold -= upgradeGold;
-            UIManager.instance.updateGoldText();
-        }
-
         //health double when age increase
         fullHealth *= Config.ageUnitFactor;
         health *= Config.ageUnitFactor;
