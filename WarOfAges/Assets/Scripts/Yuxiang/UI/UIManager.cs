@@ -29,6 +29,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject Shop;
     [SerializeField] GameObject AgeUI;
 
+    [SerializeField] GameObject bottomBar;
+
     [Header("Turn")]
     [SerializeField] GameObject turnBtn;
     [SerializeField] GameObject cancelTurnBtn;
@@ -49,8 +51,6 @@ public class UIManager : MonoBehaviour
     [Header("InfoTab - Player")]
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
-
-    [SerializeField] GameObject playerInfoCanvas;
     [SerializeField] List<PlayerUIManager> playerUIManagerList;
 
     [SerializeField] GameObject infoTabPlayer;
@@ -75,22 +75,27 @@ public class UIManager : MonoBehaviour
         //everything set false first
         Shop.SetActive(false);
         goldText.gameObject.SetActive(false);
-        turnBtn.SetActive(false);
         infoTabUnit.SetActive(false);
+        turnBtn.SetActive(false);
         infoTabPlayer.SetActive(false);
         AgeUI.SetActive(false);
         cancelTurnBtn.SetActive(false);
         IntroText.SetActive(true);
         timeText.gameObject.SetActive(false);
-        playerInfoCanvas.SetActive(false);
         turnNumText.gameObject.SetActive(false);
         sellBtn.SetActive(false);
         upgradeBtn.SetActive(false);
         leaveBtn.SetActive(false);
+        bottomBar.SetActive(false);
 
         foreach (GameObject icon in readyIconList)
         {
             icon.SetActive(false);
+        }
+
+        foreach (PlayerUIManager player in playerUIManagerList)
+        {
+            player.gameObject.SetActive(false);
         }
 
         //initialize color to string
@@ -105,24 +110,29 @@ public class UIManager : MonoBehaviour
 
     #region Start Game
 
-    public void startGame()
+    public void startGameLocal()
     {
         //time option setting
         initialTime = (int)PhotonNetwork.CurrentRoom.CustomProperties["initialTime"];
         timeInc = (int)PhotonNetwork.CurrentRoom.CustomProperties["timeInc"];
 
         //set UI active
+        bottomBar.SetActive(true);
         IntroText.SetActive(false);
-        Shop.SetActive(true);
         goldText.gameObject.SetActive(true);
         AgeUI.SetActive(true);
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);
 
         goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
+    }
+
+    public void startGameAll()
+    {
+        //don't show until everyone is ready
+        Shop.SetActive(true);
 
         //Player list
-        playerInfoCanvas.SetActive(true);
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
             if (i > 0)
@@ -145,6 +155,12 @@ public class UIManager : MonoBehaviour
     //call by startTurn in gameManager
     public void startTurnUI()
     {
+        if (turnNum == 0)
+        {
+            //UI start game all 
+            startGameAll();
+        }
+
         turnNum++;
         turnNumText.text = "Turn: " + turnNum;
 
@@ -362,7 +378,7 @@ public class UIManager : MonoBehaviour
     [PunRPC]
     public void updateGoldText()
     {
-        goldText.text = "Gold: " + PlayerController.instance.gold;
+        goldText.text = PlayerController.instance.gold.ToString();
     }
 
     [PunRPC]

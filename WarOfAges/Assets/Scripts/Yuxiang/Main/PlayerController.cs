@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
 
-                UIManager.instance.startGame();
+                UIManager.instance.startGameLocal();
 
                 GameManager.instance.endTurn();
             }

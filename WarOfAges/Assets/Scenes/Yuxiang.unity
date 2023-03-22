@@ -10313,6 +10313,7 @@ MonoBehaviour:
   IntroText: {fileID: 1317317237}
   Shop: {fileID: 1395771452}
   AgeUI: {fileID: 2003514720}
+  bottomBar: {fileID: 752863726}
   turnBtn: {fileID: 1290434391}
   cancelTurnBtn: {fileID: 1188801927}
   curTimeUsed: 0
@@ -10401,6 +10402,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 262769866}
     m_Modifications:
+    - target: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11743,6 +11748,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 262769866}
     m_Modifications:
+    - target: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -12753,6 +12762,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 262769866}
     m_Modifications:
+    - target: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -256,7 +256,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     {
         //setting camera
         Camera.main.orthographicSize = 8.5f;
-        Camera.main.transform.position = new Vector3(6, 7f, -10);
+        Camera.main.transform.position = new Vector3(6, 6.75f, -10);
         
         //make map
         tiles = new Tile[rows, cols];
