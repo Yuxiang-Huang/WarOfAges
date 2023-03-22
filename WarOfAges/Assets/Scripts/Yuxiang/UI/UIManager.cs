@@ -72,7 +72,6 @@ public class UIManager : MonoBehaviour
 
         //everything set false first
         Shop.SetActive(false);
-        goldText.gameObject.SetActive(false);
         infoTabUnit.SetActive(false);
         turnBtn.SetActive(false);
         AgeUI.SetActive(false);
@@ -116,7 +115,6 @@ public class UIManager : MonoBehaviour
         //set UI active
         bottomBar.SetActive(true);
         IntroText.SetActive(false);
-        goldText.gameObject.SetActive(true);
         AgeUI.SetActive(true);
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);
@@ -138,11 +136,17 @@ public class UIManager : MonoBehaviour
         //Player list
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
+            //initialize
             PlayerController curPlayer = GameManager.instance.allPlayersOriginal[i];
-
             playerUIManagerList[i].gameObject.SetActive(true);
             playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
             curPlayer.PV.Owner.NickName, curPlayer.id);
+
+            //set gold text
+            if (curPlayer == PlayerController.instance)
+            {
+                goldText = playerUIManagerList[i].goldText;
+            }
         }
     }
 

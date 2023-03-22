@@ -71,6 +71,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             TileManager.instance.makeGrid();
         }
+
+        if (Config.moreMoneyTextMode)
+        {
+            gold = 40000000;
+        }
     }
 
     #region ID

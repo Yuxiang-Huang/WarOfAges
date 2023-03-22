@@ -9,14 +9,14 @@ public class PlayerUIManager : MonoBehaviour
 {
     public PhotonView PV;
 
-    public TextMeshProUGUI nameText;
-    public GameObject sideColor;
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] GameObject sideColor;
 
-    public TextMeshProUGUI ageText;
+    [SerializeField] TextMeshProUGUI ageText;
     public TextMeshProUGUI goldText;
-    public TextMeshProUGUI territoryText;
-    public TextMeshProUGUI troopText;
-    public TextMeshProUGUI buildingText;
+    [SerializeField] TextMeshProUGUI territoryText;
+    [SerializeField] TextMeshProUGUI troopText;
+    [SerializeField] TextMeshProUGUI buildingText;
 
     public Slider healthbar;
 
