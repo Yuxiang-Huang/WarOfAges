@@ -159,7 +159,7 @@ public class UIManager : MonoBehaviour
     {
         if (turnNum == 0)
         {
-            //UI start game all 
+            //UI start game all when first turn
             startGameAll();
         }
 
@@ -176,12 +176,9 @@ public class UIManager : MonoBehaviour
             //reset timer
             curTimeUsed = initialTime + timeInc * PlayerController.instance.age;
             timeCoroutine = StartCoroutine(nameof(timer));
-        }
 
-        //all icons show unready
-        foreach (GameObject icon in readyIconList)
-        {
-            icon.GetComponent<Image>().color = Config.notReadyColor;
+            //set my ready icon to false
+            PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
         }
     }
 
@@ -229,7 +226,7 @@ public class UIManager : MonoBehaviour
         turnBtn.SetActive(true);
         cancelTurnBtn.SetActive(false);
 
-        //hide checkmark
+        //set end turn status to false
         PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
     }
 
@@ -390,9 +387,6 @@ public class UIManager : MonoBehaviour
     {
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
-        PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
-
-        //last update in player info tab
-        PlayerController.instance.PV.RPC(nameof(PlayerController.instance.fillInfoTab), PV.Owner);
+        PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, true);
     }
 }

@@ -617,9 +617,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void fillInfoTab()
     {
-        UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
-           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count,
-          (float) mainBase.health / mainBase.fullHealth);
+        //main base will be null
+        if (lost)
+        {
+            UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
+           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
+        }
+        else
+        {
+            UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
+               UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count,
+              (float)mainBase.health / mainBase.fullHealth);
+        }
     }
 
     #endregion
@@ -668,11 +677,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         UIManager.instance.updateGoldText();
 
         //only end turn if quit
-        if (GameManager.instance.turnEnded)
+        if (!GameManager.instance.turnEnded)
             GameManager.instance.endTurn();
+
         UIManager.instance.lost();
 
         lost = true;
+
+        //last update in player info tab
+        fillInfoTab();
     }
 
     [PunRPC]
