@@ -4,8 +4,8 @@ public class Config
 {
     //test modes
     public static bool offlineMode = false;
-    public static bool sameSpawnPlaceTestMode = true;
-    public static bool moreMoneyTextMode = true;
+    public static bool sameSpawnPlaceTestMode = false;
+    public static bool moreMoneyTextMode = false;
 
     //age factors
     public static int ageIncomeOffset = 5;
@@ -22,6 +22,7 @@ public class Config
     //colors
     public static float territoryColorOpacity = 0.3f;
 
+    //for the end turn icons
     public static Color readyColor = new (33f / 255f, 128f / 255f, 68f / 255f);
     public static Color notReadyColor = new(113f / 255f, 115f / 255f, 125f / 255f);
 }

@@ -12,22 +12,25 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
 
-    private void Start()
+    void Awake()
     {
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
-            (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"]){
-            tutorialCanvas.gameObject.SetActive(true);
-            backwardbtn.SetActive(false);
-            forwardbtn.SetActive(true);
-            foreach(GameObject text in instructions)
-            {
-                text.SetActive(false);
-            }
-            instructions[0].SetActive(true);
-        }
-        else
+        //destroy if not tutorial
+        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") ||
+            !(bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
         {
             tutorialCanvas.gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        tutorialCanvas.gameObject.SetActive(true);
+        backwardbtn.SetActive(false);
+        forwardbtn.SetActive(true);
+        foreach(GameObject text in instructions)
+        {
+            text.SetActive(false);
         }
     }
 
