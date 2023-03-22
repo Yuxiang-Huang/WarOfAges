@@ -251,6 +251,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         //all players moved
         if (numPlayerMoved == allPlayers.Count)
         {
+            UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
+
             StartCoroutine(nameof(delayAttack));
         }
         else

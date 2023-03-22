@@ -164,7 +164,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = curTimeUsed; i > 0; i--)
         {
-            timeText.text = i.ToString();
+            timeText.text = i + "s left";
 
             curTimeUsed = i;
 
@@ -224,7 +224,6 @@ public class UIManager : MonoBehaviour
         //change color
         if (status)
         {
-            Debug.Log("here");
             readyIconList[index].GetComponent<Image>().color = Config.readyColor;
         }
         else
