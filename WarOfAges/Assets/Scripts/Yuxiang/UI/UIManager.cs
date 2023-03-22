@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class UIManager : MonoBehaviour
@@ -151,10 +152,10 @@ public class UIManager : MonoBehaviour
             timeCoroutine = StartCoroutine(nameof(timer));
         }
 
-        //hide all checkmarks
-        foreach (GameObject checkmark in readyIconList)
+        //all icons show unready
+        foreach (GameObject icon in readyIconList)
         {
-            checkmark.SetActive(false);
+            icon.GetComponent<Image>().color = new Color(113, 115, 125);
         }
     }
 
@@ -162,9 +163,7 @@ public class UIManager : MonoBehaviour
     {
         for (int i = curTimeUsed; i > 0; i--)
         {
-            //only if local turn didn't end
-            if (!localTurnEnded)
-                timeText.text = "Time Left:\n" + i + " seconds";
+            timeText.text = i.ToString();
 
             curTimeUsed = i;
 
@@ -184,8 +183,6 @@ public class UIManager : MonoBehaviour
     {
         localTurnEnded = true;
 
-        timeText.text = "Waiting for opponents...";
-
         turnBtn.SetActive(false);
 
         //show checkmark
@@ -199,8 +196,6 @@ public class UIManager : MonoBehaviour
     public void cancelEndTurn()
     {
         localTurnEnded = false;
-
-        timeText.text = "Time Left:\n" + curTimeUsed + " seconds";
 
         //UI
         turnBtn.SetActive(true);
@@ -336,7 +331,15 @@ public class UIManager : MonoBehaviour
     [PunRPC]
     public void setEndTurn(int index, bool status)
     {
-        readyIconList[index].SetActive(status);
+        //change color
+        if (status)
+        {
+            readyIconList[index].GetComponent<Image>().color = new Color (33, 128, 68);
+        }
+        else
+        {
+            readyIconList[index].GetComponent<Image>().color = new Color(113, 115, 125);
+        }
     }
 
     #endregion
