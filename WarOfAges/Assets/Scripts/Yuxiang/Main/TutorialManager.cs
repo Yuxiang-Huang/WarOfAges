@@ -26,11 +26,32 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         tutorialCanvas.gameObject.SetActive(true);
-        backwardbtn.SetActive(false);
-        forwardbtn.SetActive(true);
-        foreach(GameObject text in instructions)
+        //everything off first
+        foreach (GameObject text in instructions)
         {
             text.SetActive(false);
+        }
+        backwardbtn.SetActive(false);
+        forwardbtn.SetActive(false);
+
+        StartCoroutine(nameof(firstSlide));
+    }
+
+    public IEnumerator firstSlide()
+    {
+        yield return new WaitForSeconds(1f);
+
+        //player spawned main base
+        if (PlayerController.instance.mainBase != null)
+        {
+            //first instruction
+            instructions[0].SetActive(true);
+            backwardbtn.SetActive(false);
+            forwardbtn.SetActive(true);
+        }
+        else
+        {
+            StartCoroutine(nameof(firstSlide));
         }
     }
 
