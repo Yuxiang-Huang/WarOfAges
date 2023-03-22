@@ -54,8 +54,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] GameObject infoTabPlayer;
     [SerializeField] List<TextMeshProUGUI> playerInfoText;
-    [SerializeField] List<GameObject> checkmarkList;
-    public List<GameObject> skullList;
+    [SerializeField] List<GameObject> readyIconList;
 
     public Dictionary<Color, string> colorToString;
 
@@ -73,20 +72,20 @@ public class UIManager : MonoBehaviour
         PV = GetComponent<PhotonView>();
 
         //everything set false first
-        //Shop.SetActive(false);
-        //goldText.gameObject.SetActive(false);
-        //turnBtn.SetActive(false);
-        //infoTabUnit.SetActive(false);
-        //infoTabPlayer.SetActive(false);
-        //AgeUI.SetActive(false);
-        //cancelTurnBtn.SetActive(false);
-        //IntroText.SetActive(true);
-        //timeText.gameObject.SetActive(false);
+        Shop.SetActive(false);
+        goldText.gameObject.SetActive(false);
+        turnBtn.SetActive(false);
+        infoTabUnit.SetActive(false);
+        infoTabPlayer.SetActive(false);
+        AgeUI.SetActive(false);
+        cancelTurnBtn.SetActive(false);
+        IntroText.SetActive(true);
+        timeText.gameObject.SetActive(false);
         //playerList.SetActive(false);
-        //turnNumText.gameObject.SetActive(false);
-        //sellBtn.SetActive(false);
-        //upgradeBtn.SetActive(false);
-        //leaveBtn.SetActive(false);
+        turnNumText.gameObject.SetActive(false);
+        sellBtn.SetActive(false);
+        upgradeBtn.SetActive(false);
+        leaveBtn.SetActive(false);
 
         //foreach (TextMeshProUGUI text in playerNameList)
         //{
@@ -152,7 +151,7 @@ public class UIManager : MonoBehaviour
         }
 
         //hide all checkmarks
-        foreach (GameObject checkmark in checkmarkList)
+        foreach (GameObject checkmark in readyIconList)
         {
             checkmark.SetActive(false);
         }
@@ -189,7 +188,7 @@ public class UIManager : MonoBehaviour
         turnBtn.SetActive(false);
 
         //show checkmark
-        PV.RPC(nameof(setCheckmark), RpcTarget.All, PlayerController.instance.id, true);
+        PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, true);
 
         //only if have time left
         if (curTimeUsed > 0)
@@ -207,7 +206,7 @@ public class UIManager : MonoBehaviour
         cancelTurnBtn.SetActive(false);
 
         //hide checkmark
-        PV.RPC(nameof(setCheckmark), RpcTarget.All, PlayerController.instance.id, false);
+        PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
     }
 
     [PunRPC]
@@ -334,15 +333,9 @@ public class UIManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void setCheckmark(int index, bool status)
+    public void setEndTurn(int index, bool status)
     {
-        checkmarkList[index].SetActive(status);
-    }
-
-    [PunRPC]
-    public void setSkull(int index)
-    {
-        skullList[index].SetActive(true);
+        readyIconList[index].SetActive(status);
     }
 
     #endregion
@@ -365,7 +358,7 @@ public class UIManager : MonoBehaviour
             //modify gold
             PlayerController.instance.goldNeedToAdvance *= Config.ageCostFactor;
             updateGoldText();
-            goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
+            goldNeedToAdvanceText.text = "Click to advance! Costs " + PlayerController.instance.goldNeedToAdvance;
 
             //upgrade main base
             PlayerController.instance.mainBase.PV.RPC(nameof(upgrade), RpcTarget.All);
@@ -405,6 +398,6 @@ public class UIManager : MonoBehaviour
     {
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
-        PV.RPC(nameof(setCheckmark), RpcTarget.All, PlayerController.instance.id, false);
+        PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, false);
     }
 }
