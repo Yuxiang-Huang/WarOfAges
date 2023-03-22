@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] int timeInc;
 
     [Header("Start Game")]
-    [SerializeField] GameObject IntroText;
+    public GameObject IntroText;
     [SerializeField] GameObject Shop;
     [SerializeField] GameObject AgeUI;
 

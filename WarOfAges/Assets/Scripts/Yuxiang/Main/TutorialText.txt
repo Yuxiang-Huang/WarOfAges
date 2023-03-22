@@ -1,0 +1,17 @@
+﻿Welcome! Begin your game by placing your <b>base</b> on a visible tile on the map.
+The highlighted area is your territory. This can be water or land, but only land generates revenue after every turn.
+Select this unit in the shop. Most units are either a troop or building, but there are exceptions...
+This unit is a troop. Let’s spawn him on land someplace in your territory next to your base. 
+You can only spawn troops on land in your territory that are adjacent to a building.
+Let’s press the End Turn button. When all players have done so, troops will spawn, move, and attack in this order. 
+It’s your turn again now. During each turn, you may spawn units as well as move troops.
+Let’s select the melee troop you placed on the map. Click on the tile to it to direct it there.
+End your turn. Troops can move to any adjacent tile as long as it is land. Your territory now includes that tile. 
+Every time you claim a piece of land, you earn gold. You previously spent gold to spawn your melee troop.
+Let’s click on the troop again to select it. Selecting a unit lets you check on its health as well as perform actions on it. 
+You may sell a unit for some gold or upgrade them up to the next age, provided you are in it or have been in it.  
+You are currently in the Stone Age, but you have enough gold to advance!Before you advance, you can unlock a unit of your choosing early!
+Now, let’s advance our age! When you advance, troops will get stronger but also cost more. Land will also generate more gold.
+Note that units on your map do not advance with the ages. If you wish, you may upgrade them to match the new age.
+Now that you’ve advanced into a new age, you can unlock a new unit of your choice! For the purposes of this tutorial, we will unlock an [EXTRA MONEY].
+Let’s place an [EXTRA MONEY] somewhere in your territory. This can be on any land tile as long as it is your territory.

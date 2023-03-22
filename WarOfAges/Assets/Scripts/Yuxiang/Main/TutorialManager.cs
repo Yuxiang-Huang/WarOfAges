@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using System.IO;
 
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] Canvas tutorialCanvas;
-    [SerializeField] List<GameObject> instructions;
+    [SerializeField] List<string> instructions;
+    [SerializeField] TextMeshProUGUI instructionText;
     [SerializeField] int index;
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
@@ -25,35 +27,41 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
+        //read tutorial directions
+        string[] lines = File.ReadAllLines("Assets/Scripts/Yuxiang/Main/TutorialText.txt");
+
+        foreach (string line in lines)
+            instructions.Add(line);
+
+
         tutorialCanvas.gameObject.SetActive(true);
-        //everything off first
-        foreach (GameObject text in instructions)
-        {
-            text.SetActive(false);
-        }
+        UIManager.instance.IntroText.SetActive(false);
+
+        //first direction
+        instructionText.text = instructions[0];
         backwardbtn.SetActive(false);
-        forwardbtn.SetActive(false);
+        forwardbtn.SetActive(true);
 
-        StartCoroutine(nameof(firstSlide));
+        //StartCoroutine(nameof(firstSlide));
     }
 
-    public IEnumerator firstSlide()
-    {
-        yield return new WaitForSeconds(1f);
+    //public IEnumerator firstSlide()
+    //{
+    //    yield return new WaitForSeconds(1f);
 
-        //player spawned main base
-        if (PlayerController.instance.mainBase != null)
-        {
-            //first instruction
-            instructions[0].SetActive(true);
-            backwardbtn.SetActive(false);
-            forwardbtn.SetActive(true);
-        }
-        else
-        {
-            StartCoroutine(nameof(firstSlide));
-        }
-    }
+    //    //player spawned main base
+    //    if (PlayerController.instance.mainBase != null)
+    //    {
+    //        //first instruction
+    //        instructions[0].SetActive(true);
+    //        backwardbtn.SetActive(false);
+    //        forwardbtn.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        StartCoroutine(nameof(firstSlide));
+    //    }
+    //}
 
     public void forward()
     {
@@ -62,9 +70,8 @@ public class TutorialManager : MonoBehaviour
             backwardbtn.SetActive(true);
         }
 
-        instructions[index].gameObject.SetActive(false);
         index++;
-        instructions[index].gameObject.SetActive(true);
+        instructionText.text = instructions[index];
 
         if (index == instructions.Count - 1)
         {
@@ -79,9 +86,8 @@ public class TutorialManager : MonoBehaviour
             forwardbtn.SetActive(true);
         }
 
-        instructions[index].gameObject.SetActive(false);
         index--;
-        instructions[index].gameObject.SetActive(true);
+        instructionText.text = instructions[index];
 
         if (index == 0)
         {
