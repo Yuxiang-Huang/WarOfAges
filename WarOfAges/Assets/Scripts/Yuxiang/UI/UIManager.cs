@@ -119,16 +119,23 @@ public class UIManager : MonoBehaviour
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);
 
+        goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
+
         //Player list
         playerInfoCanvas.SetActive(true);
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
-            //playerNameList[i].text = GameManager.instance.allPlayersOriginal[i].PV.Owner.NickName;
-            //playerNameList[i].gameObject.transform.parent.gameObject.SetActive(true);
+            if (i > 0)
+            {
+                if (i > 0)
+                {
+                    playerUIManagerList[i - 1].gameObject.SetActive(true);
+                    playerUIManagerList[i - 1].PV.RPC("initilize", RpcTarget.All,
+                        PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
+                }
+            }
             readyIconList[i].SetActive(true);
         }
-
-        goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
     }
 
     #endregion
@@ -306,43 +313,6 @@ public class UIManager : MonoBehaviour
     public void upgrade()
     {
         PlayerController.instance.unitSelected.PV.RPC("upgrade", RpcTarget.All);
-    }
-
-    #endregion
-
-    #region Player Info Tab
-
-    public void updatePlayerInfoTab(int id)
-    {
-        infoTabPlayer.SetActive(true);
-        GameManager.instance.allPlayersOriginal[id].PV.RPC("fillInfoTab",
-            GameManager.instance.allPlayersOriginal[id].PV.Owner, PlayerController.instance.id);
-    }
-
-    [PunRPC]
-    public void fillPlayerInfoTab(string nickName, string color, string age, int gold,
-        int numTroop, int numBuilding, int numTerritory)
-    {
-        //name
-        playerInfoText[0].text = nickName;
-
-        //Color
-        playerInfoText[1].text = color;
-
-        //Age
-        playerInfoText[2].text = age;
-
-        //Gold
-        playerInfoText[3].text = "Gold: " + gold;
-
-        //Troop
-        playerInfoText[4].text = "Troop: " + numTroop;
-
-        //Buliding
-        playerInfoText[5].text = "Building: " + numBuilding;
-
-        //Territory
-        playerInfoText[6].text = "Territory: " + numTerritory;
     }
 
     #endregion

@@ -1146,12 +1146,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 6950465280075854720}
+  sideColor: {fileID: 6950465280125442565}
   ageText: {fileID: 6950465279260806590}
   goldText: {fileID: 6950465279484870940}
+  territoryText: {fileID: 6950465278658094910}
   troopText: {fileID: 6950465279910756520}
   buildingText: {fileID: 6950465279661632092}
-  timeText: {fileID: 6950465278658094910}
-  sideColor: {fileID: 6950465280125442565}
 --- !u!1 &6950465279661632094
 GameObject:
   m_ObjectHideFlags: 0

@@ -612,9 +612,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void fillInfoTab(int sender)
     {
-        UIManager.instance.PV.RPC("fillPlayerInfoTab", GameManager.instance.allPlayersOriginal[sender].PV.Owner,
-            PV.Owner.NickName, UIManager.instance.colorToString[TileManager.instance.ownerColors[id]], UIManager.instance.ageNameList[age],
-            gold, allTroops.Count, allBuildings.Count, territory.Count);
+        UIManager.instance.PV.RPC("fillInfo", GameManager.instance.allPlayersOriginal[sender].PV.Owner,
+           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count);
     }
 
     #endregion
