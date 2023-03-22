@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour
     [SerializeField] GameObject territoryColor;
 
     public GameObject dark;
-    public GameObject gray;
+    public GameObject grayFilter;
 
     [SerializeField] List<GameObject> borders;
 
@@ -154,7 +154,7 @@ public class Tile : MonoBehaviour
 
     public void setGray(bool status)
     {
-        gray.SetActive(status);
+        grayFilter.SetActive(status);
     }
 
     public void setDark(bool status)

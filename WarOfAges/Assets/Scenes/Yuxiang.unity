@@ -1318,6 +1318,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 4108916116941670807, guid: 2ea4d13b1b6b64ed29c22170e5787943, type: 3}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
       objectReference: {fileID: 6580721310958061044, guid: 560cca3f230d94bdeb1a549f3277f240, type: 3}
@@ -1544,6 +1548,10 @@ PrefabInstance:
       propertyPath: unlocked
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 1032354956992124027, guid: ed152fa21b34a48f096c804432d28a36, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
@@ -2236,6 +2244,10 @@ PrefabInstance:
       propertyPath: unlocked
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 1099058697764673962, guid: 224c1d784d96c4045b946715b273f37f, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
@@ -5687,6 +5699,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 6480947719028038638, guid: 191e282eebe6d4756abfc6a77883d7fe, type: 3}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
       objectReference: {fileID: 939499867913339684, guid: e713d201ae4824a4fb2a6d77cc32decb, type: 3}
@@ -7607,6 +7623,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unit
+      value: 
+      objectReference: {fileID: 4984355407141944089, guid: 8bf82ab7f5c814d8b9bb6f62636310b0, type: 3}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
       value: 
       objectReference: {fileID: 4984355407141944089, guid: 8bf82ab7f5c814d8b9bb6f62636310b0, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
@@ -10099,6 +10119,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 126105513483395571, guid: 69d3a83eb30a645acbbb251e7277d860, type: 3}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
       objectReference: {fileID: 6303259888954664086, guid: 245de7b33b3fd459da0a0d1961553639, type: 3}
@@ -11495,7 +11519,7 @@ MonoBehaviour:
   initialTime: 0
   timeInc: 0
   IntroText: {fileID: 1317317237}
-  Shop: {fileID: 0}
+  Shop: {fileID: 1395771452}
   AgeUI: {fileID: 0}
   turnBtn: {fileID: 0}
   cancelTurnBtn: {fileID: 0}
@@ -11934,6 +11958,10 @@ PrefabInstance:
       propertyPath: unlocked
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 1374501951802969707, guid: f4cefd7a4b0904e248fd5ce740f92adf, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
@@ -13560,6 +13588,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1627514825}
     m_Modifications:
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnUnit
+      value: 
+      objectReference: {fileID: 4005839721537878175, guid: b63047aabf50f448283d8221273a5698, type: 3}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: spawnImage
+      value: 
+      objectReference: {fileID: 3350579417564403051, guid: 85330372dcccb4576ac7d6f8ed02e152, type: 3}
     - target: {fileID: 195891942802153981, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_Name
       value: MeleeSpawn

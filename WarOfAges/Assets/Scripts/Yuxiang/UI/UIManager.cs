@@ -73,42 +73,34 @@ public class UIManager : MonoBehaviour
         PV = GetComponent<PhotonView>();
 
         //everything set false first
-        Shop.SetActive(false);
-        goldText.gameObject.SetActive(false);
-        turnBtn.SetActive(false);
-        infoTabUnit.SetActive(false);
-        infoTabPlayer.SetActive(false);
-        AgeUI.SetActive(false);
-        cancelTurnBtn.SetActive(false);
-        IntroText.SetActive(true);
-        timeText.gameObject.SetActive(false);
-        playerList.SetActive(false);
-        turnNumText.gameObject.SetActive(false);
-        sellBtn.SetActive(false);
-        upgradeBtn.SetActive(false);
-        leaveBtn.SetActive(false);
+        //Shop.SetActive(false);
+        //goldText.gameObject.SetActive(false);
+        //turnBtn.SetActive(false);
+        //infoTabUnit.SetActive(false);
+        //infoTabPlayer.SetActive(false);
+        //AgeUI.SetActive(false);
+        //cancelTurnBtn.SetActive(false);
+        //IntroText.SetActive(true);
+        //timeText.gameObject.SetActive(false);
+        //playerList.SetActive(false);
+        //turnNumText.gameObject.SetActive(false);
+        //sellBtn.SetActive(false);
+        //upgradeBtn.SetActive(false);
+        //leaveBtn.SetActive(false);
 
-        foreach (TextMeshProUGUI text in playerNameList)
-        {
-            text.gameObject.transform.parent.gameObject.SetActive(false);
-        }
-
-        foreach (GameObject checkmark in checkmarkList)
-        {
-            checkmark.SetActive(false);
-        }
-
-        foreach (GameObject skull in skullList)
-        {
-            skull.SetActive(false);
-        }
+        //foreach (TextMeshProUGUI text in playerNameList)
+        //{
+        //    text.gameObject.transform.parent.gameObject.SetActive(false);
+        //}
 
         //initialize color to string
-        colorToString = new Dictionary<Color, string>();
-        colorToString.Add(new Color(0, 1, 1), "Cyan");
-        colorToString.Add(new Color(1, 0, 0), "Red");
-        colorToString.Add(new Color(1, 1, 0), "Yellow");
-        colorToString.Add(new Color(1, 0, 1), "Purple");
+        colorToString = new Dictionary<Color, string>
+        {
+            { new Color(0, 1, 1), "Cyan" },
+            { new Color(1, 0, 0), "Red" },
+            { new Color(1, 1, 0), "Yellow" },
+            { new Color(1, 0, 1), "Purple" }
+        };
     }
 
     #region Start Game

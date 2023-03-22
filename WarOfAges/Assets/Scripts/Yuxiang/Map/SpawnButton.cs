@@ -9,28 +9,26 @@ using UnityEngine.EventSystems;
 public class SpawnButton : MonoBehaviour
 {
     [SerializeField] Image displayImage;
+    public List<Sprite> unitImages;
 
     public string path;
 
     [SerializeField] int goldNeedToSpawn;
-
-    [SerializeField] GameObject spawnImage;
-
     [SerializeField] TextMeshProUGUI costText;
 
-    [SerializeField] GameObject unit;
+    [SerializeField] GameObject spawnImage;
+    [SerializeField] GameObject spawnUnit;
 
     [SerializeField] bool unlocked;
     [SerializeField] GameObject lockObject;
+    [SerializeField] GameObject grayFilter;
 
     [SerializeField] GameObject description;
 
-    public List<Sprite> unitImages;
-
     void Awake()
     {
-        costText.text = goldNeedToSpawn + " gold";
-
+        //initial cost text and image
+        costText.text = goldNeedToSpawn.ToString();
         displayImage.sprite = unitImages[0];
 
         //set all ages inactive except the current one
@@ -44,12 +42,15 @@ public class SpawnButton : MonoBehaviour
         if (unlocked)
         {
             lockObject.SetActive(false);
+            grayFilter.SetActive(false);
         }
         else
         {
             lockObject.SetActive(true);
+            grayFilter.SetActive(true);
         }
 
+        //set description off
         description.SetActive(false);
     }
 
@@ -63,11 +64,11 @@ public class SpawnButton : MonoBehaviour
             {
                 SpawnManager.instance.spawn(displayImage, path,
                     goldNeedToSpawn * (int)Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age),
-                    spawnImage, unit);
-                UIManager.instance.updateInfoTabSpawn(unit.GetComponent<IUnit>());
+                    spawnImage, spawnUnit);
+                UIManager.instance.updateInfoTabSpawn(spawnUnit.GetComponent<IUnit>());
 
                 //gray tiles, condition same as in playerController spawn
-                if (unit.CompareTag("Building"))
+                if (spawnUnit.CompareTag("Building"))
                 {
                     foreach (Tile tile in PlayerController.instance.visibleTiles)
                     {
@@ -78,7 +79,7 @@ public class SpawnButton : MonoBehaviour
                         }
                     }
                 }
-                else if (unit.CompareTag("Troop"))
+                else if (spawnUnit.CompareTag("Troop"))
                 {
                     foreach (Tile tile in PlayerController.instance.visibleTiles)
                     {
@@ -86,7 +87,7 @@ public class SpawnButton : MonoBehaviour
                             && !PlayerController.instance.spawnList.ContainsKey(tile.pos)
                             && PlayerController.instance.canSpawn[tile.pos.x, tile.pos.y] &&
                                 (tile.terrain == "land" ||
-                                unit.GetComponent<Amphibian>() != null)))
+                                spawnUnit.GetComponent<Amphibian>() != null)))
                         {
                             tile.setGray(true);
                         }
@@ -104,15 +105,15 @@ public class SpawnButton : MonoBehaviour
             SpawnManager.instance.keys--;
             unlocked = true;
             lockObject.SetActive(false);
+            grayFilter.SetActive(false);
         }
     }
 
     public void ageAdvanceUpdate()
     {
-        costText.text = goldNeedToSpawn
-        * (int) Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age)
-        +" gold";
-
+        //update cost text and image
+        costText.text = (goldNeedToSpawn
+        * (int)Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age)).ToString();
         displayImage.sprite = unitImages[PlayerController.instance.age];
 
         //set all ages inactive except the current one
