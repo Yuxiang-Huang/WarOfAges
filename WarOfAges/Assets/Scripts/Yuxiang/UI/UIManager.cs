@@ -102,6 +102,8 @@ public class UIManager : MonoBehaviour
             { new Color(1, 1, 0), "Yellow" },
             { new Color(1, 0, 1), "Purple" }
         };
+
+        ageText.text = ageNameList[0];
     }
 
     #region Start Game

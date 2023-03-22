@@ -10,7 +10,7 @@ End your turn. Troops can move to any adjacent tile as long as it is land. Your 
 Every time you claim a piece of land, you earn gold. You previously spent gold to spawn your melee troop.
 Let’s click on the troop again to select it. Selecting a unit lets you check on its health as well as perform actions on it. 
 You may sell a unit for some gold or upgrade them up to the next age, provided you are in it or have been in it.  
-You are currently in the Stone Age, but you have enough gold to advance!Before you advance, you can unlock a unit of your choosing early!
+You are currently in the Stone Age, but you have enough gold to advance!
 Now, let’s advance our age! When you advance, troops will get stronger but also cost more. Land will also generate more gold.
 Note that units on your map do not advance with the ages. If you wish, you may upgrade them to match the new age.
 Now that you’ve advanced into a new age, you can unlock a new unit of your choice! For the purposes of this tutorial, we will unlock an [EXTRA MONEY].
