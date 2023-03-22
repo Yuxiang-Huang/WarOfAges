@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6337446905398276107}
   - component: {fileID: 5318337720731239877}
   m_Layer: 0
-  m_Name: Gray
+  m_Name: GrayFilter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,12 +447,7 @@ MonoBehaviour:
   highlightTile: {fileID: 5507542342683702645}
   territoryColor: {fileID: 3237852691886608713}
   dark: {fileID: 1685886697574609719}
-  gray: {fileID: 2268030348949707914}
-  ownerColor:
-  - {r: 0, g: 1, b: 1, a: 6.917795e+22}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
+  grayFilter: {fileID: 2268030348949707914}
   borders:
   - {fileID: 5923414417130844217}
   - {fileID: 5382631380685579124}

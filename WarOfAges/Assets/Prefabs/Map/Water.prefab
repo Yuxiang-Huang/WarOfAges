@@ -111,12 +111,7 @@ MonoBehaviour:
   highlightTile: {fileID: 2345102748913751339}
   territoryColor: {fileID: 3335725596359333128}
   dark: {fileID: 6520112993604184512}
-  gray: {fileID: 1947728287931355529}
-  ownerColor:
-  - {r: 0, g: 1, b: 1, a: 6.917795e+22}
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 1, b: 0, a: 1}
-  - {r: 1, g: 0, b: 1, a: 1}
+  grayFilter: {fileID: 1947728287931355529}
   borders:
   - {fileID: 6750547156851788425}
   - {fileID: 4983235600091716036}
@@ -157,7 +152,7 @@ GameObject:
   - component: {fileID: 5877607177698962974}
   - component: {fileID: 8245369470671275140}
   m_Layer: 0
-  m_Name: Gray
+  m_Name: GrayFilter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
