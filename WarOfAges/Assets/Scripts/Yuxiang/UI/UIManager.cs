@@ -52,20 +52,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] List<PlayerUIManager> playerUIManagerList;
-
-    [SerializeField] GameObject infoTabPlayer;
-    [SerializeField] List<TextMeshProUGUI> playerInfoText;
     [SerializeField] List<GameObject> readyIconList;
 
     public Dictionary<Color, string> colorToString;
-
-    public GameObject leaveBtn;
 
     [Header("Age")]
     public List<string> ageNameList;
     [SerializeField] GameObject ageAdvanceBtn;
     [SerializeField] TextMeshProUGUI ageText;
     [SerializeField] TextMeshProUGUI goldNeedToAdvanceText;
+
+    [Header("End")]
+    public GameObject leaveBtn;
 
     void Awake()
     {
@@ -77,7 +75,6 @@ public class UIManager : MonoBehaviour
         goldText.gameObject.SetActive(false);
         infoTabUnit.SetActive(false);
         turnBtn.SetActive(false);
-        infoTabPlayer.SetActive(false);
         AgeUI.SetActive(false);
         cancelTurnBtn.SetActive(false);
         IntroText.SetActive(true);
@@ -124,6 +121,12 @@ public class UIManager : MonoBehaviour
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);
 
+        //icons
+        for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
+        {
+            readyIconList[i].SetActive(true);
+        }
+
         goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
     }
 
@@ -135,9 +138,11 @@ public class UIManager : MonoBehaviour
         //Player list
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
+            PlayerController curPlayer = GameManager.instance.allPlayersOriginal[i];
+
             playerUIManagerList[i].gameObject.SetActive(true);
             playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
-            PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
+            curPlayer.PV.Owner.NickName, curPlayer.id);
         }
     }
 
@@ -255,7 +260,6 @@ public class UIManager : MonoBehaviour
     //for existing units
     public void updateInfoTab(IUnit unit, bool myUnit)
     {
-        infoTabPlayer.SetActive(false);
         infoTabUnit.SetActive(true);
         unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitSellText, unitUpgradeText);
 
@@ -273,7 +277,6 @@ public class UIManager : MonoBehaviour
     //for spawn buttons
     public void updateInfoTabSpawn(IUnit unit)
     {
-        infoTabPlayer.SetActive(false);
         infoTabUnit.SetActive(true);
         unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, PlayerController.instance.age);
     }
@@ -281,7 +284,6 @@ public class UIManager : MonoBehaviour
     //for spawn images
     public void updateInfoTab(SpawnInfo spawnInfo)
     {
-        infoTabPlayer.SetActive(false);
         infoTabUnit.SetActive(true);
         spawnInfo.unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, spawnInfo.age);
         sellBtn.SetActive(true);
