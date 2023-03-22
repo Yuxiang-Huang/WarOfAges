@@ -933,8 +933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 128.24, y: 0}
-  m_SizeDelta: {x: 256.48, y: -6}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6950465279584959590
 CanvasRenderer:
@@ -1154,6 +1154,7 @@ MonoBehaviour:
   territoryText: {fileID: 6950465278658094910}
   troopText: {fileID: 6950465279910756520}
   buildingText: {fileID: 6950465279661632092}
+  healthbar: {fileID: 6950465279999741001}
 --- !u!114 &7158618512909304
 MonoBehaviour:
   m_ObjectHideFlags: 0

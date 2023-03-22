@@ -613,7 +613,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void fillInfoTab()
     {
         UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
-           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count);
+           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count,
+          (float) mainBase.health / mainBase.fullHealth);
     }
 
     #endregion

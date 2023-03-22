@@ -18,6 +18,8 @@ public class PlayerUIManager : MonoBehaviour
     public TextMeshProUGUI troopText;
     public TextMeshProUGUI buildingText;
 
+    public Slider healthbar;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -31,12 +33,13 @@ public class PlayerUIManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void fillInfo(string age, int gold, int numTerritory, int numTroop, int numBuilding)
+    public void fillInfo(string age, int gold, int numTerritory, int numTroop, int numBuilding, float healthPercent)
     {
         ageText.text = age;
         goldText.text = gold.ToString();
         territoryText.text = numTerritory.ToString();
         troopText.text = numTroop.ToString();
         buildingText.text = numBuilding.ToString();
+        healthbar.value = healthPercent;
     }
 }
