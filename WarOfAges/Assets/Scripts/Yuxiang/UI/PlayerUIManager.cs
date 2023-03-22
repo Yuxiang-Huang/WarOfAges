@@ -28,8 +28,6 @@ public class PlayerUIManager : MonoBehaviour
     {
         nameText.text = name;
         sideColor.GetComponent<Image>().color = TileManager.instance.ownerColors[colorIndex];
-
-        Debug.Log(sideColor.GetComponent<Image>().color);
     }
 
     [PunRPC]

@@ -135,16 +135,9 @@ public class UIManager : MonoBehaviour
         //Player list
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
         {
-            if (i > 0)
-            {
-                if (i > 0)
-                {
-                    playerUIManagerList[i - 1].gameObject.SetActive(true);
-                    playerUIManagerList[i - 1].PV.RPC("initilize", RpcTarget.All,
-                        PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
-                }
-            }
-            readyIconList[i].SetActive(true);
+            playerUIManagerList[i].gameObject.SetActive(true);
+            playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
+            PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
         }
     }
 

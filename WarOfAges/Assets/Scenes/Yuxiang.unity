@@ -1046,6 +1046,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 195891942802153982, guid: 92c312100072046779c20a63ffefc397, type: 3}
   m_PrefabInstance: {fileID: 182037196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &244047106 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6950465279484870940, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 1268171184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &254469763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1275,7 +1286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 53}
+  m_AnchoredPosition: {x: 50, y: 275}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &262769867
@@ -1296,7 +1307,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 60
+  m_Spacing: 80
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -6612,6 +6623,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
   m_PrefabInstance: {fileID: 1268171184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268171187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 1268171184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29def66dad01447f9889d337dffb2291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1278029725
 GameObject:
   m_ObjectHideFlags: 0
@@ -9065,8 +9087,9 @@ MonoBehaviour:
   sellBtn: {fileID: 852082104}
   upgradeBtn: {fileID: 467287541}
   timeText: {fileID: 1014228769}
-  goldText: {fileID: 0}
+  goldText: {fileID: 244047106}
   playerUIManagerList:
+  - {fileID: 1268171187}
   - {fileID: 1936620265}
   - {fileID: 1708768071}
   - {fileID: 6950465278614329760}
