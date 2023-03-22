@@ -133,9 +133,10 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Turn
+    #region Turn (shouldn't be call by buttons)
 
-    public void startTurn()
+    //call by startTurn in gameManager
+    public void startTurnUI()
     {
         turnNum++;
         turnNumText.text = "Turn: " + turnNum;
@@ -155,7 +156,7 @@ public class UIManager : MonoBehaviour
         //all icons show unready
         foreach (GameObject icon in readyIconList)
         {
-            icon.GetComponent<Image>().color = new Color(113, 115, 125);
+            icon.GetComponent<Image>().color = Config.notReadyColor;
         }
     }
 
@@ -179,7 +180,8 @@ public class UIManager : MonoBehaviour
             GameManager.instance.endTurn();
     }
 
-    public void endTurn()
+    //call by endTurn in gameManager
+    public void endTurnUI()
     {
         localTurnEnded = true;
 
@@ -193,7 +195,8 @@ public class UIManager : MonoBehaviour
             cancelTurnBtn.SetActive(true);
     }
 
-    public void cancelEndTurn()
+    //call by cancelEndTurn in gameManager
+    public void cancelEndTurnUI()
     {
         localTurnEnded = false;
 
@@ -213,6 +216,21 @@ public class UIManager : MonoBehaviour
         localTurnEnded = true;
         turnBtn.SetActive(false);
         cancelTurnBtn.SetActive(false);
+    }
+
+    [PunRPC]
+    public void setEndTurn(int index, bool status)
+    {
+        //change color
+        if (status)
+        {
+            Debug.Log("here");
+            readyIconList[index].GetComponent<Image>().color = Config.readyColor;
+        }
+        else
+        {
+            readyIconList[index].GetComponent<Image>().color = Config.notReadyColor;
+        }
     }
 
     #endregion
@@ -326,20 +344,6 @@ public class UIManager : MonoBehaviour
 
         //Territory
         playerInfoText[6].text = "Territory: " + numTerritory;
-    }
-
-    [PunRPC]
-    public void setEndTurn(int index, bool status)
-    {
-        //change color
-        if (status)
-        {
-            readyIconList[index].GetComponent<Image>().color = new Color (33, 128, 68);
-        }
-        else
-        {
-            readyIconList[index].GetComponent<Image>().color = new Color(113, 115, 125);
-        }
     }
 
     #endregion

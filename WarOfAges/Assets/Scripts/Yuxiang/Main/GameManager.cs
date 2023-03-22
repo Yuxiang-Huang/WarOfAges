@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void startTurn()
     {
-        UIManager.instance.startTurn();
+        UIManager.instance.startTurnUI();
 
         //reset all vars
         numPlayerMoved = 0;
@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //stop action of player
         PlayerController.instance.stop();
 
-        UIManager.instance.endTurn();
+        UIManager.instance.endTurnUI();
 
         if (PhotonNetwork.OfflineMode)
         {
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         PlayerController.instance.turnEnded = false;
 
-        UIManager.instance.cancelEndTurn();
+        UIManager.instance.cancelEndTurnUI();
 
         //revert endturn property
         Hashtable playerProperties = new Hashtable();
