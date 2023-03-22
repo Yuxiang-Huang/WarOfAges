@@ -28,7 +28,10 @@ public class TutorialManager : MonoBehaviour
     private void Start()
     {
         //read tutorial directions
-        string[] lines = File.ReadAllLines("Assets/Scripts/Yuxiang/Main/TutorialText.txt");
+        TextAsset mytxtData = (TextAsset)Resources.Load("Text/TutorialText");
+        string txt = mytxtData.text;
+
+        string[] lines = txt.Split("\n");
 
         foreach (string line in lines)
             instructions.Add(line);

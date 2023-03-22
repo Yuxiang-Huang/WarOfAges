@@ -28,13 +28,15 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     void Awake()
     {
+        ScreenManager.Instance.DisplayScreen("Loading");
+
         Instance = this;
 
         roomNameInput.text = "Room " + Random.Range(0, 1000).ToString("0000");
     }
 
     public void Start()
-    { 
+    {
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
     }
