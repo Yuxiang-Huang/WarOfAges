@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public PhotonView PV;
 
-    public SortedDictionary<int, PlayerController> playerList = new SortedDictionary<int, PlayerController>();
+    public SortedDictionary<int, PlayerController> playerList = new();
     public List<PlayerController> allPlayersOriginal;
     public List<PlayerController> allPlayers;
 
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] bool gameStarted;
     public bool turnEnded;
 
-    public HashSet<Tile> spellTiles = new HashSet<Tile>();
+    public HashSet<Tile> spellTiles = new();
 
     private void Awake()
     {
