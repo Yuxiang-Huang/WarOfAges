@@ -5843,6 +5843,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: PV
+      value: 
+      objectReference: {fileID: 1268171186}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5946,6 +5950,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
   m_PrefabInstance: {fileID: 1268171184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268171186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 1268171184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1268171187 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
@@ -8415,21 +8430,11 @@ MonoBehaviour:
   - {fileID: 1936620265}
   - {fileID: 1708768071}
   - {fileID: 6950465278614329760}
-  infoTabPlayer: {fileID: 0}
-  playerInfoText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   readyIconList:
   - {fileID: 406456450}
   - {fileID: 661215738}
   - {fileID: 705097639}
   - {fileID: 73928626}
-  leaveBtn: {fileID: 1573375920}
   ageNameList:
   - Stone Age
   - Bronze Age
@@ -8440,6 +8445,7 @@ MonoBehaviour:
   ageAdvanceBtn: {fileID: 829458720}
   ageText: {fileID: 660951266}
   goldNeedToAdvanceText: {fileID: 1597940931}
+  leaveBtn: {fileID: 1573375920}
 --- !u!4 &1655113465
 Transform:
   m_ObjectHideFlags: 0
@@ -8488,6 +8494,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: PV
+      value: 
+      objectReference: {fileID: 1708768072}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8600,6 +8610,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29def66dad01447f9889d337dffb2291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1708768072 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 1708768069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1779553598
@@ -9431,6 +9452,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: PV
+      value: 
+      objectReference: {fileID: 1936620266}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9543,6 +9568,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29def66dad01447f9889d337dffb2291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1936620266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 1936620263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1969029244
@@ -10191,6 +10227,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3115039769588091806, guid: 60419328f50404187b4c392034d37a18, type: 3}
+      propertyPath: PV
+      value: 
+      objectReference: {fileID: 6950465278614329761}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10298,5 +10338,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29def66dad01447f9889d337dffb2291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6950465278614329761 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7158618512909304, guid: 60419328f50404187b4c392034d37a18, type: 3}
+  m_PrefabInstance: {fileID: 6950465278614329759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

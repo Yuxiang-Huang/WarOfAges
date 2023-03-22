@@ -610,9 +610,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region UI
 
     [PunRPC]
-    public void fillInfoTab(int sender)
+    public void fillInfoTab()
     {
-        UIManager.instance.PV.RPC("fillInfo", GameManager.instance.allPlayersOriginal[sender].PV.Owner,
+        UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
            UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count);
     }
 
@@ -660,8 +660,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         gold = 0;
         territory = new HashSet<Tile>();
         UIManager.instance.updateGoldText();
-
-        UIManager.instance.PV.RPC("setSkull", RpcTarget.All, id);
 
         //only end turn if quit
         if (GameManager.instance.turnEnded)

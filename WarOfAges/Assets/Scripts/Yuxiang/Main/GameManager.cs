@@ -304,6 +304,12 @@ public class GameManager : MonoBehaviourPunCallbacks
             allPlayers.Add(allPlayers[0]);
             allPlayers.RemoveAt(0);
 
+            //ask every playercontroller owner to update their info
+            foreach (PlayerController player in allPlayers)
+            {
+                player.PV.RPC(nameof(player.fillInfoTab), player.PV.Owner);
+            }
+
             //next turn
             PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
         }

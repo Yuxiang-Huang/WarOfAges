@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
     [Header("InfoTab - Player")]
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
-    [SerializeField] List<PlayerUIManager> playerUIManagerList;
+    public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
 
     public Dictionary<Color, string> colorToString;
@@ -127,7 +127,7 @@ public class UIManager : MonoBehaviour
             readyIconList[i].SetActive(true);
         }
 
-        goldNeedToAdvanceText.text = "Advance: " + PlayerController.instance.goldNeedToAdvance + " gold";
+        goldNeedToAdvanceText.text = "Click to advance! Costs " + PlayerController.instance.goldNeedToAdvance;
     }
 
     public void startGameAll()
