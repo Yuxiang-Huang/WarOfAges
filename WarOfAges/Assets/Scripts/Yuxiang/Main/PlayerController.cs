@@ -377,6 +377,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //spawn an image
                     GameObject spawnImage = Instantiate(toSpawnImage,
                     highlighted.gameObject.transform.position, Quaternion.identity);
+                    spawnImage.SetActive(true);
 
                     //add to spawn list
                     spawnList.Add(highlighted.pos, new SpawnInfo(highlighted, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),

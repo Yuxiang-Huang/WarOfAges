@@ -16,8 +16,8 @@ public class SpawnButton : MonoBehaviour
     [SerializeField] int goldNeedToSpawn;
     [SerializeField] TextMeshProUGUI costText;
 
-    [SerializeField] GameObject spawnImage;
     [SerializeField] GameObject spawnUnit;
+    [SerializeField] GameObject spawnImage;
 
     [SerializeField] bool unlocked;
     [SerializeField] GameObject lockObject;
@@ -30,13 +30,6 @@ public class SpawnButton : MonoBehaviour
         //initial cost text and image
         costText.text = goldNeedToSpawn.ToString();
         displayImage.sprite = unitImages[0];
-
-        //set all ages inactive except the current one
-        foreach (Transform cur in spawnImage.transform)
-        {
-            cur.gameObject.SetActive(false);
-        }
-        spawnImage.transform.GetChild(0).gameObject.SetActive(true);
 
         //lock
         if (unlocked)
@@ -52,6 +45,39 @@ public class SpawnButton : MonoBehaviour
 
         //set description off
         description.SetActive(false);
+
+        //create spawn image using spawn unit
+        spawnImage = Instantiate(spawnUnit);
+        spawnImage.SetActive(false);
+
+        //destroy script
+        Component[] components = spawnImage.GetComponents<Component>();
+        foreach (Component component in components)
+        {
+            if (component is IUnit)
+            {
+                DestroyImmediate(component, true);
+            }
+        }
+        //change transparency
+        Transform imageHolder = spawnImage.transform.GetChild(0);
+
+        for (int i = imageHolder.childCount - 1; i >= 0; i --)
+        {
+            imageHolder.GetChild(i).GetComponent<SpriteRenderer>().color = Config.spawnImageColor;
+            imageHolder.GetChild(i).transform.parent = spawnImage.transform;
+        }
+
+        //destroy the image holder and slider
+        Destroy(spawnImage.transform.GetChild(0).gameObject);
+        Destroy(spawnImage.transform.GetChild(1).gameObject);
+
+        //set all ages inactive except the current one
+        foreach (Transform cur in spawnImage.transform)
+        {
+            cur.gameObject.SetActive(false);
+        }
+        spawnImage.transform.GetChild(Config.numAges - 1).gameObject.SetActive(true);
     }
 
     public void spawn()
@@ -111,7 +137,7 @@ public class SpawnButton : MonoBehaviour
 
     public void ageAdvanceUpdate()
     {
-        //update cost text and image
+        //update cost text
         costText.text = (goldNeedToSpawn
         * (int)Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age)).ToString();
         displayImage.sprite = unitImages[PlayerController.instance.age];
@@ -121,7 +147,7 @@ public class SpawnButton : MonoBehaviour
         {
             cur.gameObject.SetActive(false);
         }
-        spawnImage.transform.GetChild(PlayerController.instance.age).gameObject.SetActive(true);
+        spawnImage.transform.GetChild(Config.numAges - PlayerController.instance.age - 1).gameObject.SetActive(true);
     }
 
     #region Hovering (Lock and description)

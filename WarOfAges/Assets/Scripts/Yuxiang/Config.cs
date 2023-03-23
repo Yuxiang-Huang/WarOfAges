@@ -8,6 +8,7 @@ public class Config
     public static bool moreMoneyTextMode = true;
 
     //age factors
+    public static int numAges = 6;
     public static int ageIncomeOffset = 5;
     public static int ageCostFactor = 2;
     public static int ageUnitFactor = 2;
@@ -21,6 +22,8 @@ public class Config
 
     //colors
     public static float territoryColorOpacity = 0.3f;
+
+    public static Color spawnImageColor = new Color(1, 1, 1, 0.5f);
 
     //for the end turn icons
     public static Color readyColor = new (33f / 255f, 128f / 255f, 68f / 255f);

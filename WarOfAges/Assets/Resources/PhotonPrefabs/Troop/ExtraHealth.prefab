@@ -30,8 +30,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8274766393347949222}
   - {fileID: 764930450718585958}
+  - {fileID: 8274766393347949222}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -69,7 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dec795da2e0e46d0bdc4ddf0db84f82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeGold: 0
   sellGold: 0
   imageRenderer: {fileID: 0}
   unitImages:
@@ -373,7 +372,7 @@ Transform:
   - {fileID: 8315030594676898165}
   - {fileID: 1067908193123398123}
   m_Father: {fileID: 2537345260671034645}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2660735970752893105
 GameObject:
@@ -848,7 +847,7 @@ RectTransform:
   - {fileID: 5232990502963372005}
   - {fileID: 549565092583320292}
   m_Father: {fileID: 2537345260671034645}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
