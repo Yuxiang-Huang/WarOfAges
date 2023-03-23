@@ -875,7 +875,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 6580721310958061044, guid: 560cca3f230d94bdeb1a549f3277f240, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 100
@@ -1080,7 +1080,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 2642429555207648274, guid: be4605ce2d10e4e0d9f220c4141cb31f, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 120
@@ -1724,7 +1724,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 1118290006790659104, guid: 5bac66c31775a4053b6d94849614fa3e, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 100
@@ -3375,7 +3375,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 939499867913339684, guid: e713d201ae4824a4fb2a6d77cc32decb, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 40
@@ -4182,7 +4182,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 1371028787450875553, guid: 806398d3c81b84a6a932a9df7a6e15f5, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 40
@@ -5796,7 +5796,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 6303259888954664086, guid: 245de7b33b3fd459da0a0d1961553639, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 80
@@ -7253,7 +7253,7 @@ PrefabInstance:
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: spawnImage
       value: 
-      objectReference: {fileID: 9003052658327922773, guid: 5fbb2e743970e4d71b822786102154e8, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
       value: 60
