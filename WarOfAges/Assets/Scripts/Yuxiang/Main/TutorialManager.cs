@@ -14,7 +14,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
 
-    void Awake()
+    private void Start()
     {
         //destroy if not tutorial
         if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") ||
@@ -22,11 +22,9 @@ public class TutorialManager : MonoBehaviour
         {
             tutorialCanvas.gameObject.SetActive(false);
             Destroy(gameObject);
+            return;
         }
-    }
 
-    private void Start()
-    {
         //read tutorial directions
         TextAsset mytxtData = (TextAsset)Resources.Load("Text/TutorialText");
         string txt = mytxtData.text;

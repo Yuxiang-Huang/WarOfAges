@@ -3,9 +3,9 @@ using UnityEngine;
 public class Config
 {
     //test modes
-    public static bool offlineMode = false;
+    public static bool offlineMode = true;
     public static bool sameSpawnPlaceTestMode = false;
-    public static bool moreMoneyTextMode = false;
+    public static bool moreMoneyTextMode = true;
 
     //age factors
     public static int ageIncomeOffset = 5;

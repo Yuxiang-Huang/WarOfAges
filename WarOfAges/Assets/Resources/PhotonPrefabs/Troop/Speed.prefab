@@ -69,7 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16b2b73350f1b40f2a8fed2d92533284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeGold: 0
   sellGold: 0
   imageRenderer: {fileID: 0}
   unitImages:
