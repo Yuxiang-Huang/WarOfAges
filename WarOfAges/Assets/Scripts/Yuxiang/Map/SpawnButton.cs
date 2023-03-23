@@ -68,16 +68,17 @@ public class SpawnButton : MonoBehaviour
             imageHolder.GetChild(i).transform.parent = spawnImage.transform;
         }
 
-        //destroy the image holder and slider
-        Destroy(spawnImage.transform.GetChild(0).gameObject);
-        Destroy(spawnImage.transform.GetChild(1).gameObject);
-
         //set all ages inactive except the current one
         foreach (Transform cur in spawnImage.transform)
         {
             cur.gameObject.SetActive(false);
         }
-        spawnImage.transform.GetChild(Config.numAges - 1).gameObject.SetActive(true);
+        //+1 because of image holder and slider
+        spawnImage.transform.GetChild(Config.numAges + 1).gameObject.SetActive(true);
+
+        //destroy the image holder and slider
+        Destroy(spawnImage.transform.GetChild(0).gameObject);
+        Destroy(spawnImage.transform.GetChild(1).gameObject);
     }
 
     public void spawn()
