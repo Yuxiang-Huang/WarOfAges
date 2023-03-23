@@ -81,7 +81,7 @@ MonoBehaviour:
   - {fileID: 5133073183850387454}
   healthbar: {fileID: 1493553460646909849}
   fullHealth: 2
-  damage: 100
+  damage: 1
 --- !u!1 &1493553460407938421
 GameObject:
   m_ObjectHideFlags: 0

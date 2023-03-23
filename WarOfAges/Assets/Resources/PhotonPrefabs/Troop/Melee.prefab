@@ -290,8 +290,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4145773337679016462}
-  - component: {fileID: 3235971985597661346}
   - component: {fileID: 4371264588589508770}
+  - component: {fileID: 3235971985597661346}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Troop
@@ -316,34 +316,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3235971985597661346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4005839721537878175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328155a15684c4208b7bc1080f14cd6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sellGold: 0
-  imageRenderer: {fileID: 3717804148828446538}
-  unitImages:
-  - {fileID: 4487582498603874043}
-  - {fileID: 8762183796426496958}
-  - {fileID: 5148461530427556513}
-  - {fileID: 571960116787764132}
-  - {fileID: 6039271994654415377}
-  - {fileID: 1275310282752667536}
-  healthbar: {fileID: 5808259032274118396}
-  fullHealth: 200
-  damage: 1
-  direction: {x: 0, y: 0}
-  tile: {fileID: 0}
-  numOfTilesMoved: 0
-  speed: 1
 --- !u!114 &4371264588589508770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,6 +338,34 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3235971985597661346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4005839721537878175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 328155a15684c4208b7bc1080f14cd6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sellGold: 0
+  imageRenderer: {fileID: 3717804148828446538}
+  unitImages:
+  - {fileID: 4487582498603874043}
+  - {fileID: 8762183796426496958}
+  - {fileID: 5148461530427556513}
+  - {fileID: 571960116787764132}
+  - {fileID: 6039271994654415377}
+  - {fileID: 1275310282752667536}
+  healthbar: {fileID: 5808259032274118396}
+  fullHealth: 2
+  damage: 1
+  direction: {x: 0, y: 0}
+  tile: {fileID: 0}
+  numOfTilesMoved: 0
+  speed: 1
 --- !u!1 &4487582498603874043
 GameObject:
   m_ObjectHideFlags: 0
