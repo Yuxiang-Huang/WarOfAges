@@ -28,8 +28,6 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        ScreenManager.Instance.DisplayScreen("Loading");
-
         Instance = this;
 
         roomNameInput.text = "Room " + Random.Range(0, 1000).ToString("0000");
@@ -129,7 +127,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        ScreenManager.Instance.DisplayScreen("Main");
+        ScreenManager.Instance.DisplayScreen("Loading");
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
