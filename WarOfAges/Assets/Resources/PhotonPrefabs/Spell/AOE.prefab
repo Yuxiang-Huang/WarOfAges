@@ -81,7 +81,7 @@ MonoBehaviour:
   - {fileID: 4585772099223818381}
   - {fileID: 8743168860572373417}
   - {fileID: 3398290172768199772}
-  damage: 100
+  damage: 1
 --- !u!1 &2978792317138811127
 GameObject:
   m_ObjectHideFlags: 0

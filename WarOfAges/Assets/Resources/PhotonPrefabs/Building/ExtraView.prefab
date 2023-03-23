@@ -70,7 +70,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  upgradeGold: 0
   sellGold: 0
   imageRenderer: {fileID: 0}
   unitImages:
@@ -81,7 +80,7 @@ MonoBehaviour:
   - {fileID: 6182740558736313707}
   - {fileID: 5133073183850387454}
   healthbar: {fileID: 1493553460646909849}
-  fullHealth: 200
+  fullHealth: 2
   damage: 100
 --- !u!1 &1493553460407938421
 GameObject:

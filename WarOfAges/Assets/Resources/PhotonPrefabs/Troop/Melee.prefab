@@ -339,7 +339,7 @@ MonoBehaviour:
   - {fileID: 1275310282752667536}
   healthbar: {fileID: 5808259032274118396}
   fullHealth: 200
-  damage: 100
+  damage: 1
   direction: {x: 0, y: 0}
   tile: {fileID: 0}
   numOfTilesMoved: 0

@@ -645,7 +645,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05d1d66f4d45540b1bd37c8930bd9bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeGold: 0
   sellGold: 0
   imageRenderer: {fileID: 0}
   unitImages:
@@ -656,8 +655,8 @@ MonoBehaviour:
   - {fileID: 4442981892982454624}
   - {fileID: 9211451602756521185}
   healthbar: {fileID: 4538640292735501709}
-  fullHealth: 200
-  damage: 100
+  fullHealth: 2
+  damage: 1
   direction: {x: 0, y: 0}
   tile: {fileID: 0}
   numOfTilesMoved: 0
