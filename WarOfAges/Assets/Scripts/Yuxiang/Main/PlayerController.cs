@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 newUnit.GetComponent<Building>().PV.RPC("Init", RpcTarget.All,
                     id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    info.unitName, age, info.sellGold);
+                    info.unitName, info.age, info.sellGold);
                 newUnit.GetComponent<Building>().updateCanSpawn();
 
                 allBuildings.Add(newUnit.GetComponent<Building>());
@@ -487,7 +487,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 newUnit.GetComponent<Spell>().PV.RPC("Init", RpcTarget.All,
                     id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    info.unitName, age, info.sellGold);
+                    info.unitName, info.age, info.sellGold);
 
                 allSpells.Add(newUnit.GetComponent<Spell>());
             }
