@@ -214,16 +214,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 highlighted.unit.setHealthBar(true);
             }
 
-            //select unit when mouse pressed
-            if (Input.GetMouseButtonDown(0))
+            //select unit when mouse pressed and not after turn ended
+            if (Input.GetMouseButtonDown(0) && !turnEnded)
             {
+                UIManager.instance.hideInfoTab();
+
                 //deselect if something is selected
                 if (unitSelected != null)
                 {
                     unitSelected.setImage(Color.white);
-
-                    UIManager.instance.hideInfoTab();
-
                     unitSelected = null;
                 }
 
@@ -431,6 +430,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         else if (mode == "move")
         {
             //set color of the selected unit back to white and deselect
+            unitSelected.setImage(Color.white);
+            unitSelected = null;
+        }
+
+        //clear selection
+        if (unitSelected != null)
+        {
             unitSelected.setImage(Color.white);
             unitSelected = null;
         }
