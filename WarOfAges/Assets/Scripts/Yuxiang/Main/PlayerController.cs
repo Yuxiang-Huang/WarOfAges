@@ -607,6 +607,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.OfflineMode)
         {
+            fillInfoTab();
             GameManager.instance.startTurn();
         }
         else

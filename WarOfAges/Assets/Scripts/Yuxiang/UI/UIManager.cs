@@ -199,6 +199,8 @@ public class UIManager : MonoBehaviour
 
         cancelTurnBtn.SetActive(false);
 
+        timeText.text = "Waiting...";
+
         //only if local turn didn't end
         if (!localTurnEnded)
             GameManager.instance.endTurn();
@@ -211,7 +213,7 @@ public class UIManager : MonoBehaviour
 
         turnBtn.SetActive(false);
 
-        //show checkmark
+        //show ready state
         PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, true);
 
         //only if have time left
@@ -235,9 +237,13 @@ public class UIManager : MonoBehaviour
     [PunRPC]
     public void turnPhase()
     {
+        localTurnEnded = true;
+
+        //couroutine
         if (timeCoroutine != null)
             StopCoroutine(timeCoroutine);
-        localTurnEnded = true;
+
+        //buttons
         turnBtn.SetActive(false);
         cancelTurnBtn.SetActive(false);
     }
