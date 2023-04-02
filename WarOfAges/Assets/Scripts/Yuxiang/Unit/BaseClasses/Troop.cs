@@ -313,16 +313,22 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         healthbar.gameObject.SetActive(status);
     }
 
-    [PunRPC]
     public virtual void checkDeath()
     {
         if (health <= 0)
         {
             tile.unit = null;
-            Destroy(arrow);
-            Destroy(healthbar.gameObject);
-            Destroy(this.gameObject);
+
+            PV.RPC(nameof(destroy), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void destroy()
+    {
+        Destroy(arrow);
+        Destroy(healthbar.gameObject);
+        Destroy(this.gameObject);
     }
 
     #endregion

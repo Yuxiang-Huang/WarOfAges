@@ -574,7 +574,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //troops
         foreach (Troop troop in allTroops)
         {
-            troop.PV.RPC(nameof(troop.checkDeath), RpcTarget.All);
+            troop.checkDeath();
         }
 
         for (int i = allTroops.Count - 1; i >= 0; i--)
@@ -588,7 +588,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //buildings
         foreach (Building building in allBuildings)
         {
-            building.PV.RPC(nameof(building.checkDeath), RpcTarget.All);
+            building.checkDeath();
         }
 
         for (int i = allBuildings.Count - 1; i >= 0; i--)

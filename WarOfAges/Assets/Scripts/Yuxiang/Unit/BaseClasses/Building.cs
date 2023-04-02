@@ -139,7 +139,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         healthbar.value = health;
     }
 
-    [PunRPC]
     public virtual void checkDeath()
     {
         if (health <= 0)
@@ -151,10 +150,17 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
                 neighbor.updateCanSpawn();
             }
 
-            Destroy(healthbar.gameObject);
-            Destroy(this.gameObject);
+            PV.RPC(nameof(destroy), RpcTarget.All);
         }
     }
+
+    [PunRPC]
+    private void destroy()
+    {
+        Destroy(healthbar.gameObject);
+        Destroy(this.gameObject);
+    }
+
 
     public void sell()
     {

@@ -64,7 +64,6 @@ public class ExtraView : Building
         }
     }
 
-    [PunRPC]
     public override void checkDeath()
     {
         if (health <= 0)
