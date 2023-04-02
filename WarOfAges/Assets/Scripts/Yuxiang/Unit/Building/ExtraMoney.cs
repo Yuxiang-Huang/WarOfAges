@@ -6,6 +6,7 @@ public class ExtraMoney : Building
 {
     public override void effect()
     {
-        PlayerController.instance.gold += age + Config.ageIncomeOffset;
+        //produce 1/10 the cost
+        PlayerController.instance.gold += (sellGold / 5);
     }
 }

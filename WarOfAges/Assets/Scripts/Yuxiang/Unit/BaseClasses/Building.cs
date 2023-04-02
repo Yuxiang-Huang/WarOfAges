@@ -18,7 +18,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     public int age { get; set; }
 
     [Header("UI")]
-    [SerializeField] int sellGold;
+    protected int sellGold;
     public int upgradeGold { get; set; }
 
     public SpriteRenderer imageRenderer;

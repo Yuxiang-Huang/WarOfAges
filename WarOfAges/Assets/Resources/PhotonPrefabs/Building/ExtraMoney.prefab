@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1098587520790335011
 Transform:
   m_ObjectHideFlags: 0
@@ -617,7 +617,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  sellGold: 0
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3267935240887392887}
