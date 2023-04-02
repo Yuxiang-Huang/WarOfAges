@@ -10,9 +10,9 @@ public class ExtraView : Building
     {
         base.updateCanSpawn();
 
-
         List<Tile> neighbors3 = TileManager.instance.findNeighbors3(tile);
 
+        //reveal tiles
         foreach (Tile neighbor in neighbors3)
         {
             PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
