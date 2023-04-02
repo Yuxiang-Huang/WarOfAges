@@ -7,6 +7,9 @@ public class Config
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTextMode = false;
 
+    //time factors
+    public static float troopMovementTime = 0.5f;
+
     //age factors
     public static int numAges = 6;
     public static int ageIncomeOffset = 5;

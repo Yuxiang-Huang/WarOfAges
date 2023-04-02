@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using static System.TimeZoneInfo;
 
 public class Troop : MonoBehaviourPunCallbacks, IUnit
 {
@@ -178,6 +179,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //moved in this turn already
         if (numOfTilesMoved == speed) return;
 
+        //destroy arrow
+        if (arrow != null)
+        {
+            Destroy(arrow);
+        }
+
         numOfTilesMoved ++;
 
         //if has next tile to go
@@ -215,8 +222,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                     PV.RPC(nameof(updateTileUnit), RpcTarget.All);
                 }
             }
-
-            displayArrow();
         }
     }
 
@@ -248,10 +253,31 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
         tile.updateStatus(ownerID, this);
 
-        //update position
-        transform.position = TileManager.instance.getWorldPosition(tile);
+        //owner so animate movement
+        if (ownerID == PlayerController.instance.id)
+        {
+            StartCoroutine(TranslateOverTime(transform.position, TileManager.instance.getWorldPosition(tile), Config.troopMovementTime));
+        }
+        else
+        {
+            //update position
+            transform.position = TileManager.instance.getWorldPosition(tile);
+            healthbar.gameObject.transform.position = transform.position + offset;
+        }
+    }
 
+    IEnumerator TranslateOverTime(Vector3 startingPosition, Vector3 targetPosition, float time)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            transform.position = Vector3.Lerp(startingPosition, targetPosition, (elapsedTime / time));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
         healthbar.gameObject.transform.position = transform.position + offset;
+        displayArrow();
     }
 
     [PunRPC]
