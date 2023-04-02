@@ -313,19 +313,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         healthbar.gameObject.SetActive(status);
     }
 
-    public virtual void checkDeath()
+    public void checkDeath()
     {
         if (health <= 0)
         {
-            tile.unit = null;
-
             PV.RPC(nameof(destroy), RpcTarget.All);
         }
     }
 
     [PunRPC]
-    private void destroy()
+    public void destroy()
     {
+        tile.unit = null;
         Destroy(arrow);
         Destroy(healthbar.gameObject);
         Destroy(this.gameObject);
@@ -368,7 +367,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         PlayerController.instance.allTroops.Remove(this);
 
-        PV.RPC(nameof(kill), RpcTarget.All);
+        kill();
 
         PlayerController.instance.mode = "select";
     }
@@ -395,7 +394,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
     }
 
-    [PunRPC]
     public void kill()
     {
         health = 0;

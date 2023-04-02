@@ -646,13 +646,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //kill all troops
         foreach (Troop troop in allTroops)
         {
-            troop.PV.RPC(nameof(troop.kill), RpcTarget.All);
+            troop.kill();
         }
 
         //destroy all buildings
         foreach (Building building in allBuildings)
         {
-            building.PV.RPC(nameof(building.kill), RpcTarget.All);
+            building.kill();
         }
 
         //clear spawnList

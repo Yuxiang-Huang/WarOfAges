@@ -143,8 +143,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     {
         if (health <= 0)
         {
-            tile.unit = null;
-
             foreach (Tile neighbor in tile.neighbors)
             {
                 neighbor.updateCanSpawn();
@@ -155,12 +153,12 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     }
 
     [PunRPC]
-    private void destroy()
+    public void destroy()
     {
+        tile.unit = null;
         Destroy(healthbar.gameObject);
         Destroy(this.gameObject);
     }
-
 
     public void sell()
     {
@@ -174,7 +172,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
             PlayerController.instance.end();
         }
 
-        PV.RPC(nameof(kill), RpcTarget.All);
+        kill();
     }
 
     [PunRPC]
@@ -199,7 +197,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
     }
 
-    [PunRPC]
     public void kill()
     {
         health = 0;

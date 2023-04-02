@@ -3,9 +3,9 @@ using UnityEngine;
 public class Config
 {
     //test modes
-    public static bool offlineMode = true;
-    public static bool sameSpawnPlaceTestMode = false;
-    public static bool moreMoneyTextMode = false;
+    public static bool offlineMode = false;
+    public static bool sameSpawnPlaceTestMode = true;
+    public static bool moreMoneyTextMode = true;
 
     //time factors
     public static float troopMovementTime = 0.5f;
