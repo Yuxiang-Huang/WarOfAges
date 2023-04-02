@@ -878,7 +878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
-      value: 100
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[0]
@@ -1018,15 +1018,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Building: Generate gold equal to 1/10 of its cost each turn.'
+      value: 'Building: Generate gold equal to 1/8 of its cost each turn.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -1217,18 +1217,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.399994
       objectReference: {fileID: 0}
+    - target: {fileID: 1981828075137195030, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "After one turn, reveal all tiles within three tiles radius. 3\xD7 damage
-        on tile. 2\xD7 damage one tile away. 1\xD7 damage two tiles away."
+      value: "Spell: After one turn, reveal all tiles within three tiles radius.
+        3\xD7 damage on tile. 2\xD7 damage one tile away. 1\xD7 damage two tiles
+        away."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 16
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 16
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -1868,11 +1873,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -3512,17 +3517,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.399994
       objectReference: {fileID: 0}
+    - target: {fileID: 1981828075137195030, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: He knows how to swim (Can tread on water tiles). Same stats as melee.
+      value: 'Troop: He knows how to swim (Can tread on water tiles). Same stats
+        as melee.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 20
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 20
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -4325,15 +4335,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: Can attack within two tiles radius.
+      value: Troop; Can attack within two tiles radius. Half the health as melee.
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -5937,17 +5947,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.399994
       objectReference: {fileID: 0}
+    - target: {fileID: 1981828075137195030, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Attack all enemy units within one tile radius. 2\xD7 health as melee."
+      value: "Troop: Attack all enemy units within one tile radius. 2\xD7 health
+        as melee. Able to see two tiles away."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -7396,15 +7411,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Can move two tiles each turn. 2\xD7 damage."
+      value: "Troop: Can move two tiles each turn. 2\xD7 damage as melee."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 24
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -8266,6 +8281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeSpawn
       objectReference: {fileID: 0}
+    - target: {fileID: 195891942802153981, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 195891942802153982, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8370,17 +8389,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 2.399994
       objectReference: {fileID: 0}
+    - target: {fileID: 1981828075137195030, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: Most basic unit that attack one enemy unit within one tile radius.
+      value: 'Troop: Most basic unit that attack one enemy unit within one tile radius.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 22
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_HorizontalAlignment

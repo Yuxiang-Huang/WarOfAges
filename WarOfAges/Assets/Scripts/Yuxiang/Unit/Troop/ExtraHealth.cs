@@ -39,19 +39,6 @@ public class ExtraHealth : Troop
                 }
             }
         }
-
-        //attack all enemies two tiles around whose health is more than 0
-        foreach (Tile curTile in tile.neighbors2)
-        {
-            //if can see this tile and there is enemy unit on it
-            if (!curTile.dark.activeSelf && curTile.unit != null && curTile.unit.ownerID != ownerID)
-            {
-                if (curTile.unit.health > 0)
-                {
-                    curTile.unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage);
-                }
-            }
-        }
     }
 
     public override void move()
