@@ -148,7 +148,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                     (curTile.terrain == "land" ||
                     (curTile.terrain == "water" &&
                     (ship != null ||
-                    curTile.unit != null && curTile.unit.gameObject.GetComponent<Ship>() != null && curTile.unit.ownerID == ownerID))))
+                    curTile.unit != null && curTile.unit.ownerID == ownerID))))
                 {
                     //no team building
                     if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
@@ -223,6 +223,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             {
                 //leave space
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
+                tile.unit = ship;
 
                 path[0].unit.gameObject.GetComponent<Troop>().move();
 
@@ -237,6 +238,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 {
                     //reverse leave space
                     PV.RPC(nameof(updateTileUnit), RpcTarget.All);
+                    tile.unit = this;
                 }
             }
         }
@@ -269,7 +271,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //leave water
         if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
-            tile.unit = ship;
+            //edge case when exchange tile
+            if (tile.unit == null)
+                tile.unit = ship;
             ship.tile = tile;
             ship = null;
         }
@@ -283,7 +287,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         //update tile
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
-
         tile.updateStatus(ownerID, this);
 
         //also try to conquer all water tiles around if moved to land tile
