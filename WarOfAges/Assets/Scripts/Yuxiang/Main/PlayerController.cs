@@ -386,19 +386,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 return false;
             }
         }
-        //if tile is not null and no unit is here and the tile is still my territory
+        //Common condition for troop and building:
+        //if tile is not null and the tile is still my territory
         //and no units is going to be spawn here
-        else if (curTile != null && curTile.unit == null
-            && territory.Contains(curTile) && !spawnList.ContainsKey(curTile.pos))
+        else if (curTile != null && territory.Contains(curTile) && !spawnList.ContainsKey(curTile.pos))
         {
             //for troops
             if (spawnUnit.CompareTag("Troop"))
             {
-                //can only spawn on spawnable tiles and it had to be a land tile or a ship on water
+                //can only spawn on spawnable tiles and it had to be a land tile with no unit
+                //or on a ship
+                //or a ship on water
                 if (spawnable[curTile.pos.x, curTile.pos.y] &&
                     (
                     (spawnUnit.GetComponent<Ship>() == null &&
-                    curTile.terrain == "land")
+                    curTile.terrain == "land"
+                    && curTile.unit == null)
+                    ||
+                    (curTile.unit != null && curTile.unit.gameObject.GetComponent<Ship>() != null)
                     ||
                     (spawnUnit.GetComponent<Ship>() != null
                     && curTile.terrain == "water")))
@@ -410,8 +415,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     return false;
                 }
             }
-            //for buildings
-            else if (spawnUnit.CompareTag("Building") && curTile.terrain == "land")
+            //for buildings only need to be a land tile and no unit there
+            else if (spawnUnit.CompareTag("Building") && curTile.terrain == "land" && curTile.unit == null)
             {
                 return true;
             }
@@ -484,17 +489,26 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             if (newUnit.CompareTag("Troop"))
             {
-                newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
-                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
-                    info.unitName, info.age, info.sellGold);
-
                 allTroops.Add(newUnit.GetComponent<Troop>());
 
+                //a ship is spawned
                 if (newUnit.GetComponent<Ship>() != null)
                 {
                     allShips.Add(newUnit.GetComponent<Ship>());
                 }
+                else
+                {
+                    //spawned on a ship
+                    if (info.spawnTile.terrain == "water")
+                    {
+                        newUnit.GetComponent<Troop>().ship = info.spawnTile.unit.gameObject.GetComponent<Ship>();
+                    }
+                }
+
+                newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
+                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
+                    spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
+                    info.unitName, info.age, info.sellGold);
             }
             else if (newUnit.CompareTag("Building"))
             {

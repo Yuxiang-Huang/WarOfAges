@@ -41,7 +41,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [SerializeField] int numOfTilesMoved;
     [SerializeField] int speed;
 
-    [SerializeField] Ship ship;
+    public Ship ship;
 
     private void Awake()
     {
