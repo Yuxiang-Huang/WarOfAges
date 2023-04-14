@@ -131,8 +131,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             foreach (Tile curTile in lastTile.neighbors)
             {
-                //not visited and land tile 
-                if (!visited[curTile.pos.x, curTile.pos.y] && curTile.terrain == "land")
+                //not visited and land tile or water tile with ship on it
+                if (!visited[curTile.pos.x, curTile.pos.y] && (curTile.terrain == "land" ||
+                    (curTile.terrain == "water" && curTile.unit != null && curTile.unit.ownerID == ownerID)))
                 {
                     //no team building
                     if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
@@ -193,8 +194,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //update direction
             direction = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
 
-            //move to next tile on list if no unit is there
-            if (path[0].unit == null)
+            Debug.Log(path[0].unit == null || (path[0].terrain == "water" && path[0].unit.ownerID == ownerID));
+
+            //move to next tile on list if no unit is there or team ship on water tile
+            if (path[0].unit == null || (path[0].terrain == "water" && path[0].unit.ownerID == ownerID))
             {
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
                 PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
@@ -236,13 +239,17 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //show arrow if there is a tile to go
         if (path.Count != 0)
         {
-            arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
+            //edge case when ship moved
+            if (path[0].terrain == "land" || (path[0].terrain == "water" && path[0].unit != null && path[0].unit.ownerID == ownerID))
+            {
+                arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-            Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+                Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
 
-            float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
+                float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
 
-            arrow.transform.Rotate(Vector3.forward, angle * 180 / Mathf.PI);
+                arrow.transform.Rotate(Vector3.forward, angle * 180 / Mathf.PI);
+            }
         }
     }
 

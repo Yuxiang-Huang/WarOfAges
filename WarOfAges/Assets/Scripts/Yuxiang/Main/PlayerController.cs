@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [Header("Belongings")]
     public List<Troop> allTroops = new List<Troop>();
+    public List<Ship> allShips = new List<Ship>();
     public List<Building> allBuildings = new List<Building>();
     public List<Spell> allSpells = new List<Spell>();
 
@@ -477,6 +478,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     info.unitName, info.age, info.sellGold);
 
                 allTroops.Add(newUnit.GetComponent<Troop>());
+
+                if (newUnit.GetComponent<Ship>() != null)
+                {
+                    allShips.Add(newUnit.GetComponent<Ship>());
+                }
             }
             else if (newUnit.CompareTag("Building"))
             {
@@ -527,7 +533,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         foreach (Troop troop in allTroops)
         {
-            troop.move();
+            //ship moves after troop
+            if (troop.GetComponent<Ship>() == null)
+                troop.move();
+        }
+
+        foreach (Ship ship in allShips)
+        {
+            ship.move();
         }
 
         if (PhotonNetwork.OfflineMode)
