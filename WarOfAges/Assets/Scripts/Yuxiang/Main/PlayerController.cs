@@ -587,10 +587,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void checkDeath()
     {
-        //troops
+        //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
             troop.checkDeath();
+            troop.resetMovement();
         }
 
         for (int i = allTroops.Count - 1; i >= 0; i--)

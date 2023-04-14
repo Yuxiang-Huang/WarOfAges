@@ -178,12 +178,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (PlayerController.instance.lost) return;
 
         PlayerController.instance.turnEnded = false;
-
-        //reset movement;
-        foreach (Troop troop in PlayerController.instance.allTroops)
-        {
-            troop.resetMovement();
-        }
     }
 
     [PunRPC]

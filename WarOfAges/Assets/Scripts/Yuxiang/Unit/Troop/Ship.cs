@@ -9,6 +9,8 @@ public class Ship : Troop
 {
     public override void findPath(Tile target)
     {
+        if (lastTarget == target) return; //same path
+
         //same tile reset
         if (target == tile)
         {
@@ -16,8 +18,13 @@ public class Ship : Troop
 
             Destroy(arrow);
 
+            lastTarget = null;
+
             return;
         }
+
+        //otherwise find new path
+        lastTarget = target;
 
         float minDist = dist(target, tile);
 

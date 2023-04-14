@@ -34,6 +34,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     [Header("Movement")]
     public Tile tile;
+    protected Tile lastTarget;
     protected List<Tile> path = new List<Tile>();
     protected GameObject arrow;
 
@@ -100,6 +101,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void findPath(Tile target)
     {
+        if (lastTarget == target) return; //same path
+
         //same tile reset
         if (target == tile)
         {
@@ -107,8 +110,13 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             Destroy(arrow);
 
+            lastTarget = null;
+
             return;
         }
+
+        //otherwise find new path
+        lastTarget = target;
 
         float minDist = dist(target, tile);
 
@@ -262,6 +270,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
             tile.unit = ship;
+            ship.tile = tile;
             ship = null;
         }
 
@@ -344,6 +353,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public void resetMovement()
     {
         numOfTilesMoved = 0;
+        lastTarget = null;
+        //reset path if not movable
+        if (path.Count > 0 && !canMoveToTile(path[0]))
+        {
+            path = new List<Tile>();
+        }
     }
 
     public virtual bool canMoveToTile(Tile cur)
