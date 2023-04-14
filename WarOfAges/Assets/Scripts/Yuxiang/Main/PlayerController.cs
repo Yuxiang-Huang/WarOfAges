@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int[,] extraViewTiles;
 
     [Header("Spawn")]
-    public bool[,] canSpawn;
+    public bool[,] spawnable;
     public Vector2[,] spawnDirection;
     public string toSpawnPath;
     public GameObject toSpawnImage;
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             TileManager.instance.makeGrid();
         }
 
-        if (Config.moreMoneyTextMode)
+        if (Config.moreMoneyTestMode)
         {
             gold = 40000000;
         }
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 //initialize double arrays
                 extraViewTiles = new int[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
-                canSpawn = new bool[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
+                spawnable = new bool[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
                 spawnDirection = new Vector2[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
 
                 //spawn castle
@@ -316,52 +316,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 highlighted = newHighlighted;
 
-                if (toSpawnUnit.CompareTag("Spell"))
+                if (canSpawn(highlighted, toSpawnUnit))
                 {
-                    //only need to be visible and no unit spawn here for spells
-                    if (highlighted != null && !highlighted.dark.activeSelf
-                        && !spawnList.ContainsKey(highlighted.pos))
-                    {
-                        highlighted.highlight(true);
-                    }
-                    else
-                    {
-                        highlighted = null;
-                    }
-                }
-                //if tile is not null and no unit is here and the tile is still my territory
-                //and no units is going to be spawn here
-                else if (highlighted != null && highlighted.unit == null
-                    && territory.Contains(highlighted) && !spawnList.ContainsKey(highlighted.pos))
-                {
-                    //for troops
-                    if (toSpawnUnit.CompareTag("Troop"))
-                    {
-                        //can only spawn on spawnable tiles and it had to be a land tile or a ship on water
-                        if (canSpawn[highlighted.pos.x, highlighted.pos.y] &&
-                            (
-                            (toSpawnUnit.GetComponent<Ship>() == null &&
-                            highlighted.terrain == "land")
-                            ||
-                            (toSpawnUnit.GetComponent<Ship>() != null
-                            && highlighted.terrain == "water")))
-                        {
-                            highlighted.highlight(true);
-                        }
-                        else
-                        {
-                            highlighted = null;
-                        }
-                    }
-                    //for buildings
-                    else if (toSpawnUnit.CompareTag("Building") && highlighted.terrain == "land")
-                    {
-                        highlighted.highlight(true);
-                    }
-                    else
-                    {
-                        highlighted = null;
-                    }
+                    highlighted.highlight(true);
                 }
                 else
                 {
@@ -411,6 +368,61 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     UIManager.instance.hideInfoTab();
                 }
             }
+        }
+    }
+
+    public bool canSpawn(Tile curTile, GameObject spawnUnit)
+    {
+        if (spawnUnit.CompareTag("Spell"))
+        {
+            //only need to be visible and no unit spawn here for spells
+            if (curTile != null && !curTile.dark.activeSelf
+                && !spawnList.ContainsKey(curTile.pos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //if tile is not null and no unit is here and the tile is still my territory
+        //and no units is going to be spawn here
+        else if (curTile != null && curTile.unit == null
+            && territory.Contains(curTile) && !spawnList.ContainsKey(curTile.pos))
+        {
+            //for troops
+            if (spawnUnit.CompareTag("Troop"))
+            {
+                //can only spawn on spawnable tiles and it had to be a land tile or a ship on water
+                if (spawnable[curTile.pos.x, curTile.pos.y] &&
+                    (
+                    (spawnUnit.GetComponent<Ship>() == null &&
+                    curTile.terrain == "land")
+                    ||
+                    (spawnUnit.GetComponent<Ship>() != null
+                    && curTile.terrain == "water")))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            //for buildings
+            else if (spawnUnit.CompareTag("Building") && curTile.terrain == "land")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 

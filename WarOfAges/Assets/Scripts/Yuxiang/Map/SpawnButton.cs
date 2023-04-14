@@ -94,34 +94,12 @@ public class SpawnButton : MonoBehaviour
                     spawnImage, spawnUnit);
                 UIManager.instance.updateInfoTabSpawn(spawnUnit.GetComponent<IUnit>());
 
-                //gray tiles, condition same as in playerController spawn
-                if (spawnUnit.CompareTag("Building"))
+                //gray tiles
+                foreach (Tile curTile in PlayerController.instance.visibleTiles)
                 {
-                    foreach (Tile tile in PlayerController.instance.visibleTiles)
+                    if (!PlayerController.instance.canSpawn(curTile, spawnUnit))
                     {
-                        if (!(tile != null && tile.unit == null && PlayerController.instance.territory.Contains(tile)
-                            && !PlayerController.instance.spawnList.ContainsKey(tile.pos) && tile.terrain == "land"))
-                        {
-                            tile.setGray(true);
-                        }
-                    }
-                }
-                else if (spawnUnit.CompareTag("Troop"))
-                {
-                    foreach (Tile tile in PlayerController.instance.visibleTiles)
-                    {
-                        if (!(tile != null && tile.unit == null && PlayerController.instance.territory.Contains(tile)
-                            && !PlayerController.instance.spawnList.ContainsKey(tile.pos)
-                            && PlayerController.instance.canSpawn[tile.pos.x, tile.pos.y] &&
-                            (
-                            (spawnUnit.GetComponent<Ship>() == null &&
-                            tile.terrain == "land")
-                            ||
-                            (spawnUnit.GetComponent<Ship>() != null
-                            && tile.terrain == "water"))))
-                        {
-                            tile.setGray(true);
-                        }
+                        curTile.setGray(true);
                     }
                 }
             }

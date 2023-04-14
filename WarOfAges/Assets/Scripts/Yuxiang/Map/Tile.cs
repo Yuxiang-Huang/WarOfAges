@@ -187,7 +187,7 @@ public class Tile : MonoBehaviour
         }
 
         //can't be spawn anymore
-        PlayerController.instance.canSpawn[pos.x, pos.y] = false;
+        PlayerController.instance.spawnable[pos.x, pos.y] = false;
     }
 
     public void updateVisibility()

@@ -77,7 +77,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     {
         foreach (Tile neighbor in tile.neighbors)
         {
-            PlayerController.instance.canSpawn[neighbor.pos.x, neighbor.pos.y] = true;
+            PlayerController.instance.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
 
             PlayerController.instance.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
                 TileManager.instance.getWorldPosition(neighbor) - TileManager.instance.getWorldPosition(tile);
