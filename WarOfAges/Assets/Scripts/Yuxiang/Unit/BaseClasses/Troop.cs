@@ -41,6 +41,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [SerializeField] int numOfTilesMoved;
     [SerializeField] int speed;
 
+    [SerializeField] Ship ship;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -61,11 +63,14 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
         tile.updateStatus(ownerID, this);
 
-        //also conquer all water tiles around
-        foreach (Tile neighbor in tile.neighbors)
+        //also conquer all water tiles around if not ship
+        if (tile.terrain != "water")
         {
-            if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
-                neighbor.updateStatus(ownerID, null);
+            foreach (Tile neighbor in tile.neighbors)
+            {
+                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                    neighbor.updateStatus(ownerID, null);
+            }
         }
 
         //modify images
@@ -77,8 +82,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
 
         //modify health and damage according to age
-        fullHealth *= (int) Mathf.Pow(Config.ageUnitFactor, age);
-        damage *= (int) Mathf.Pow(Config.ageUnitFactor, age);
+        fullHealth *= (int)Mathf.Pow(Config.ageUnitFactor, age);
+        damage *= (int)Mathf.Pow(Config.ageUnitFactor, age);
 
         //health
         health = fullHealth;
@@ -137,14 +142,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             foreach (Tile curTile in lastTile.neighbors)
             {
-                //not visited and land tile or water tile with ship on it
-                if (!visited[curTile.pos.x, curTile.pos.y] && (curTile.terrain == "land" ||
-                    (curTile.terrain == "water" && curTile.unit != null && curTile.unit.ownerID == ownerID)))
+                //not visited and land tile or
+                //water tile on ship or with ship on it
+                if (!visited[curTile.pos.x, curTile.pos.y] &&
+                    (curTile.terrain == "land" ||
+                    (curTile.terrain == "water" &&
+                    (ship != null ||
+                    curTile.unit != null && curTile.unit.gameObject.GetComponent<Ship>() != null && curTile.unit.ownerID == ownerID))))
                 {
                     //no team building
                     if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
                         curTile.unit.ownerID != ownerID)
-                    { 
+                    {
                         visited[curTile.pos.x, curTile.pos.y] = true;
 
                         //check this tile dist
@@ -192,7 +201,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Destroy(arrow);
         }
 
-        numOfTilesMoved ++;
+        numOfTilesMoved++;
 
         //if has next tile to go
         if (path.Count != 0)
@@ -200,8 +209,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //update direction
             direction = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
 
-            //move to next tile on list if no unit is there or team ship on water tile
-            if (path[0].unit == null || (path[0].terrain == "water" && path[0].unit.ownerID == ownerID))
+            //if can move to tile
+            if (canMoveToTile(path[0]))
             {
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
                 PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
@@ -217,7 +226,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 path[0].unit.gameObject.GetComponent<Troop>().move();
 
                 //try to move again
-                if (path[0].unit == null)
+                if (canMoveToTile(path[0]))
                 {
                     PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
 
@@ -243,32 +252,49 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //show arrow if there is a tile to go
         if (path.Count != 0)
         {
-            //edge case when ship moved
-            if (path[0].terrain == "land" || (path[0].terrain == "water" && path[0].unit != null && path[0].unit.ownerID == ownerID))
-            {
-                arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-                Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+            arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-                float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
+            Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
 
-                arrow.transform.Rotate(Vector3.forward, angle * 180 / Mathf.PI);
-            }
+            float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
+
+            arrow.transform.Rotate(Vector3.forward, angle * 180 / Mathf.PI);
         }
     }
 
     [PunRPC]
     public virtual void moveUpdate_RPC(int nextTileX, int nextTileY)
     {
+        //leave water
+        if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
+        {
+            tile.unit = ship;
+            ship = null;
+        }
+
+        //leave land
+        else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
+        {
+            //onboard a ship
+            ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+            transform.position = ship.transform.position;
+        }
+
         //update tile
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
+
+
         tile.updateStatus(ownerID, this);
 
-        //also conquer all water tiles around
-        foreach (Tile neighbor in tile.neighbors)
+        //also conquer all water tiles around if moved to land tile
+        if (tile.terrain == "land")
         {
-            if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
-                neighbor.updateStatus(ownerID, null);
+            foreach (Tile neighbor in tile.neighbors)
+            {
+                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                    neighbor.updateStatus(ownerID, null);
+            }
         }
 
         //owner so animate movement
@@ -290,11 +316,25 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         while (elapsedTime < time)
         {
             transform.position = Vector3.Lerp(startingPosition, targetPosition, (elapsedTime / time));
+
+            //ship movement
+            if (ship != null)
+            {
+                ship.transform.position = transform.position;
+            }
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         transform.position = targetPosition;
         healthbar.gameObject.transform.position = transform.position + offset;
+
+        //ship movement
+        if (ship != null)
+        {
+            ship.healthbar.gameObject.transform.position = ship.transform.position + offset;
+        }
+
         displayArrow();
     }
 
@@ -313,6 +353,17 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public virtual void resetMovement()
     {
         numOfTilesMoved = 0;
+    }
+
+    bool canMoveToTile(Tile cur)
+    {
+        //if no unit there and land tile or
+        //water tile on ship or with ship on it
+
+        return (cur.unit == null && cur.terrain == "land" ||
+                    (cur.terrain == "water" &&
+                    (ship != null ||
+                    (cur.unit != null && cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID))));
     }
 
     #endregion
