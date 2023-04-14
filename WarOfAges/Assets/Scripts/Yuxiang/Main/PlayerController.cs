@@ -531,16 +531,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void troopMove()
     {
-        foreach (Troop troop in allTroops)
-        {
-            //ship moves after troop
-            if (troop.GetComponent<Ship>() == null)
-                troop.move();
-        }
-
+        //ships move first
         foreach (Ship ship in allShips)
         {
             ship.move();
+        }
+
+        foreach (Troop troop in allTroops)
+        {
+            troop.move();
         }
 
         if (PhotonNetwork.OfflineMode)

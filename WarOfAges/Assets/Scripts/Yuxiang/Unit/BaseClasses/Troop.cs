@@ -34,7 +34,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     [Header("Movement")]
     public Tile tile;
-    protected Tile lastTarget;
     protected List<Tile> path = new List<Tile>();
     protected GameObject arrow;
 
@@ -101,8 +100,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void findPath(Tile target)
     {
-        if (lastTarget == target) return; //same path
-
         //same tile reset
         if (target == tile)
         {
@@ -110,13 +107,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             Destroy(arrow);
 
-            lastTarget = null;
-
             return;
         }
-
-        //otherwise find new path
-        lastTarget = target;
 
         float minDist = dist(target, tile);
 
@@ -253,7 +245,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //show arrow if there is a tile to go
         if (path.Count != 0)
         {
-
             arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
             Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
@@ -284,7 +275,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         //update tile
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
-
 
         tile.updateStatus(ownerID, this);
 
