@@ -50,8 +50,8 @@ public class Ship : Troop
 
             foreach (Tile curTile in lastTile.neighbors)
             {
-                //not visited and land or water tile 
-                if (!visited[curTile.pos.x, curTile.pos.y] && (curTile.terrain == "land" || curTile.terrain == "water"))
+                //not visited and water tile 
+                if (!visited[curTile.pos.x, curTile.pos.y] && curTile.terrain == "water")
                 {
                     //no team building
                     if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
