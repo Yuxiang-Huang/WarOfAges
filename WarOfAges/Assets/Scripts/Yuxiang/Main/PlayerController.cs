@@ -540,7 +540,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //income from territory
         if (!lost)
         {
-            gold += landTerritory * (age + Config.ageIncomeOffset);
+            gold += landTerritory * Config.ageIncomeOffset;
         }
 
         UIManager.instance.updateGoldText();

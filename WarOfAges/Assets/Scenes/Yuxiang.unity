@@ -3427,8 +3427,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: He knows how to swim (Can tread on water tiles). Same stats
-        as melee.'
+      value: 'Troop: Travel on water. Able to carry a troop. Same health as melee.
+        Doesn''t attack.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
