@@ -50,17 +50,23 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public virtual void Init(int playerID, int startingtTileX, int startingtTileY, Vector2 startDirection,
         string path, int age, int sellGold)
     {
-        //setting tile, ID, direction, age, gold
+        //setting ID, direction, age, gold
         ownerID = playerID;
-
-        tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
-        tile.updateStatus(ownerID, this);
-
         direction = startDirection;
-
         this.age = age;
         this.sellGold = sellGold;
         this.upgradeGold = sellGold * 2;
+
+        //update tile
+        tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
+        tile.updateStatus(ownerID, this);
+
+        //also conquer all water tiles around
+        foreach (Tile neighbor in tile.neighbors)
+        {
+            if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                neighbor.updateStatus(ownerID, null);
+        }
 
         //modify images
         foreach (GameObject cur in unitImages)
@@ -257,6 +263,13 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //update tile
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
         tile.updateStatus(ownerID, this);
+
+        //also conquer all water tiles around
+        foreach (Tile neighbor in tile.neighbors)
+        {
+            if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                neighbor.updateStatus(ownerID, null);
+        }
 
         //owner so animate movement
         if (ownerID == PlayerController.instance.id)

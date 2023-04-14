@@ -7,6 +7,8 @@ using System.Linq;
 
 public class Ship : Troop
 {
+    public Troop unit;
+
     public override void findPath(Tile target)
     {
         if (lastTarget == target) return; //same path
