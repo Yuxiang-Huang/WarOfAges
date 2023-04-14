@@ -659,8 +659,10 @@ MonoBehaviour:
   damage: 0
   direction: {x: 0, y: 0}
   tile: {fileID: 0}
+  path: []
   numOfTilesMoved: 0
   speed: 1
+  ship: {fileID: 0}
 --- !u!1 &7608667942778190037
 GameObject:
   m_ObjectHideFlags: 0

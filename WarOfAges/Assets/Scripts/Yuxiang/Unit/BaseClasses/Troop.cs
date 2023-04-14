@@ -35,7 +35,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [Header("Movement")]
     public Tile tile;
     protected Tile lastTarget;
-    protected List<Tile> path = new List<Tile>();
+    public List<Tile> path = new List<Tile>();
     protected GameObject arrow;
 
     [SerializeField] int numOfTilesMoved;
