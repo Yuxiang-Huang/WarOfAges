@@ -336,10 +336,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //for troops
                     if (toSpawnUnit.CompareTag("Troop"))
                     {
-                        //can only spawn on spawnable tiles and it had to be land or troop can be on water
+                        //can only spawn on spawnable tiles and it had to be a land tile or a ship on water
                         if (canSpawn[highlighted.pos.x, highlighted.pos.y] &&
-                            (highlighted.terrain == "land" ||
-                            toSpawnUnit.GetComponent<Amphibian>() != null))
+                            (
+                            (toSpawnUnit.GetComponent<Ship>() == null &&
+                            highlighted.terrain == "land")
+                            ||
+                            (toSpawnUnit.GetComponent<Ship>() != null
+                            && highlighted.terrain == "water")))
                         {
                             highlighted.highlight(true);
                         }

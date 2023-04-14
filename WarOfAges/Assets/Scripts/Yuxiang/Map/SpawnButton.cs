@@ -113,8 +113,11 @@ public class SpawnButton : MonoBehaviour
                         if (!(tile != null && tile.unit == null && PlayerController.instance.territory.Contains(tile)
                             && !PlayerController.instance.spawnList.ContainsKey(tile.pos)
                             && PlayerController.instance.canSpawn[tile.pos.x, tile.pos.y] &&
-                                (tile.terrain == "land" ||
-                                spawnUnit.GetComponent<Amphibian>() != null)))
+                            (spawnUnit.GetComponent<Ship>() == null &&
+                            tile.terrain == "land")
+                            ||
+                            (spawnUnit.GetComponent<Ship>() != null
+                            && tile.terrain == "water")))
                         {
                             tile.setGray(true);
                         }

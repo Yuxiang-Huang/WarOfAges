@@ -3363,7 +3363,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: da0b6c1b5181e4d138cd718df7ab0e13, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: path
-      value: Troop/Amphibian
+      value: Troop/Ship
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unit
@@ -3383,35 +3383,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
+      propertyPath: unitImages.Array.size
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+      objectReference: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
     - target: {fileID: 195891942802153981, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_Name
-      value: AmphibianSpawn
+      value: ShipSpawn
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153982, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_Pivot.x

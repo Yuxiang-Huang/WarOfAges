@@ -239,7 +239,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -407,7 +407,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -565,7 +565,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 5966900516699917267}
   - component: {fileID: 4316284018435778642}
   m_Layer: 0
-  m_Name: Amphibian
+  m_Name: Ship
   m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
   - {fileID: 9211451602756521185}
   healthbar: {fileID: 4538640292735501709}
   fullHealth: 2
-  damage: 1
+  damage: 0
   direction: {x: 0, y: 0}
   tile: {fileID: 0}
   numOfTilesMoved: 0
@@ -734,7 +734,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -894,7 +894,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 92f5abbe48a16429dbdd86351787a2ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e476030639c8b45f0b469c24428ff28a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
