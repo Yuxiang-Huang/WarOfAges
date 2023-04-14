@@ -18,7 +18,7 @@ public class Speed : Troop
             {
                 //attack order depending on dot product
                 targets.TryAdd(Vector2.Dot(direction,
-                    TileManager.instance.getWorldPosition(curTile) - TileManager.instance.getWorldPosition(tile)),
+                    curTile.transform.position - tile.transform.position),
                     curTile);
             }
         }
@@ -56,7 +56,7 @@ public class Speed : Troop
 
             arrow.transform.localScale = new Vector3(2.5f, 1, 1);
 
-            Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[1]) - TileManager.instance.getWorldPosition(tile);
+            Vector2 arrowDirection = path[1].transform.position - tile.transform.position;
 
             float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
 
@@ -67,7 +67,7 @@ public class Speed : Troop
         {
             arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-            Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+            Vector2 arrowDirection = path[0].transform.position - tile.transform.position;
 
             float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
 

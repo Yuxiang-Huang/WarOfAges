@@ -80,7 +80,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
             PlayerController.instance.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
 
             PlayerController.instance.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
-                TileManager.instance.getWorldPosition(neighbor) - TileManager.instance.getWorldPosition(tile);
+                neighbor.transform.position - tile.transform.position;
         }
     }
 
@@ -204,12 +204,4 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     }
 
     #endregion
-
-    //find distance between two tiles
-    public float dist(Tile t1, Tile t2)
-    {
-        Vector2 p1 = TileManager.instance.getWorldPosition(t1);
-        Vector2 p2 = TileManager.instance.getWorldPosition(t2);
-        return Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-    }
 }

@@ -476,11 +476,11 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         Tile bestTile = oneTile;
 
-        float minDist = dist(pos, getWorldPosition(oneTile));
+        float minDist = dist(pos, oneTile.transform.position);
 
         foreach (Tile neighbor in oneTile.neighbors)
         {
-            float mayDist = dist(pos, getWorldPosition(neighbor));
+            float mayDist = dist(pos, neighbor.transform.position);
             if (mayDist < minDist)
             {
                 minDist = mayDist;
@@ -489,7 +489,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         }
         foreach (Tile neighbor in oneTile.neighbors2)
         {
-            float mayDist = dist(pos, getWorldPosition(neighbor));
+            float mayDist = dist(pos, neighbor.transform.position);
             if (mayDist < minDist)
             {
                 minDist = mayDist;
@@ -499,15 +499,23 @@ public class TileManager : MonoBehaviourPunCallbacks
         return bestTile;
     }
 
-    //get world position from row col
-    public Vector2 getWorldPosition(Tile tile)
-    {
-        return new Vector2(tile.pos.x * 0.5f, tile.pos.y * Mathf.Sqrt(3f) + (tile.pos.x % 2 * Mathf.Sqrt(3f) / 2));
-    }
+    ////get world position from row col
+    //public Vector2 getWorldPosition(Tile tile)
+    //{
+    //    return new Vector2(tile.pos.x * 0.5f, tile.pos.y * Mathf.Sqrt(3f) + (tile.pos.x % 2 * Mathf.Sqrt(3f) / 2));
+    //}
 
     //find distance between two vector2
-    float dist(Vector2 v1, Vector2 v2)
+    public float dist(Vector2 v1, Vector2 v2)
     {
         return Mathf.Sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
+    }
+
+    //find distance between two tiles
+    public float dist(Tile t1, Tile t2)
+    {
+        Vector2 p1 = t1.transform.position;
+        Vector2 p2 = t2.transform.position;
+        return Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
     }
 }

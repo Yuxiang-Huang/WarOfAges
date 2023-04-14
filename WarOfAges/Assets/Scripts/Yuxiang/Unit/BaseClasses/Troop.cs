@@ -118,7 +118,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //otherwise find new path
         lastTarget = target;
 
-        float minDist = dist(target, tile);
+        float minDist = TileManager.instance.dist(target, tile);
 
         //initiated a queue
         Queue<List<Tile>> allPath = new Queue<List<Tile>>();
@@ -160,7 +160,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                         List<Tile> dup = new List<Tile>(cur);
                         dup.Add(curTile);
 
-                        float curDist = dist(target, curTile);
+                        float curDist = TileManager.instance.dist(target, curTile);
 
                         if (curDist < 0.01)
                         {
@@ -207,7 +207,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         if (path.Count != 0)
         {
             //update direction
-            direction = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+            direction = path[0].transform.position - tile.transform.position;
 
             //if can move to tile
             if (canMoveToTile(path[0]))
@@ -255,7 +255,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         {
             arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-            Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+            Vector2 arrowDirection = path[0].transform.position - tile.transform.position;
 
             float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
 
@@ -277,9 +277,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //leave land
         else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
         {
-            //onboard a ship
+            //board a ship
             ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
-            transform.position = ship.transform.position;
         }
 
         //update tile
@@ -300,12 +299,16 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //owner so animate movement
         if (ownerID == PlayerController.instance.id)
         {
-            StartCoroutine(TranslateOverTime(transform.position, TileManager.instance.getWorldPosition(tile), Config.troopMovementTime));
+            StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
+            if (ship != null)
+            {
+                ship.StartCoroutine(ship.TranslateOverTime(ship.transform.position, tile.transform.position, Config.troopMovementTime));
+            }
         }
         else
         {
             //update position
-            transform.position = TileManager.instance.getWorldPosition(tile);
+            transform.position = tile.transform.position;
             healthbar.gameObject.transform.position = transform.position + offset;
             if (ship != null)
             {
@@ -321,24 +324,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         while (elapsedTime < time)
         {
             transform.position = Vector3.Lerp(startingPosition, targetPosition, (elapsedTime / time));
-
-            //ship movement
-            if (ship != null)
-            {
-                ship.transform.position = transform.position;
-            }
-
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         transform.position = targetPosition;
         healthbar.gameObject.transform.position = transform.position + offset;
-
-        //ship movement
-        if (ship != null)
-        {
-            ship.healthbar.gameObject.transform.position = ship.transform.position + offset;
-        }
 
         displayArrow();
     }
@@ -504,12 +494,4 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     }
 
     #endregion
-
-    //find distance between two tiles
-    public float dist(Tile t1, Tile t2)
-    {
-        Vector2 p1 = TileManager.instance.getWorldPosition(t1);
-        Vector2 p2 = TileManager.instance.getWorldPosition(t2);
-        return Mathf.Sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
-    }
 }

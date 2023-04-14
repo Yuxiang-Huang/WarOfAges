@@ -26,7 +26,7 @@ public class Ship : Troop
         //otherwise find new path
         lastTarget = target;
 
-        float minDist = dist(target, tile);
+        float minDist = TileManager.instance.dist(target, tile);
 
         //initiated a queue
         Queue<List<Tile>> allPath = new Queue<List<Tile>>();
@@ -63,7 +63,7 @@ public class Ship : Troop
                         List<Tile> dup = new List<Tile>(cur);
                         dup.Add(curTile);
 
-                        float curDist = dist(target, curTile);
+                        float curDist = TileManager.instance.dist(target, curTile);
 
                         if (curDist < 0.01)
                         {
@@ -99,7 +99,7 @@ public class Ship : Troop
 
                 arrow = Instantiate(UIManager.instance.arrowPrefab, transform.position, Quaternion.identity);
 
-                Vector2 arrowDirection = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
+                Vector2 arrowDirection = path[0].transform.position - tile.transform.position;
 
                 float angle = Mathf.Atan2(arrowDirection.y, arrowDirection.x);
 

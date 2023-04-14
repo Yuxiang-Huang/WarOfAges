@@ -38,7 +38,7 @@ public class ExtraView : Building
             if (!curTile.dark.activeSelf && curTile.unit != null && curTile.unit.ownerID != ownerID)
             {
                 //attack order depending on distance to mainbase
-                targets.TryAdd(dist(tile, curTile), curTile);
+                targets.TryAdd(TileManager.instance.dist(tile, curTile), curTile);
             }
         }
 
@@ -48,7 +48,7 @@ public class ExtraView : Building
             if (!curTile.dark.activeSelf && curTile.unit != null && curTile.unit.ownerID != ownerID)
             {
                 //attack order depending on distance to mainbase
-                targets.TryAdd(dist(tile, curTile), curTile);
+                targets.TryAdd(TileManager.instance.dist(tile, curTile), curTile);
             }
         }
 

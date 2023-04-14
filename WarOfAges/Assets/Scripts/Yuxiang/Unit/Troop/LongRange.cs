@@ -18,7 +18,7 @@ public class LongRange : Troop
             {
                 //attack order depending on dot product
                 targets.TryAdd(Vector2.Dot(direction,
-                    TileManager.instance.getWorldPosition(curTile) - TileManager.instance.getWorldPosition(tile)),
+                    curTile.transform.position - tile.transform.position),
                     curTile);
             }
         }
@@ -47,7 +47,7 @@ public class LongRange : Troop
             {
                 //attack order depending on dot product
                 targets.TryAdd(Vector2.Dot(direction,
-                    TileManager.instance.getWorldPosition(curTile) - TileManager.instance.getWorldPosition(tile)),
+                    curTile.transform.position - tile.transform.position),
                     curTile);
             }
         }

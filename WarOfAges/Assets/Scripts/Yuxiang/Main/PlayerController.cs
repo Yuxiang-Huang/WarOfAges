@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 Vector2Int startingTile = highlighted.pos;
 
                 mainBase = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Building/MainBase"),
-                    TileManager.instance.getWorldPosition(highlighted), Quaternion.identity).
+                    highlighted.transform.position, Quaternion.identity).
                     GetComponent<MainBase>();
 
                 mainBase.gameObject.GetPhotonView().RPC("Init", RpcTarget.All, id, startingTile.x, startingTile.y,
