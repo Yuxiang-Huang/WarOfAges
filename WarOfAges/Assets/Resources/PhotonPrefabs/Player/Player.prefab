@@ -79,6 +79,7 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   mode: 
   allTroops: []
+  allShips: []
   allBuildings: []
   allSpells: []
   landTerritory: 0

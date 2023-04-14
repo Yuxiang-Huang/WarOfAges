@@ -194,8 +194,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //update direction
             direction = TileManager.instance.getWorldPosition(path[0]) - TileManager.instance.getWorldPosition(tile);
 
-            Debug.Log(path[0].unit == null || (path[0].terrain == "water" && path[0].unit.ownerID == ownerID));
-
             //move to next tile on list if no unit is there or team ship on water tile
             if (path[0].unit == null || (path[0].terrain == "water" && path[0].unit.ownerID == ownerID))
             {
