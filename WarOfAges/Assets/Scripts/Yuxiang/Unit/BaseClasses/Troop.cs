@@ -218,7 +218,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 path.RemoveAt(0);
             }
             //ask it to move first
-            else if (path[0].unit.gameObject.CompareTag("Troop"))
+            //edge case when ship moved away
+            else if (path[0].unit != null && path[0].unit.gameObject.CompareTag("Troop"))
             {
                 //leave space
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
@@ -350,20 +351,35 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile.unit = null;
     }
 
-    public virtual void resetMovement()
+    public void resetMovement()
     {
         numOfTilesMoved = 0;
     }
 
     public virtual bool canMoveToTile(Tile cur)
     {
-        //if no unit there and land tile or
-        //water tile is a ship or on ship or with ship on it
-        return (cur.unit == null && cur.terrain == "land" ||
-                    (cur.terrain == "water" &&
+        //good if no unit there and land tile
+        if (cur.unit == null && cur.terrain == "land")
+        {
+            return true;
+        }
+
+        //if on a ship
+        if (ship != null)
+        {
+            //good if no unit
+            return cur.unit == null;
+        }
+        else
+        {
+            //last possible good case:
+            //if water tile and
+            //is a ship or on ship or with ship on it
+            return (cur.terrain == "water" &&
                     (GetComponent<Ship>() != null ||
                     ship != null ||
-                    (cur.unit != null && cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID))));
+                    (cur.unit != null && cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID)));
+        }
     }
 
     #endregion
