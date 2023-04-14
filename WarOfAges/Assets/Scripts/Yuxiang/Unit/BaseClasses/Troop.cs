@@ -63,12 +63,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
         tile.updateStatus(ownerID, this);
 
-        //also conquer all water tiles around if not ship
-        if (tile.terrain != "water")
+        //also try to conquer all water tiles around if moved to land tile
+        if (tile.terrain == "land")
         {
             foreach (Tile neighbor in tile.neighbors)
             {
-                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID && neighbor.unit == null)
                     neighbor.updateStatus(ownerID, null);
             }
         }
@@ -287,12 +287,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         tile.updateStatus(ownerID, this);
 
-        //also conquer all water tiles around if moved to land tile
+        //also try to conquer all water tiles around if moved to land tile
         if (tile.terrain == "land")
         {
             foreach (Tile neighbor in tile.neighbors)
             {
-                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID)
+                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID && neighbor.unit == null)
                     neighbor.updateStatus(ownerID, null);
             }
         }
@@ -307,6 +307,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //update position
             transform.position = TileManager.instance.getWorldPosition(tile);
             healthbar.gameObject.transform.position = transform.position + offset;
+            if (ship != null)
+            {
+                ship.transform.position = transform.position;
+                ship.healthbar.gameObject.transform.position = ship.transform.position + offset;
+            }
         }
     }
 
@@ -414,7 +419,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [PunRPC]
     public void destroy()
     {
-        tile.unit = null;
+        if (ship != null)
+        {
+            tile.unit = ship;
+            ship.tile = tile;
+        }
+        else
+        {
+            tile.unit = null;
+        }
         Destroy(arrow);
         Destroy(healthbar.gameObject);
         Destroy(this.gameObject);
