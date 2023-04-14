@@ -107,4 +107,10 @@ public class Ship : Troop
             }
         }
     }
+
+    public override bool canMoveToTile(Tile cur)
+    {
+        //if no unit there 
+        return cur.unit == null;
+    }
 }

@@ -355,14 +355,14 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         numOfTilesMoved = 0;
     }
 
-    bool canMoveToTile(Tile cur)
+    public virtual bool canMoveToTile(Tile cur)
     {
         //if no unit there and land tile or
-        //water tile on ship or with ship on it
-
+        //water tile is a ship or on ship or with ship on it
         return (cur.unit == null && cur.terrain == "land" ||
                     (cur.terrain == "water" &&
-                    (ship != null ||
+                    (GetComponent<Ship>() != null ||
+                    ship != null ||
                     (cur.unit != null && cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID))));
     }
 
