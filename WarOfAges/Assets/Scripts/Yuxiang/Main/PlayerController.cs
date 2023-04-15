@@ -509,8 +509,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         Ship curShip = info.spawnTile.unit.gameObject.GetComponent<Ship>();
                         newUnit.GetComponent<Troop>().ship = curShip;
-                        newUnit.GetComponent<Troop>().path = curShip.path;
-                        curShip.path = new List<Tile>();
+                        //reset path
+                        curShip.findPath(curShip.tile);
                     }
                 }
 
@@ -753,6 +753,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //last update in player info tab
         UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
             UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
+
+        //ask all player to recalculate income
+        UIManager.instance.PV.RPC(nameof(UIManager.instance.setIncomeText), RpcTarget.All);
     }
 
     [PunRPC]

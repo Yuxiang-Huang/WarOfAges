@@ -94,6 +94,7 @@ MonoBehaviour:
   - fillInfo
   - initilize
   - destroy
+  - setIncomeText
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -168,7 +168,7 @@ public class UIManager : MonoBehaviour
         turnNum++;
         turnNumText.text = "Turn: " + turnNum;
 
-        incomeText.text = "+" + PlayerController.instance.calculateIncome();
+        setIncomeText();
 
         //don't do if lost
         if (!PlayerController.instance.lost)
@@ -342,6 +342,12 @@ public class UIManager : MonoBehaviour
             updateGoldText();
             PlayerController.instance.unitSelected.PV.RPC("upgrade", RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    public void setIncomeText()
+    {
+        incomeText.text = "+" + PlayerController.instance.calculateIncome();
     }
 
     #endregion
