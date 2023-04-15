@@ -363,6 +363,7 @@ MonoBehaviour:
   fullHealth: 2
   damage: 1
   direction: {x: 0, y: 0}
+  healFactor: 1
   tile: {fileID: 0}
   numOfTilesMoved: 0
   speed: 1

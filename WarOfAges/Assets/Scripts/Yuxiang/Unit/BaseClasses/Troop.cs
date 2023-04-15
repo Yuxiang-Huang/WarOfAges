@@ -32,6 +32,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public Vector2 direction;
     protected Vector3 offset = new Vector3(0, 0.5f, 0);
 
+    [SerializeField] int healFactor; 
+
     [Header("Movement")]
     public Tile tile;
     protected Tile lastTarget;
@@ -506,8 +508,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public int getHealGold()
     {
-        //basic cost
-        return (int) (Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
+        //heal factor times basic cost
+        return healFactor * (int) (Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
     }
 
     public void kill()

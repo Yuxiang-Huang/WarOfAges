@@ -33,6 +33,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     [SerializeField] protected int damage;
 
+    [SerializeField] int healFactor;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -191,8 +193,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public virtual int getHealGold()
     {
-        //basic cost
-        return (int)(Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
+        //heal factor times basic cost
+        return healFactor * (int)(Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
     }
 
     [PunRPC]

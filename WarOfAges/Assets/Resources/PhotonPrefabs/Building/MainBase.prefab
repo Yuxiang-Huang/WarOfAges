@@ -362,6 +362,7 @@ MonoBehaviour:
   healthbar: {fileID: 5990717552439171017}
   fullHealth: 8
   damage: 0
+  healFactor: 4
 --- !u!1 &4154116741495939278
 GameObject:
   m_ObjectHideFlags: 0
