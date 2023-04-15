@@ -671,13 +671,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void fillInfoTab()
     {
-        //main base will be null
-        if (lost)
-        {
-            UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
-           UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
-        }
-        else
+        if (!lost)
         {
             UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
                UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count,
@@ -687,9 +681,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateIncome()
     {
-        //territory income: 5 (x - playerNum * x^2 / mapSize)
-        int sum = (int) (5 * (landTerritory - GameManager.instance.allPlayersOriginal.Count *
-            landTerritory * landTerritory / (float)TileManager.instance.mapSize));
+        //territory income: 5 (x - 0.5 * playerNum * x^2 / mapSize)
+        int sum = (int) (5 * (landTerritory - 0.5 * GameManager.instance.allPlayers.Count *
+            landTerritory * landTerritory / TileManager.instance.totalLandTiles));
 
         //income from extra money
         foreach (Building building in allBuildings)
@@ -757,7 +751,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         lost = true;
 
         //last update in player info tab
-        fillInfoTab();
+        UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
+            UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
     }
 
     [PunRPC]
