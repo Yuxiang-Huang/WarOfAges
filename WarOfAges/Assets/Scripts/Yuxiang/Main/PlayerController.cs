@@ -471,6 +471,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void spawn()
     {
+        //income
+        if (!lost)
+        {
+            gold += calculateIncome();
+        }
+
         //update visibility if didn't lost
         if (!lost)
         {
@@ -536,12 +542,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //clear list
         spawnList = new Dictionary<Vector2, SpawnInfo>();
-
-        //income from territory
-        if (!lost)
-        {
-            gold += landTerritory * Config.ageIncomeOffset;
-        }
 
         UIManager.instance.updateGoldText();
 
@@ -683,6 +683,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
                UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count,
               (float)mainBase.health / mainBase.fullHealth);
         }
+    }
+
+    public int calculateIncome()
+    {
+        //territory income: 5 (x - playerNum * x^2 / mapSize)
+        int sum = (int) (5 * (landTerritory - GameManager.instance.allPlayersOriginal.Count *
+            landTerritory * landTerritory / (float)TileManager.instance.mapSize));
+
+        //income from extra money
+        foreach (Building building in allBuildings)
+        {
+            if (building.GetComponent<ExtraMoney>() != null)
+            {
+                sum += building.GetComponent<ExtraMoney>().income();
+            }
+        }
+
+        return sum;
     }
 
     #endregion

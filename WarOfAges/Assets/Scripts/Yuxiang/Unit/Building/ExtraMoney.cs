@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ExtraMoney : Building
 {
-    public override void effect()
+    public int income()
     {
-        //produce 1/10 the cost
-        PlayerController.instance.gold += (sellGold / 4);
+        //produce 1/8 the cost
+        return (sellGold / 4);
     }
 }

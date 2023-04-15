@@ -21,6 +21,8 @@ public class TileManager : MonoBehaviourPunCallbacks
     //building blocks
     public const float tileSize = 1;
 
+    public int mapSize;
+
     [SerializeField] GameObject landTilePrefab;
     [SerializeField] GameObject waterTilePrefab;
 
@@ -263,7 +265,7 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         GameObject parent = new GameObject("Map");
 
-        int count = 0;
+        mapSize = 0;
 
         //generate the grid using instruction
         for (int i = 0; i < tiles.GetLength(0); i++)
@@ -279,7 +281,7 @@ public class TileManager : MonoBehaviourPunCallbacks
                     Vector3 pos = new Vector3(xPos, yPos, 0);
 
                     //instantiate
-                    if (instruction[count] == '0')
+                    if (instruction[mapSize] == '0')
                     {
                         tiles[i, j] = Instantiate(landTilePrefab, pos, Quaternion.identity).GetComponent<Tile>();
                         tiles[i, j].terrain = "land";
@@ -296,7 +298,7 @@ public class TileManager : MonoBehaviourPunCallbacks
                     tiles[i, j].GetComponent<Tile>().pos = new Vector2Int(i, j);
                 }
 
-                count++;
+                mapSize++;
             }
         }
 

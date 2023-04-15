@@ -51,9 +51,9 @@ public class UIManager : MonoBehaviour
     [Header("InfoTab - Player")]
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI incomeText;
     public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
-
     public Dictionary<Color, string> colorToString;
 
     [Header("Age")]
@@ -167,6 +167,8 @@ public class UIManager : MonoBehaviour
 
         turnNum++;
         turnNumText.text = "Turn: " + turnNum;
+
+        incomeText.text = "+" + PlayerController.instance.calculateIncome();
 
         //don't do if lost
         if (!PlayerController.instance.lost)
