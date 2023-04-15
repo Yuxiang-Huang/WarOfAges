@@ -92,7 +92,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     #region UI
 
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText)
+        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         string unitName = ToString();
         nameText.text = unitName.Substring(0, unitName.IndexOf("("));
@@ -100,6 +100,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         damageText.text = "Damage: " + damage;
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
+        healText.text = "Heal: " + getHealGold() + " Gold";
 
         //main base
         if (sellGold == 0)
@@ -173,6 +174,24 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         }
 
         kill();
+    }
+
+    public bool notFullHealth()
+    {
+        return health < fullHealth;
+    }
+
+    [PunRPC]
+    public void heal()
+    {
+        //health increase by basic unit
+        health = (int)Mathf.Max(fullHealth, health + Mathf.Pow(Config.ageUnitFactor, age));
+    }
+
+    public virtual int getHealGold()
+    {
+        //basic cost
+        return (int)(Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
     }
 
     [PunRPC]

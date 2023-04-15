@@ -86,4 +86,10 @@ public class ExtraView : Building
 
         base.checkDeath();
     }
+
+    public override int getHealGold()
+    {
+        //3 * basic cost
+        return 3 * (int)(Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
+    }
 }

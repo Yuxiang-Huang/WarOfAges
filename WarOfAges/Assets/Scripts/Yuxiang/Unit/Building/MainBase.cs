@@ -13,4 +13,10 @@ public class MainBase : Building
             neigbhor.updateStatus(ownerID, null);
         }
     }
+
+    public override int getHealGold()
+    {
+        //4 * basic cost
+        return 4 * (int)(Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
+    }
 }

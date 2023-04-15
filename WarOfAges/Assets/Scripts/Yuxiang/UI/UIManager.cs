@@ -45,8 +45,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI unitDamageText;
     [SerializeField] TextMeshProUGUI unitSellText;
     [SerializeField] TextMeshProUGUI unitUpgradeText;
+    [SerializeField] TextMeshProUGUI unitHealText;
     [SerializeField] GameObject sellBtn;
     [SerializeField] GameObject upgradeBtn;
+    [SerializeField] GameObject healBtn;
 
     [Header("InfoTab - Player")]
     [SerializeField] TextMeshProUGUI timeText;
@@ -272,7 +274,7 @@ public class UIManager : MonoBehaviour
     public void updateInfoTab(IUnit unit, bool myUnit)
     {
         infoTabUnit.SetActive(true);
-        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitSellText, unitUpgradeText);
+        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitSellText, unitUpgradeText, unitHealText);
 
         //only display buttons if my units
         if (myUnit)
@@ -282,6 +284,10 @@ public class UIManager : MonoBehaviour
             //able to upgrade if lower age
             if (unit.age < PlayerController.instance.age)
                 upgradeBtn.SetActive(true);
+
+            //able to heal if health not full
+            //if (unit.notFullHealth())
+                healBtn.SetActive(true);
         }
     }
 
@@ -305,6 +311,7 @@ public class UIManager : MonoBehaviour
         infoTabUnit.SetActive(false);
         sellBtn.SetActive(false);
         upgradeBtn.SetActive(false);
+        healBtn.SetActive(false);
     }
 
     public void sell()
@@ -341,6 +348,18 @@ public class UIManager : MonoBehaviour
             PlayerController.instance.gold -= upgradeGold;
             updateGoldText();
             PlayerController.instance.unitSelected.PV.RPC("upgrade", RpcTarget.All);
+        }
+    }
+
+    public void heal()
+    {
+        int healGold = PlayerController.instance.unitSelected.getHealGold();
+
+        if (PlayerController.instance.gold >= healGold)
+        {
+            PlayerController.instance.gold -= healGold;
+            updateGoldText();
+            PlayerController.instance.unitSelected.PV.RPC("heal", RpcTarget.All);
         }
     }
 

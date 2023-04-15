@@ -426,6 +426,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         Destroy(this.gameObject);
     }
 
+    public bool notFullHealth()
+    {
+        return health < fullHealth;
+    }
+
     #endregion
 
     #region UI
@@ -436,7 +441,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     }
 
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-    TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText)
+    TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         string unitName = ToString();
         nameText.text = unitName.Substring(0, unitName.IndexOf("("));
@@ -444,6 +449,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         damageText.text = "Damage: " + damage;
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
+        healText.text = "Heal: " + getHealGold() + " Gold";
     }
 
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
@@ -479,7 +485,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         damage *= Config.ageUnitFactor;
 
-        //update sell gold
+        //update sell and upgrade gold
         sellGold *= Config.ageCostFactor;
         upgradeGold *= Config.ageCostFactor;
 
@@ -488,6 +494,19 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         age++;
         unitImages[age].SetActive(true);
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
+    }
+
+    [PunRPC]
+    public void heal()
+    {
+        //health increase by basic unit
+        health = (int) Mathf.Max(fullHealth, health + Mathf.Pow(Config.ageUnitFactor, age));
+    }
+
+    public int getHealGold()
+    {
+        //basic cost
+        return (int) (Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
     }
 
     public void kill()

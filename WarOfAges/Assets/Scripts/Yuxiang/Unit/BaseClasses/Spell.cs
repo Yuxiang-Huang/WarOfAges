@@ -90,14 +90,9 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     #region UI
 
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText)
+        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
-        healthText.text = "Health: n/a"; 
-        damageText.text = "Damage: " + damage;
-        sellText.text = "Sell: " + sellGold + " Gold";
-        upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
+        //can't be selected after spawn
     }
 
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
@@ -165,6 +160,24 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
         age++;
         unitImages[age].SetActive(true);
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
+    }
+
+    //can't heal a spell
+    public bool notFullHealth()
+    {
+        return false;
+    }
+
+    //can't heal a spell
+    public void heal()
+    {
+
+    }
+
+    //can't heal a spell
+    public int getHealGold()
+    {
+        return -1;
     }
 
     [PunRPC]

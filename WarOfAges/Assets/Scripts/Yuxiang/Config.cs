@@ -3,9 +3,9 @@ using UnityEngine;
 public class Config
 {
     //test modes
-    public static bool offlineMode = false;
+    public static bool offlineMode = true;
     public static bool sameSpawnPlaceTestMode = false;
-    public static bool moreMoneyTestMode = false;
+    public static bool moreMoneyTestMode = true;
 
     //time factors
     public static float troopMovementTime = 0.5f;
@@ -15,6 +15,8 @@ public class Config
     public static int ageIncomeOffset = 5;
     public static int ageCostFactor = 2;
     public static int ageUnitFactor = 2;
+
+    public static int basicGoldUnit = 10;
 
     //default map setting
     public static string defaultMode = "Water";

@@ -24,7 +24,7 @@ public interface IUnit
     public void setHealthBar(bool status);
 
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText);
+        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText);
 
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age);
@@ -33,4 +33,8 @@ public interface IUnit
 
     public void sell();
     public void upgrade();
+    public void heal();
+    public bool notFullHealth();
+
+    public int getHealGold();
 }
