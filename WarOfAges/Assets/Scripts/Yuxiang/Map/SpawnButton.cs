@@ -29,6 +29,9 @@ public class SpawnButton : MonoBehaviour
     {
         //initial cost text and image
         costText.text = goldNeedToSpawn.ToString();
+
+        createImageList();
+
         displayImage.sprite = unitImages[0];
 
         //lock
@@ -46,6 +49,24 @@ public class SpawnButton : MonoBehaviour
         //set description off
         description.SetActive(false);
 
+        createSpawnImage();
+    }
+
+    public void createImageList()
+    {
+        //create image list using spawn unit
+        unitImages = new List<Sprite>();
+
+        Transform imageHolder = spawnUnit.transform.GetChild(0);
+
+        for (int i = 0; i < imageHolder.childCount; i ++)
+        {
+            unitImages.Add(imageHolder.GetChild(i).GetComponent<SpriteRenderer>().sprite);
+        }
+    }
+
+    public void createSpawnImage()
+    { 
         //create spawn image using spawn unit
         spawnImage = Instantiate(spawnUnit);
         spawnImage.SetActive(false);
