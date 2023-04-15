@@ -81,6 +81,11 @@ public class SpawnButton : MonoBehaviour
         Destroy(spawnImage.transform.GetChild(1).gameObject);
     }
 
+    public void setLockColor(Color color)
+    {
+        lockObject.GetComponent<Image>().color = color;
+    }
+
     public void spawn()
     {
         //able to spawn if unlocked
@@ -138,14 +143,15 @@ public class SpawnButton : MonoBehaviour
     public void OnPointerEnter()
     {
         if (SpawnManager.instance.keys > 0)
-            lockObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.2f);
+            lockObject.SetActive(false);
 
         description.SetActive(true);
     }
 
     public void OnPointerExit()
     {
-        lockObject.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+        if (!unlocked)
+            lockObject.SetActive(true);
 
         description.SetActive(false);
     }

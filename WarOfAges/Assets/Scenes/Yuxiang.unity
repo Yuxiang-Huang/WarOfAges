@@ -832,9 +832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac024c12995d544b88b906034aac095f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clubMan: {fileID: 6514224017186162067, guid: b63047aabf50f448283d8221273a5698, type: 3}
   lastSpawnButtonImage: {fileID: 0}
-  testObject: {fileID: 996705849}
   spawnBtnList:
   - {fileID: 996705854}
   - {fileID: 1190985328}
@@ -845,6 +843,8 @@ MonoBehaviour:
   - {fileID: 1051410392}
   - {fileID: 660658620}
   keys: 1
+  duration: 1
+  t: 0
 --- !u!1001 &182037196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3575,11 +3575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac7aed3a77294d23a04fa2ff7e425be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &996705849 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 195891942802153981, guid: 92c312100072046779c20a63ffefc397, type: 3}
-  m_PrefabInstance: {fileID: 195891942691563460}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &996705850 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 195891942802153982, guid: 92c312100072046779c20a63ffefc397, type: 3}
@@ -3590,7 +3585,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
   m_PrefabInstance: {fileID: 195891942691563460}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996705849}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aac7aed3a77294d23a04fa2ff7e425be, type: 3}
@@ -4444,7 +4439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +100
+  m_text: +0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da33492f40039cd4b9c5d0dccee775af, type: 2}
   m_sharedMaterial: {fileID: 2129810829913635677, guid: da33492f40039cd4b9c5d0dccee775af, type: 2}
