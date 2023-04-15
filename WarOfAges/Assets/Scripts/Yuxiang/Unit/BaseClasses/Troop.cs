@@ -500,7 +500,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public void heal()
     {
         //health increase by basic unit
-        health = (int) Mathf.Max(fullHealth, health + Mathf.Pow(Config.ageUnitFactor, age));
+        health = (int) Mathf.Min(fullHealth, health + Mathf.Pow(Config.ageUnitFactor, age));
+        healthbar.value = health;
     }
 
     public int getHealGold()

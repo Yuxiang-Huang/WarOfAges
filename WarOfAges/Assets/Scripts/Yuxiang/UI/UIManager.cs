@@ -286,7 +286,7 @@ public class UIManager : MonoBehaviour
                 upgradeBtn.SetActive(true);
 
             //able to heal if health not full
-            //if (unit.notFullHealth())
+            if (unit.notFullHealth())
                 healBtn.SetActive(true);
         }
     }
