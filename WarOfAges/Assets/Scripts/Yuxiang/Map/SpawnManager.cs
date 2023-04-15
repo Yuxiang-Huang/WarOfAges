@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     private Color startColor = new Color (0, 0, 0, 0.6f);
     private Color endColor = new Color(0, 0, 0, 0.2f);
 
-    public float duration = 2.0f;
+    public float duration;
     [SerializeField] float t = 0.0f;
 
     public void Awake()

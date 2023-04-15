@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374501951802969707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.037, y: 0.027, z: 0}
+  m_LocalPosition: {x: -1, y: 0.027, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -85,6 +85,7 @@ MonoBehaviour:
   tile: {fileID: 0}
   numOfTilesMoved: 0
   speed: 2
+  ship: {fileID: 0}
 --- !u!1 &2015465349172859697
 GameObject:
   m_ObjectHideFlags: 0
