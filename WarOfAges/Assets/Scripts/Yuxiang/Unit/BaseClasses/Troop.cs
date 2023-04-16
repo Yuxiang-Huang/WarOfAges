@@ -70,8 +70,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         {
             foreach (Tile neighbor in tile.neighbors)
             {
-                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID && neighbor.unit == null)
-                    neighbor.updateStatus(ownerID, null);
+                neighbor.tryWaterConquer();
             }
         }
 
@@ -296,8 +295,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         {
             foreach (Tile neighbor in tile.neighbors)
             {
-                if (neighbor.terrain == "water" && neighbor.ownerID != ownerID && neighbor.unit == null)
-                    neighbor.updateStatus(ownerID, null);
+                neighbor.tryWaterConquer();
             }
         }
 

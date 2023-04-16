@@ -49,9 +49,10 @@ public class Tile : MonoBehaviour
         //if owner changes
         if (ownerID != newOwnerID)
         {
-            //remove from other player's territory
+            //if has an owner already
             if (ownerID != -1)
             {
+                //remove from other player's territory
                 PlayerController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
 
                 prevOwner.territory.Remove(this);
@@ -173,7 +174,7 @@ public class Tile : MonoBehaviour
 
     #endregion
 
-    #region Two Updates
+    #region Updates
 
     public void updateCanSpawn()
     {
@@ -210,7 +211,81 @@ public class Tile : MonoBehaviour
         setDark(true);
     }
 
+    public void tryWaterConquer()
+    {
+        //water tile and no unit on the tile
+        if (terrain == "water" && unit == null)
+        {
+            //store all units
+            HashSet<int> conquerors = new HashSet<int>();
+            int onlyConqueror = -1;
+
+            //check all units around
+            foreach (Tile neigbhor in neighbors)
+            {
+                if (neigbhor.unit != null)
+                {
+                    conquerors.Add(neigbhor.unit.ownerID);
+                    onlyConqueror = neigbhor.unit.ownerID;
+                }
+            }
+
+            //conquer only if only one conquerer
+            if (conquerors.Count == 1)
+            {
+                updateStatus(onlyConqueror, null);
+            }
+            else
+            {
+                //set to unconquerered
+                reset();
+            }
+        }
+    }
+
     public void reset()
+    {
+        //if has an owner
+        if (ownerID != -1)
+        {
+            //remove from other player's territory
+            PlayerController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
+
+            prevOwner.territory.Remove(this);
+
+            if (terrain == "land")
+                prevOwner.landTerritory--;
+
+            //update territory color
+            foreach (Tile neighbor in neighbors)
+            {
+                //show neighbor border
+                if (prevOwner.territory.Contains(neighbor))
+                {
+                    int index = neighbor.pos.x % 2 == 0 ?
+                    TileManager.instance.neighborIndexEvenRow[pos - neighbor.pos] :
+                    TileManager.instance.neighborIndexOddRow[pos - neighbor.pos];
+
+                    neighbor.borders[index].SetActive(true);
+                }
+            }
+
+            //update visibility if I was the previous owner
+            if (ownerID == PlayerController.instance.id)
+            {
+                foreach (Tile neighbor in neighbors)
+                {
+                    neighbor.updateVisibility();
+                }
+
+                updateVisibility();
+            }
+        }
+
+        ownerID = -1;
+    }
+
+    public void lostReset()
     {
         foreach(GameObject border in borders)
         {

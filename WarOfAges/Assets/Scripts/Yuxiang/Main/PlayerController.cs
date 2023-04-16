@@ -777,7 +777,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //no territory
         foreach (Tile tile in territory)
         {
-            tile.reset();
+            tile.lostReset();
         }
     }
 }
