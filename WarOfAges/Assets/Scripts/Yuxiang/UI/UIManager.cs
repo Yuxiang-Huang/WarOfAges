@@ -54,6 +54,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI incomeText;
+    [SerializeField] TextMeshProUGUI marginalIncomeText;
     public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
     public Dictionary<Color, string> colorToString;
@@ -285,9 +286,9 @@ public class UIManager : MonoBehaviour
             if (unit.age < PlayerController.instance.age)
                 upgradeBtn.SetActive(true);
 
-            //able to heal if health not full
-            if (unit.notFullHealth())
-                healBtn.SetActive(true);
+            ////able to heal if health not full
+            //if (unit.notFullHealth())
+            //    healBtn.SetActive(true);
         }
     }
 
@@ -367,7 +368,18 @@ public class UIManager : MonoBehaviour
     public void setIncomeText()
     {
         incomeText.text = "+" + PlayerController.instance.calculateIncome();
-    }
+
+        int marginalIncome = PlayerController.instance.calculateMarginalIncome();
+
+        if (marginalIncome > 0)
+        {
+            marginalIncomeText.text = "+" + marginalIncome;
+        }
+        else
+        {
+            marginalIncomeText.text = marginalIncome.ToString();
+        }
+    } 
 
     #endregion
 

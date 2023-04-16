@@ -697,6 +697,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         return sum;
     }
 
+    public int calculateMarginalIncome()
+    {
+        return (int)(5 * ((landTerritory + 1) - 0.5 * GameManager.instance.allPlayers.Count *
+            (landTerritory + 1) * (landTerritory + 1) / TileManager.instance.totalLandTiles))
+            - calculateIncome();
+    }
+
     #endregion
 
     public void end()
