@@ -4,8 +4,8 @@ public class Config
 {
     //test modes
     public static bool offlineMode = false;
-    public static bool sameSpawnPlaceTestMode = true;
-    public static bool moreMoneyTestMode = true;
+    public static bool sameSpawnPlaceTestMode = false;
+    public static bool moreMoneyTestMode = false;
 
     //time factors
     public static float troopMovementTime = 0.5f;
