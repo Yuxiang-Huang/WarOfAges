@@ -1782,15 +1782,16 @@ PrefabInstance:
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
       value: "Building: Reveal all tile within three tiles radius. Deal 1\xD7 damage
-        to one enemy unit closest to base each turn within two tiles radius."
+        to one enemy unit within two tiles radius that is closest to the main base
+        each turn."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 30
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -3556,8 +3557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: Travel on water. Able to carry a troop. Same health as melee.
-        Doesn''t attack.'
+      value: 'Troop: Travel on water. Able to carry a troop. Doesn''t attack.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
@@ -6408,15 +6408,15 @@ PrefabInstance:
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
       value: "Troop: Attack all enemy units within one tile radius. 2\xD7 health
-        as melee. Able to see two tiles away."
+        and damage as melee. Able to see two tiles away. "
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 36
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
@@ -8997,15 +8997,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: Most basic unit that attack one enemy unit within one tile radius.'
+      value: 'Troop: Most basic unit that attack one enemy unit within one tile radius
+        and move one tile each turn.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 36
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_HorizontalAlignment
