@@ -115,11 +115,13 @@ public class Tile : MonoBehaviour
     {
         PlayerController owner = GameManager.instance.allPlayersOriginal[ownerID];
 
+        //set territory color to color of owner
         territoryColor.SetActive(true);
         territoryColor.GetComponent<SpriteRenderer>().color = new Color(
             TileManager.instance.ownerColors[ownerID].r, TileManager.instance.ownerColors[ownerID].g,
             TileManager.instance.ownerColors[ownerID].b, Config.territoryColorOpacity);
 
+        //set all borders to true first
         foreach (GameObject border in borders)
         {
             border.SetActive(true);
@@ -283,6 +285,11 @@ public class Tile : MonoBehaviour
         }
 
         ownerID = -1;
+        territoryColor.SetActive(false);
+        foreach (GameObject border in borders)
+        {
+            border.SetActive(false);
+        }
     }
 
     public void lostReset()
