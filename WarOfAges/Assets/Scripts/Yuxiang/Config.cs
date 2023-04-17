@@ -16,7 +16,10 @@ public class Config
     public static int ageCostFactor = 2;
     public static int ageUnitFactor = 2;
 
+    //gold
     public static int basicGoldUnit = 10;
+    public static int goldFactor = 5; //each land give this many gold each turn
+    public static float goldPercent = 0.375f; //1 / (4 * goldPercent) gives percent of land player can conquer before gold goes down
 
     //default map setting
     public static string defaultMode = "Water";
