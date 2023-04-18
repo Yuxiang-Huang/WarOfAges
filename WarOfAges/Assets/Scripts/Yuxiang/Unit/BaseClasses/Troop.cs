@@ -245,8 +245,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
         else
         {
-            //still conquer water when not move
-            PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
+            //still conquer water when not move if not ship
+            if (gameObject.GetComponent<Ship>() == null)
+                PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
         }
     }
 
