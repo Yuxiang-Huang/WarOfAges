@@ -681,8 +681,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateIncome()
     {
-        //territory income: 5 (x - 0.5 * playerNum * x^2 / mapSize)
-        int sum = (int) (5 * (landTerritory - 0.5 * GameManager.instance.allPlayers.Count *
+        //territory income: 5 (x - 0.375 * playerNum * x^2 / mapSize)
+        int sum = (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
             landTerritory * landTerritory / TileManager.instance.totalLandTiles));
 
         //income from extra money

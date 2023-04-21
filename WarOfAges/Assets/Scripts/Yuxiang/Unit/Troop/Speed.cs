@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Speed : Troop
 {
+    private int numberOfTileMoved;
+
     public override void attack()
     {
         SortedDictionary<float, Tile> targets = new SortedDictionary<float, Tile>();
@@ -31,7 +33,8 @@ public class Speed : Troop
 
         if (targets.Count > 0)
         {
-            targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage);
+            //damage proportioned to number of tiles moved
+            targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage * numberOfTileMoved);
         }
     }
 
@@ -39,6 +42,72 @@ public class Speed : Troop
     {
         base.move();
         base.move();
+    }
+
+    [PunRPC]
+    public override void moveUpdate_RPC(int nextTileX, int nextTileY)
+    {
+        //leave water
+        if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
+        {
+            //edge case when exchange tile
+            if (tile.unit == null)
+                tile.unit = ship;
+            ship.tile = tile;
+            ship = null;
+        }
+
+        //leave land
+        else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
+        {
+            //board a ship
+            ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+        }
+
+        //update tile
+        if (tile != TileManager.instance.tiles[nextTileX, nextTileY])
+        {
+            numberOfTileMoved++;
+        }
+
+        tile = TileManager.instance.tiles[nextTileX, nextTileY];
+        tile.updateStatus(ownerID, this);
+
+        //also try to conquer all water tiles around if moved to land tile
+        if (tile.terrain == "land")
+        {
+            foreach (Tile neighbor in tile.neighbors)
+            {
+                neighbor.tryWaterConquer();
+            }
+        }
+
+        //owner so animate movement
+        if (ownerID == PlayerController.instance.id)
+        {
+            StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
+            if (ship != null)
+            {
+                ship.StartCoroutine(ship.TranslateOverTime(ship.transform.position, tile.transform.position, Config.troopMovementTime));
+            }
+        }
+        else
+        {
+            //update position
+            transform.position = tile.transform.position;
+            healthbar.gameObject.transform.position = transform.position + offset;
+            if (ship != null)
+            {
+                ship.transform.position = transform.position;
+                ship.healthbar.gameObject.transform.position = ship.transform.position + offset;
+            }
+        }
+    }
+
+    public override void resetMovement()
+    {
+        base.resetMovement();
+        numberOfTileMoved = 0;
     }
 
     public override void displayArrow()

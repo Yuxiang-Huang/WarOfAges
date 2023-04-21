@@ -40,7 +40,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     protected List<Tile> path = new List<Tile>();
     protected GameObject arrow;
 
-    [SerializeField] int numOfTilesMoved;
+    [SerializeField] int speedUsed;
     [SerializeField] int speed;
 
     public Ship ship;
@@ -194,7 +194,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public virtual void move()
     {
         //moved in this turn already
-        if (numOfTilesMoved == speed) return;
+        if (speedUsed == speed) return;
 
         //destroy arrow
         if (arrow != null)
@@ -202,7 +202,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Destroy(arrow);
         }
 
-        numOfTilesMoved++;
+        speedUsed++;
 
         //if has next tile to go
         if (path.Count != 0)
@@ -327,7 +327,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
     }
 
-    IEnumerator TranslateOverTime(Vector3 startingPosition, Vector3 targetPosition, float time)
+    public IEnumerator TranslateOverTime(Vector3 startingPosition, Vector3 targetPosition, float time)
     {
         float elapsedTime = 0f;
         while (elapsedTime < time)
@@ -354,9 +354,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile.unit = null;
     }
 
-    public void resetMovement()
+    public virtual void resetMovement()
     {
-        numOfTilesMoved = 0;
+        speedUsed = 0;
         lastTarget = null;
         //reset path if not movable
         if (path.Count > 0 && !canMoveToTile(path[0]))
