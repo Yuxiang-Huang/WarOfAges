@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int goldNeedToSpawn;
      
     public Dictionary<Vector2, SpawnInfo> spawnList = new Dictionary<Vector2, SpawnInfo>();
+    public Dictionary<Vector2, SpawnInfo> spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
 
     [Header("Gold")]
     public int gold;
@@ -342,8 +343,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     spawnImage.SetActive(true);
 
                     //add to spawn list
-                    spawnList.Add(highlighted.pos, new SpawnInfo(highlighted, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
-                        spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2));
+                    SpawnInfo spawnInfo = new SpawnInfo(highlighted, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
+                        spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2);
+
+                    spawnList.Add(highlighted.pos, spawnInfo);
+
+                    if (toSpawnUnit.GetComponent<Spell>() != null)
+                    {
+                        spawnListSpell.Add(highlighted.pos, spawnInfo);
+                    }
 
                     //reset to prevent double spawn
                     highlighted.highlight(false);
@@ -492,55 +500,51 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         foreach (SpawnInfo info in spawnList.Values)
         {
-            //spawn unit and initiate
-            GameObject newUnit = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", info.unitName),
-            info.spawnTile.gameObject.transform.position, Quaternion.identity);
-
-            if (newUnit.CompareTag("Troop"))
+            //skip skills
+            if (!spawnListSpell.ContainsKey(info.spawnTile.pos))
             {
-                allTroops.Add(newUnit.GetComponent<Troop>());
+                //spawn unit and initiate
+                GameObject newUnit = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", info.unitName),
+                info.spawnTile.gameObject.transform.position, Quaternion.identity);
 
-                //a ship is spawned
-                if (newUnit.GetComponent<Ship>() != null)
+                if (newUnit.CompareTag("Troop"))
                 {
-                    allShips.Add(newUnit.GetComponent<Ship>());
-                }
-                else
-                {
-                    //spawned on a ship
-                    if (info.spawnTile.terrain == "water")
+                    allTroops.Add(newUnit.GetComponent<Troop>());
+
+                    //a ship is spawned
+                    if (newUnit.GetComponent<Ship>() != null)
                     {
-                        Ship curShip = info.spawnTile.unit.gameObject.GetComponent<Ship>();
-                        newUnit.GetComponent<Troop>().ship = curShip;
-                        //reset path
-                        curShip.findPath(curShip.tile);
+                        allShips.Add(newUnit.GetComponent<Ship>());
                     }
+                    else
+                    {
+                        //spawned on a ship
+                        if (info.spawnTile.terrain == "water")
+                        {
+                            Ship curShip = info.spawnTile.unit.gameObject.GetComponent<Ship>();
+                            newUnit.GetComponent<Troop>().ship = curShip;
+                            //reset path
+                            curShip.findPath(curShip.tile);
+                        }
+                    }
+
+                    newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
+                        id, info.spawnTile.pos.x, info.spawnTile.pos.y,
+                        spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
+                        info.unitName, info.age, info.sellGold);
+                }
+                else if (newUnit.CompareTag("Building"))
+                {
+                    newUnit.GetComponent<Building>().PV.RPC("Init", RpcTarget.All,
+                        id, info.spawnTile.pos.x, info.spawnTile.pos.y,
+                        info.unitName, info.age, info.sellGold);
+                    newUnit.GetComponent<Building>().updateCanSpawn();
+
+                    allBuildings.Add(newUnit.GetComponent<Building>());
                 }
 
-                newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
-                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
-                    info.unitName, info.age, info.sellGold);
+                Destroy(info.spawnImage);
             }
-            else if (newUnit.CompareTag("Building"))
-            {
-                newUnit.GetComponent<Building>().PV.RPC("Init", RpcTarget.All,
-                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    info.unitName, info.age, info.sellGold);
-                newUnit.GetComponent<Building>().updateCanSpawn();
-
-                allBuildings.Add(newUnit.GetComponent<Building>());
-            }
-            else if (newUnit.CompareTag("Spell"))
-            {
-                newUnit.GetComponent<Spell>().PV.RPC("Init", RpcTarget.All,
-                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
-                    info.unitName, info.age, info.sellGold);
-
-                allSpells.Add(newUnit.GetComponent<Spell>());
-            }
-
-            Destroy(info.spawnImage);
         }
 
         //clear list
@@ -563,6 +567,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void troopMove()
     {
+        //spawn spell now after all troops are spawned
+        foreach (SpawnInfo info in spawnListSpell.Values)
+        {
+            //spawn unit and initiate
+            GameObject newUnit = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", info.unitName),
+            info.spawnTile.gameObject.transform.position, Quaternion.identity);
+
+            newUnit.GetComponent<Spell>().PV.RPC("Init", RpcTarget.All,
+                id, info.spawnTile.pos.x, info.spawnTile.pos.y,
+                info.unitName, info.age, info.sellGold);
+
+            allSpells.Add(newUnit.GetComponent<Spell>());
+
+            Destroy(info.spawnImage);
+        }
+
+        spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
+
         //ships move first
         foreach (Ship ship in allShips)
         {
