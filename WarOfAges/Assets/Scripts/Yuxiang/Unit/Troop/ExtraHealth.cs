@@ -42,8 +42,19 @@ public class ExtraHealth : Troop
         if (attacked)
         {
             speedUsed = speed;
+
+            attacked = false;
         }
 
         base.move();
+    }
+
+    public override void displayArrow()
+    {
+        //can't display arrow if attacked since can't move
+        if (!attacked)
+        {
+            base.displayArrow();
+        }
     }
 }

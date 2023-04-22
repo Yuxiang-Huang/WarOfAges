@@ -41,7 +41,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     protected GameObject arrow;
 
     protected int speedUsed;
-    protected int speed;
+    [SerializeField] protected int speed;
     protected int numOfTileMoved;
 
     public Ship ship;
