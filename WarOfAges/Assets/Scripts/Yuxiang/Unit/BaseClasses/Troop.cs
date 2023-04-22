@@ -40,8 +40,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     protected List<Tile> path = new List<Tile>();
     protected GameObject arrow;
 
-    [SerializeField] int speedUsed;
-    [SerializeField] int speed;
+    protected int speedUsed;
+    protected int speed;
+    protected int numOfTileMoved;
 
     public Ship ship;
 
@@ -293,6 +294,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         //update tile
+        if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && PlayerController.instance.id == ownerID)
+        {
+            numOfTileMoved++;
+        }
         tile = TileManager.instance.tiles[nextTileX, nextTileY];
         tile.updateStatus(ownerID, this);
 
@@ -354,9 +359,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         tile.unit = null;
     }
 
-    public virtual void resetMovement()
+    public void resetMovement()
     {
         speedUsed = 0;
+        numOfTileMoved = 0;
         lastTarget = null;
         //reset path if not movable
         if (path.Count > 0 && !canMoveToTile(path[0]))

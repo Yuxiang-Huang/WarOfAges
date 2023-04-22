@@ -6407,8 +6407,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Troop: Attack all enemy units within one tile radius. 2\xD7 health
-        as melee. Able to see two tiles away. "
+      value: "Troop: 2\xD7 health as melee. Deals double damage when didn't move
+        this turn. Can't move if attacked this turn."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
@@ -8004,7 +8004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Troop: Can move two tiles each turn. 1.5\xD7 health as melee and do
+      value: "Troop: Can move two tiles each turn. 1.5\xD7 health as melee and deal
         damage in proportion to the number of tiles moved this turn. "
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
