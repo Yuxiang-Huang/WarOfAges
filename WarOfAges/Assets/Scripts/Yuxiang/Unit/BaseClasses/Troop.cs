@@ -35,14 +35,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [SerializeField] int healFactor; 
 
     [Header("Movement")]
-    public Tile tile;
-    protected Tile lastTarget;
     protected List<Tile> path = new List<Tile>();
+    public Tile tile { get; set; }
     protected GameObject arrow;
 
     protected int speedUsed;
     [SerializeField] protected int speed;
     protected int numOfTileMoved;
+
+    public IUnit toFollow;
 
     public Ship ship;
 
@@ -103,7 +104,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void findPath(Tile target)
     {
-        if (lastTarget == target) return; //same path
+        //follow this troop if in my team
+        if (target.unit != null && target.unit.ownerID == ownerID)
+        {
+            toFollow = target.unit;
+        }
+        else
+        {
+            toFollow = null;
+        }
 
         //same tile reset
         if (target == tile)
@@ -112,13 +121,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             Destroy(arrow);
 
-            lastTarget = null;
-
             return;
         }
-
-        //otherwise find new path
-        lastTarget = target;
 
         float minDist = TileManager.instance.dist(target, tile);
 
@@ -190,6 +194,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         displayArrow();
+    }
+
+    public void follow()
+    {
+        if (toFollow != null)
+            findPath(toFollow.tile);
+
+        if (arrow != null)
+            Destroy(arrow);
     }
 
     public virtual void move()
@@ -363,9 +376,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     {
         speedUsed = 0;
         numOfTileMoved = 0;
-        lastTarget = null;
         //reset path if not movable
-        if (path.Count > 0 && !canMoveToTile(path[0]))
+        if (path.Count > 0 && !canMoveToTile(path[0]) && toFollow == null)
         {
             path = new List<Tile>();
         }

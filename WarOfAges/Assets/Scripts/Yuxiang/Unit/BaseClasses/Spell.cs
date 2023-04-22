@@ -13,7 +13,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
-    public Tile tile;
+    public Tile tile { get; set; }
 
     public int age { get; set; }
 

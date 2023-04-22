@@ -596,6 +596,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
             troop.move();
         }
 
+        //recalculate path for followers
+        foreach (Troop troop in allTroops)
+        {
+            troop.follow();
+        }
+
         if (PhotonNetwork.OfflineMode)
         {
             attack();

@@ -11,6 +11,8 @@ public interface IUnit
 
     int ownerID { get; }
 
+    Tile tile { get; }
+
     GameObject gameObject { get; }
 
     int health { get; }

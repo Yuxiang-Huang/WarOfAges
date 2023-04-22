@@ -13,7 +13,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
-    public Tile tile;
+    public Tile tile { get; set; }
 
     public int age { get; set; }
 
