@@ -51,7 +51,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     }
 
     [PunRPC]
-    public virtual void Init(int playerID, int startingtTileX, int startingtTileY, Vector2 startDirection,
+    public void Init(int playerID, int startingtTileX, int startingtTileY, Vector2 startDirection,
         string path, int age, int sellGold)
     {
         //setting ID, direction, age, gold

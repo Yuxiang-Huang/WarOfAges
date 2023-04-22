@@ -6263,7 +6263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.size
@@ -8005,15 +8005,15 @@ PrefabInstance:
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
       value: "Troop: Can move two tiles each turn. 1.5\xD7 health as melee and do
-        damage equal to damage of melee times the number of tiles moved this turn. "
+        damage in proportion to the number of tiles moved this turn. "
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 29
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 29
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic

@@ -5,23 +5,6 @@ using UnityEngine;
 
 public class ExtraHealth : Troop
 {
-    [PunRPC]
-    public override void Init(int playerID, int startingtTileX, int startingtTileY, Vector2 startDirection,
-        string path, int age, int sellGold)
-    {
-        base.Init(playerID, startingtTileX, startingtTileY, startDirection, path, age, sellGold);
-
-        if (ownerID == PlayerController.instance.id)
-        {
-            //reveal tiles
-            foreach (Tile neighbor in tile.neighbors2)
-            {
-                PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
-                neighbor.setDark(false);
-            }
-        }
-    }
-
     //attack all enemies on tiles around it
     public override void attack()
     {
@@ -38,26 +21,6 @@ public class ExtraHealth : Troop
                     curTile.unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage);
                 }
             }
-        }
-    }
-
-    public override void move()
-    {
-        //update visibility
-        foreach (Tile neighbor in tile.neighbors2)
-        {
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
-            neighbor.updateVisibility();
-        }
-
-        base.move();
-
-        //update visibility
-        foreach (Tile neighbor in tile.neighbors2)
-        {
-            neighbor.setDark(false);
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
-            neighbor.updateVisibility();
         }
     }
 }
