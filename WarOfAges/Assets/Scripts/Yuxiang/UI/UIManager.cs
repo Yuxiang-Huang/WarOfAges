@@ -280,7 +280,18 @@ public class UIManager : MonoBehaviour
         //only display buttons if my units
         if (myUnit)
         {
-            sellBtn.SetActive(true);
+            //Debug.Log(GameManager.instance.unsellableUnits.Count);
+
+            //foreach (IUnit u in GameManager.instance.unsellableUnits)
+            //{
+            //    Debug.Log(u);
+            //}
+
+            //Debug.Log(PlayerController.instance.unitSelected);
+
+            //if not unsellable due to spell
+            if (!GameManager.instance.unsellableUnits.Contains(unit))
+                sellBtn.SetActive(true);
 
             //able to upgrade if lower age
             if (unit.age < PlayerController.instance.age)

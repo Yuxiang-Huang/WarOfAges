@@ -39,7 +39,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     }
 
     [PunRPC]
-    public void Init(int playerID, int startingtTileX, int startingtTileY,
+    public virtual void Init(int playerID, int startingtTileX, int startingtTileY,
         string path, int age, int sellGold)
     {
         ownerID = playerID;

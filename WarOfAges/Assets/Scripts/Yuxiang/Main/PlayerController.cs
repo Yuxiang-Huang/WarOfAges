@@ -239,14 +239,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //else if a unit is on the tile
                     else if (highlighted.GetComponent<Tile>().unit != null)
                     {
-                        //don't show health bar
-                        highlighted.unit.setHealthBar(false);
+                        //select unit
+                        unitSelected = highlighted.GetComponent<Tile>().unit.gameObject.GetComponent<IUnit>();
 
                         //update info tab
                         UIManager.instance.updateInfoTab(highlighted.unit, highlighted.unit.ownerID == id);
 
-                        //select unit
-                        unitSelected = highlighted.GetComponent<Tile>().unit.gameObject.GetComponent<IUnit>();
+                        //don't show health bar
+                        unitSelected.setHealthBar(false);
 
                         //change color to show selection
                         unitSelected.setImage(Color.grey);
@@ -486,6 +486,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 tileList[i].updateVisibility();
             }
         }
+
+        //reset unsellable
+        GameManager.instance.unsellableUnits = new HashSet<IUnit>();
 
         foreach (SpawnInfo info in spawnList.Values)
         {

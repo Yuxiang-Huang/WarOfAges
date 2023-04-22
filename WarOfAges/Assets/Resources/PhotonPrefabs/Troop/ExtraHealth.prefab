@@ -84,9 +84,9 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   healFactor: 2
   tile: {fileID: 0}
-  speedUsed: 0
   speed: 1
   ship: {fileID: 0}
+  attacked: 0
 --- !u!1 &660742147429366953
 GameObject:
   m_ObjectHideFlags: 0

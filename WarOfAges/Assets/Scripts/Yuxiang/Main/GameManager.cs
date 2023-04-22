@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public HashSet<Tile> spellTiles = new();
 
+    public HashSet<IUnit> unsellableUnits = new();
+
     private void Awake()
     {
         instance = this;
