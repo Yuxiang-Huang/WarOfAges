@@ -86,4 +86,24 @@ public class ExtraView : Building
 
         base.checkDeath();
     }
+
+    public override void sell()
+    {
+        //check visibility
+        List<Tile> neighbors3 = TileManager.instance.findNeighbors3(tile);
+
+        foreach (Tile neighbor in neighbors3)
+        {
+            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+            neighbor.updateVisibility();
+        }
+
+        foreach (Tile neighbor in tile.neighbors2)
+        {
+            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+            neighbor.updateVisibility();
+        }
+
+        base.sell();
+    }
 }

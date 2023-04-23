@@ -146,8 +146,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     {
         if (health <= 0)
         {
-            tile.unit = null;
-
             foreach (Tile neighbor in tile.neighbors)
             {
                 neighbor.updateCanSpawn();
@@ -171,6 +169,11 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         UIManager.instance.updateGoldText();
 
         PlayerController.instance.allBuildings.Remove(this);
+
+        foreach (Tile neighbor in tile.neighbors)
+        {
+            neighbor.updateCanSpawn();
+        }
 
         destroy();
     }
