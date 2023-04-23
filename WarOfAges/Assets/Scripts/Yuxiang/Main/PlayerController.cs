@@ -712,9 +712,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateIncome()
     {
-        //territory income: 5 (x - 0.375 * playerNum * x^2 / mapSize)
-        int sum = (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
-            landTerritory * landTerritory / TileManager.instance.totalLandTiles));
+        ////territory income: 5 (x - 0.375 * playerNum * x^2 / mapSize)
+        //int sum = (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
+        //    landTerritory * landTerritory / TileManager.instance.totalLandTiles));
+
+        //territory income: total possible income times square root of percentage
+        int sum = (int) (
+            (Config.goldFactor * TileManager.instance.totalLandTiles) *
+            Mathf.Sqrt((float) landTerritory / TileManager.instance.totalLandTiles));
 
         //income from extra money
         foreach (Building building in allBuildings)
@@ -730,10 +735,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateMarginalIncome()
     {
-        return (int)(Config.goldFactor * ((landTerritory + 1) - Config.goldPercent * GameManager.instance.allPlayers.Count *
-            (landTerritory + 1) * (landTerritory + 1) / TileManager.instance.totalLandTiles))
-            - (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
-            landTerritory * landTerritory / TileManager.instance.totalLandTiles));
+        return (int) ((Config.goldFactor * TileManager.instance.totalLandTiles) *
+            (Mathf.Sqrt((float) (landTerritory + 1) / TileManager.instance.totalLandTiles) -
+             Mathf.Sqrt((float) landTerritory / TileManager.instance.totalLandTiles)));
     }
 
     #endregion
