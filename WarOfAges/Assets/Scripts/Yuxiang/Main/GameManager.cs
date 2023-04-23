@@ -314,6 +314,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             allPlayers.Add(allPlayers[0]);
             allPlayers.RemoveAt(0);
 
+            UIManager.instance.PV.RPC(nameof(UIManager.instance.endTurnRotate), RpcTarget.All);
+
             //ask every playercontroller owner to update their info
             foreach (PlayerController player in allPlayers)
             {

@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI incomeText;
     [SerializeField] TextMeshProUGUI marginalIncomeText;
+    [SerializeField] GameObject playerUIManagerParent;
     public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
     public Dictionary<Color, string> colorToString;
@@ -139,18 +140,26 @@ public class UIManager : MonoBehaviour
         Shop.SetActive(true);
 
         //Player list
-        for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
+        for (int i = 0; i < playerUIManagerList.Count; i++)
         {
-            //initialize
-            PlayerController curPlayer = GameManager.instance.allPlayersOriginal[i];
-            playerUIManagerList[i].gameObject.SetActive(true);
-            playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
-            curPlayer.PV.Owner.NickName, curPlayer.id);
-
-            //set gold text
-            if (curPlayer == PlayerController.instance)
+            if (i < GameManager.instance.allPlayersOriginal.Count)
             {
-                goldText = playerUIManagerList[i].goldText;
+                //initialize
+                PlayerController curPlayer = GameManager.instance.allPlayersOriginal[i];
+                playerUIManagerList[i].gameObject.SetActive(true);
+                playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
+                curPlayer.PV.Owner.NickName, curPlayer.id);
+
+                //set gold text
+                if (curPlayer == PlayerController.instance)
+                {
+                    goldText = playerUIManagerList[i].goldText;
+                }
+            }
+            else
+            {
+                //destroy for rotating
+                Destroy(playerUIManagerList[i].gameObject);
             }
         }
     }
@@ -265,6 +274,14 @@ public class UIManager : MonoBehaviour
         {
             readyIconList[index].GetComponent<Image>().color = Config.notReadyColor;
         }
+    }
+
+    [PunRPC]
+    public void endTurnRotate()
+    {
+        //different player start each turn
+        Transform toRotate = playerUIManagerParent.transform.GetChild(0);
+        toRotate.SetSiblingIndex(playerUIManagerParent.transform.childCount - 1);
     }
 
     #endregion
@@ -390,7 +407,7 @@ public class UIManager : MonoBehaviour
         {
             marginalIncomeText.text = marginalIncome.ToString();
         }
-    } 
+    }
 
     #endregion
 
