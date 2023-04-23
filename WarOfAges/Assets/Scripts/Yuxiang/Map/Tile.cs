@@ -85,6 +85,11 @@ public class Tile : MonoBehaviour
                     updateVisibility();
                 }
             }
+            else
+            {
+                //new land conquered
+                TileManager.instance.totalLandConquered++;
+            }
 
             //add this land to new owner's territory
             ownerID = newOwnerID;
@@ -282,6 +287,8 @@ public class Tile : MonoBehaviour
 
                 updateVisibility();
             }
+
+            TileManager.instance.totalLandConquered--;
         }
 
         ownerID = -1;

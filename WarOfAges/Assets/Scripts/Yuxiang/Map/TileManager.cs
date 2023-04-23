@@ -22,6 +22,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     public const float tileSize = 1;
 
     public int totalLandTiles;
+    public int totalLandConquered;
 
     [SerializeField] GameObject landTilePrefab;
     [SerializeField] GameObject waterTilePrefab;

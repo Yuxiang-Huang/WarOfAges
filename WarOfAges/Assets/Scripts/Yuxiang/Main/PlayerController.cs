@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -712,14 +713,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateIncome()
     {
-        ////territory income: 5 (x - 0.375 * playerNum * x^2 / mapSize)
-        //int sum = (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
-        //    landTerritory * landTerritory / TileManager.instance.totalLandTiles));
-
-        //territory income: total possible income times square root of percentage
-        int sum = (int) (
-            (Config.goldFactor * TileManager.instance.totalLandTiles) *
-            Mathf.Sqrt((float) landTerritory / TileManager.instance.totalLandTiles));
+        int sum = calculateLandIncome(landTerritory, TileManager.instance.totalLandConquered);
 
         //income from extra money
         foreach (Building building in allBuildings)
@@ -735,9 +729,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public int calculateMarginalIncome()
     {
-        return (int) ((Config.goldFactor * TileManager.instance.totalLandTiles) *
-            (Mathf.Sqrt((float) (landTerritory + 1) / TileManager.instance.totalLandTiles) -
-             Mathf.Sqrt((float) landTerritory / TileManager.instance.totalLandTiles)));
+        int cur = calculateLandIncome(landTerritory, TileManager.instance.totalLandConquered);
+
+        int next = calculateLandIncome(landTerritory + 1, TileManager.instance.totalLandConquered + 1);
+
+        return next - cur;
+    }
+
+    public int calculateLandIncome(int landNum, int landConquered)
+    {
+        ////territory income: 5 (x - 0.375 * playerNum * x^2 / mapSize)
+        //int sum = (int)(Config.goldFactor * (landTerritory - Config.goldPercent * GameManager.instance.allPlayers.Count *
+        //    landTerritory * landTerritory / TileManager.instance.totalLandTiles));
+
+        //territory income: total possible income * square root of land percentage * total conquered land percent
+        return (int)((
+            (Config.goldFactor * TileManager.instance.totalLandTiles) *
+            Mathf.Sqrt((float)landNum / TileManager.instance.totalLandTiles)) *
+            ((float)landConquered / TileManager.instance.totalLandTiles));
     }
 
     #endregion
