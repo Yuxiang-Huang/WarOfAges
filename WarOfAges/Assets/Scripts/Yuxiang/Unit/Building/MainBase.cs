@@ -13,4 +13,11 @@ public class MainBase : Building
             neigbhor.updateStatus(ownerID, null);
         }
     }
+
+    public override void sell()
+    {
+        base.sell();
+
+        PlayerController.instance.end();
+    }
 }

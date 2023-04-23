@@ -493,7 +493,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         PlayerController.instance.allTroops.Remove(this);
 
-        kill();
+        destroy();
 
         PlayerController.instance.mode = "select";
     }
@@ -534,6 +534,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         return healFactor * (int) (Config.basicGoldUnit * Mathf.Pow(Config.ageCostFactor, age));
     }
 
+    //for losing
     public void kill()
     {
         health = 0;

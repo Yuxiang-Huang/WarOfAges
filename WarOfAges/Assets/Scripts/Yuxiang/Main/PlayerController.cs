@@ -503,7 +503,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //upgrade and sell for other players
         foreach (IUnit unit in toSell)
         {
-
+            unit.PV.RPC("destroy", RpcTarget.Others);
         }
 
         foreach (IUnit unit in toUpgrade)
@@ -782,6 +782,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             building.kill();
         }
+
+        mainBase.PV.RPC(nameof(mainBase.destroy), RpcTarget.Others);
 
         //clear spawnList
         foreach (SpawnInfo spawnInfo in spawnList.Values)

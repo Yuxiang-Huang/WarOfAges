@@ -165,19 +165,14 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         Destroy(this.gameObject);
     }
 
-    public void sell()
+    public virtual void sell()
     {
         PlayerController.instance.gold += sellGold;
         UIManager.instance.updateGoldText();
 
         PlayerController.instance.allBuildings.Remove(this);
 
-        if (this.gameObject.GetComponent<MainBase>() != null)
-        {
-            PlayerController.instance.end();
-        }
-
-        kill();
+        destroy();
     }
 
     public bool notFullHealth()
@@ -221,6 +216,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
     }
 
+    //for losing
     public void kill()
     {
         health = 0;

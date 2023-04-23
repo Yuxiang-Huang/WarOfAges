@@ -349,6 +349,7 @@ public class UIManager : MonoBehaviour
         if (PlayerController.instance.unitSelected != null)
         {
             PlayerController.instance.unitSelected.sell();
+            PlayerController.instance.toSell.Add(PlayerController.instance.unitSelected);
             PlayerController.instance.unitSelected = null;
         }
         //despawn
