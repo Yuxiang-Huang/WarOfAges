@@ -376,7 +376,8 @@ public class UIManager : MonoBehaviour
         {
             PlayerController.instance.gold -= upgradeGold;
             updateGoldText();
-            PlayerController.instance.unitSelected.PV.RPC("upgrade", RpcTarget.All);
+            PlayerController.instance.unitSelected.upgrade();
+            PlayerController.instance.toUpgrade.Add(PlayerController.instance.unitSelected);
         }
     }
 

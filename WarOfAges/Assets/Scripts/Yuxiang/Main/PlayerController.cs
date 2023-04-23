@@ -58,6 +58,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public int age;
     public int goldNeedToAdvance;
 
+    [Header("Actions")]
+    public List<IUnit> toSell = new List<IUnit>();
+    public List<IUnit> toUpgrade = new List<IUnit>();
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -496,6 +500,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
 
+        //upgrade and sell for other players
+        foreach (IUnit unit in toSell)
+        {
+
+        }
+
+        foreach (IUnit unit in toUpgrade)
+        {
+            unit.PV.RPC(nameof(unit.upgrade), RpcTarget.Others);
+        }
+
+        toSell = new List<IUnit>();
+        toUpgrade = new List<IUnit>();
+
         //reset unsellable
         GameManager.instance.unsellableUnits = new HashSet<IUnit>();
 
@@ -793,6 +811,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         gold = 0;
         territory = new HashSet<Tile>();
         UIManager.instance.updateGoldText();
+
+        toSell = new List<IUnit>();
+        toUpgrade = new List<IUnit>();
 
         //only end turn if quit
         if (!GameManager.instance.turnEnded)
