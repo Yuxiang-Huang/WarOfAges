@@ -484,6 +484,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void spawn()
     {
+        if (Config.debugTestMode)
+            Debug.Log("spawn");
+
         //income
         if (!lost)
         {
@@ -501,14 +504,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         //upgrade and sell for other players
-        foreach (IUnit unit in toSell)
-        {
-            unit.PV.RPC("destroy", RpcTarget.Others);
-        }
-
         foreach (IUnit unit in toUpgrade)
         {
             unit.PV.RPC(nameof(unit.upgrade), RpcTarget.Others);
+        }
+
+        foreach (IUnit unit in toSell)
+        {
+            unit.PV.RPC("destroy", RpcTarget.Others);
         }
 
         toSell = new List<IUnit>();
@@ -586,6 +589,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void troopMove()
     {
+        if (Config.debugTestMode)
+            Debug.Log("move");
+
         //spawn spell now after all troops are spawned
         foreach (SpawnInfo info in spawnListSpell.Values)
         {
@@ -636,6 +642,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void attack()
     {
+        if (Config.debugTestMode)
+            Debug.Log("attack");
+
         foreach (Troop troop in allTroops)
         {
             troop.attack();
@@ -666,6 +675,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void checkDeath()
     {
+        if (Config.debugTestMode)
+            Debug.Log("check death");
+
         //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
