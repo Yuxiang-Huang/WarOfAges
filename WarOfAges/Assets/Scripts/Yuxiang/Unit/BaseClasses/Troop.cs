@@ -311,7 +311,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             ship.tile = tile;
             ship = null;
         }
-
         //leave land
         else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
         {
@@ -324,6 +323,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 //board a ship
                 ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
             }
+        }
+
+        if (Config.debugTestMode)
+        {
+            Debug.Log("update tile");
         }
 
         //update tile
@@ -341,6 +345,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             {
                 neighbor.tryWaterConquer();
             }
+        }
+
+        if (Config.debugTestMode)
+        {
+            Debug.Log("animate movement");
         }
 
         //owner so animate movement
