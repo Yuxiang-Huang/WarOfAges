@@ -19,6 +19,8 @@ public class SpawnInfo
 
     public int age;
 
+    public Tile targetPathTile;
+
     public SpawnInfo(Tile spawnTile, string unitName, IUnit unit, GameObject spawnImage, int age, int spawnGold, int sellGold)
     {
         this.spawnTile = spawnTile;
@@ -28,5 +30,10 @@ public class SpawnInfo
         this.sellGold = sellGold;
         this.unit = unit;
         this.age = age;
+    }
+
+    public void setSpawnImageColor(Color color)
+    {
+        spawnImage.transform.GetChild(Config.numAges - age - 1).gameObject.GetComponent<SpriteRenderer>().color = color;
     }
 }

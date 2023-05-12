@@ -1,18 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Photon.Pun;
 using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using Photon.Realtime;
-using Unity.VisualScripting;
-using static UnityEngine.UI.CanvasScaler;
-using System;
-using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -202,6 +193,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //highlight any revealed
             if (highlighted != newHighlighted)
             {
+                //change previous
                 if (highlighted != null)
                 {
                     highlighted.highlight(false);
@@ -212,6 +204,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
                 highlighted = newHighlighted;
 
+                //change current
                 if (highlighted != null && !highlighted.dark.activeSelf)
                 {
                     highlighted.highlight(true);
@@ -239,6 +232,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     unitSelected.setImage(Color.white);
                     unitSelected = null;
                 }
+                if (spawnInfoSelected != null)
+                {
+                    spawnInfoSelected.setSpawnImageColor(Color.white);
+                    spawnInfoSelected = null;
+                }
 
                 //if a tile is highlighted
                 if (highlighted != null)
@@ -246,8 +244,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //if I am going to spawn a unit here
                     if (spawnList.ContainsKey(highlighted.pos))
                     {
+                        //select spawn info
                         spawnInfoSelected = spawnList[highlighted.pos];
+
+                        //update info tab
                         UIManager.instance.updateInfoTab(spawnInfoSelected);
+
+                        //change color to show selection
+                        spawnInfoSelected.setSpawnImageColor(Color.grey);
+
+                        //if movable and turn not ended
+                        if (spawnInfoSelected.unit.gameObject.CompareTag("Troop") && !turnEnded)
+                        {
+                            mode = "move";
+                        }
                     }
                     //else if a unit is on the tile
                     else if (highlighted.GetComponent<Tile>().unit != null)
@@ -268,7 +278,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         if (highlighted.GetComponent<Tile>().unit.ownerID == id)
                         {
                             //if movable and turn not ended
-                            if ((highlighted.GetComponent<Tile>().unit.gameObject.CompareTag("Troop"))
+                            if (highlighted.GetComponent<Tile>().unit.gameObject.CompareTag("Troop")
                                 && !turnEnded)
                             {
                                 mode = "move";
@@ -301,16 +311,35 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             if (Input.GetMouseButtonDown(0))
             {
-                //findPath
-                if (highlighted != null)
+                //for existing troop
+                if (spawnInfoSelected == null)
                 {
-                    highlighted.highlight(false);
-                    unitSelected.gameObject.GetComponent<Troop>().findPath(highlighted.GetComponent<Tile>());
+                    //findPath
+                    if (highlighted != null)
+                    {
+                        highlighted.highlight(false);
+                        unitSelected.gameObject.GetComponent<Troop>().findPath(highlighted.GetComponent<Tile>());
+                    }
+
+                    //deselect
+                    unitSelected.setImage(Color.white);
+                    unitSelected = null;
+                }
+                //for spawn troops
+                else
+                {
+                    //findPath
+                    if (highlighted != null)
+                    {
+                        highlighted.highlight(false);
+                        spawnInfoSelected.targetPathTile = highlighted;
+                    }
+
+                    //deselect
+                    spawnInfoSelected.setSpawnImageColor(Config.spawnImageColor);
+                    spawnInfoSelected = null;
                 }
 
-                //deselect
-                unitSelected.setImage(Color.white);
-                unitSelected = null;
                 UIManager.instance.hideInfoTab();
 
                 highlighted = null;
@@ -508,9 +537,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void spawn()
     {
-        if (Config.debugTestMode)
-            Debug.Log("spawn");
-
         //income
         if (!lost)
         {
@@ -578,6 +604,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         id, info.spawnTile.pos.x, info.spawnTile.pos.y,
                         spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
                         info.unitName, info.age, info.sellGold);
+
+                    //transfer path
+                    if (info.targetPathTile != null)
+                    {
+                        newUnit.GetComponent<Troop>().findPath(info.targetPathTile);
+                    }
                 }
                 else if (newUnit.CompareTag("Building"))
                 {
@@ -613,9 +645,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void troopMove()
     {
-        if (Config.debugTestMode)
-            Debug.Log("move");
-
         //spawn spell now after all troops are spawned
         foreach (SpawnInfo info in spawnListSpell.Values)
         {
@@ -666,9 +695,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void attack()
     {
-        if (Config.debugTestMode)
-            Debug.Log("attack");
-
         foreach (Troop troop in allTroops)
         {
             troop.attack();
@@ -699,9 +725,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void checkDeath()
     {
-        if (Config.debugTestMode)
-            Debug.Log("check death");
-
         //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {

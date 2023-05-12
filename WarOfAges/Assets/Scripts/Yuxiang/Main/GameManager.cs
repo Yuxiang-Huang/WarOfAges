@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using System.Linq;
 using System.IO;
