@@ -4,7 +4,7 @@ public class Config
 {
     //test modes
     public static bool offlineMode = false;
-    public static bool sameSpawnPlaceTestMode = false;
+    public static bool sameSpawnPlaceTestMode = true;
     public static bool moreMoneyTestMode = false;
     public static bool debugTestMode = false;
 

@@ -311,10 +311,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             turnEnded = false;
 
             //different player start every turn
+            allPlayers[0].startFirstIndicator(false);
             allPlayers.Add(allPlayers[0]);
             allPlayers.RemoveAt(0);
-
-            UIManager.instance.PV.RPC(nameof(UIManager.instance.endTurnRotate), RpcTarget.All);
+            allPlayers[0].startFirstIndicator(true);
 
             //ask every playercontroller owner to update their info
             foreach (PlayerController player in allPlayers)

@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public MainBase mainBase;
 
+    public PlayerUIManager playerUIManager;
+
     [Header("Mouse Interaction")]
     Tile highlighted;
     public string mode;
@@ -777,6 +779,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
             (Config.goldFactor * TileManager.instance.totalLandTiles) *
             Mathf.Sqrt((float)landNum / TileManager.instance.totalLandTiles)) *
             ((float)landConquered / TileManager.instance.totalLandTiles));
+    }
+
+    public void startFirstIndicator(bool status)
+    {
+        playerUIManager.PV.RPC("setOrderIndicator", RpcTarget.All, status);
     }
 
     #endregion

@@ -18,6 +18,8 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI troopText;
     [SerializeField] TextMeshProUGUI buildingText;
 
+    [SerializeField] GameObject orderIndicator;
+
     public Slider healthbar;
 
     private void Awake()
@@ -28,6 +30,7 @@ public class PlayerUIManager : MonoBehaviour
     [PunRPC]
     public void initilize(string name, int colorIndex)
     {
+        gameObject.SetActive(true);
         nameText.text = name;
         sideColor.GetComponent<Image>().color = TileManager.instance.ownerColors[colorIndex];
     }
@@ -42,4 +45,10 @@ public class PlayerUIManager : MonoBehaviour
         buildingText.text = numBuilding.ToString();
         healthbar.value = healthPercent;
     }
+
+    [PunRPC]
+    public void setOrderIndicator(bool status)
+    {
+        orderIndicator.SetActive(status);
+    } 
 }

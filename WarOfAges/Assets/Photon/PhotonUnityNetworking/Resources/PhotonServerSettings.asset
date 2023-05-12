@@ -97,6 +97,7 @@ MonoBehaviour:
   - setIncomeText
   - heal
   - endTurnRotate
+  - setOrderIndicator
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

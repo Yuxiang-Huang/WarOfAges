@@ -140,33 +140,21 @@ public class UIManager : MonoBehaviour
         Shop.SetActive(true);
 
         //Player list
-        for (int i = 0; i < playerUIManagerList.Count; i++)
-        {
-            if (i < GameManager.instance.allPlayersOriginal.Count)
-            {
-                //initialize
-                PlayerController curPlayer = GameManager.instance.allPlayersOriginal[i];
-                playerUIManagerList[i].gameObject.SetActive(true);
-                playerUIManagerList[i].PV.RPC("initilize", RpcTarget.All,
-                curPlayer.PV.Owner.NickName, curPlayer.id);
+                
+        //set gold text
+        goldText = PlayerController.instance.playerUIManager.goldText;
 
-                //set gold text
-                if (curPlayer == PlayerController.instance)
-                {
-                    goldText = playerUIManagerList[i].goldText;
-                }
-            }
-            else
-            {
-                //destroy for rotating
-                Destroy(playerUIManagerList[i].gameObject);
-            }
-        }
+        PlayerController.instance.playerUIManager.PV.RPC("initilize", RpcTarget.All,
+        PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
+
+        //first player start first in the first turn
+        if (PlayerController.instance.id != 0)
+            PlayerController.instance.playerUIManager.PV.RPC("setOrderIndicator", RpcTarget.All, false);
     }
 
     #endregion
 
-    #region Turn (shouldn't be call by buttons)
+    #region Turn (shouldn't be call by buttons) 
 
     //call by startTurn in gameManager
     public void startTurnUI()
@@ -274,14 +262,6 @@ public class UIManager : MonoBehaviour
         {
             readyIconList[index].GetComponent<Image>().color = Config.notReadyColor;
         }
-    }
-
-    [PunRPC]
-    public void endTurnRotate()
-    {
-        //different player start each turn
-        Transform toRotate = playerUIManagerParent.transform.GetChild(0);
-        toRotate.SetSiblingIndex(playerUIManagerParent.transform.childCount - 1);
     }
 
     #endregion

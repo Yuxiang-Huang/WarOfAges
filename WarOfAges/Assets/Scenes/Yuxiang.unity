@@ -7627,10 +7627,10 @@ MonoBehaviour:
   marginalIncomeText: {fileID: 1433238593}
   playerUIManagerParent: {fileID: 262769865}
   playerUIManagerList:
-  - {fileID: 1268171187}
-  - {fileID: 1936620265}
-  - {fileID: 1708768071}
   - {fileID: 6950465278614329760}
+  - {fileID: 1708768071}
+  - {fileID: 1936620265}
+  - {fileID: 1268171187}
   readyIconList:
   - {fileID: 406456450}
   - {fileID: 661215738}
