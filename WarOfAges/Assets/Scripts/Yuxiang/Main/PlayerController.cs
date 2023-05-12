@@ -333,6 +333,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         highlighted.highlight(false);
                         spawnInfoSelected.targetPathTile = highlighted;
+
+                        spawnInfoSelected.unit.gameObject.GetComponent<Troop>().tile = spawnInfoSelected.spawnTile;
+
+                        spawnInfoSelected.unit.gameObject.GetComponent<Troop>().displayArrowForSpawn(
+                            spawnInfoSelected.spawnTile, highlighted);
                     }
 
                     //deselect
@@ -582,6 +587,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 if (newUnit.CompareTag("Troop"))
                 {
                     allTroops.Add(newUnit.GetComponent<Troop>());
+
+                    //destroy arrowed used for path finding
+                    info.unit.gameObject.GetComponent<Troop>().tile = info.spawnTile;
+                    info.unit.gameObject.GetComponent<Troop>().findPath(info.spawnTile);
+                    info.unit.gameObject.GetComponent<Troop>().tile = null;
 
                     //a ship is spawned
                     if (newUnit.GetComponent<Ship>() != null)

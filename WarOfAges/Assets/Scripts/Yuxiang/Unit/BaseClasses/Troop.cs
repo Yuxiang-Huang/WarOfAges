@@ -129,8 +129,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //initiated a queue
         Queue<List<Tile>> allPath = new Queue<List<Tile>>();
 
-        List<Tile> root = new List<Tile>();
-        root.Add(tile);
+        List<Tile> root = new () { tile };
 
         allPath.Enqueue(root);
 
@@ -407,6 +406,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                     ship != null ||
                     (cur.unit != null && cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID)));
         }
+    }
+
+    public void displayArrowForSpawn(Tile location, Tile target)
+    {
+        findPath(target);
+
+        displayArrow();
+
+        arrow.transform.position = location.transform.position;
     }
 
     #endregion
