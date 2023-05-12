@@ -10,6 +10,9 @@ using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using Unity.VisualScripting;
+using static UnityEngine.UI.CanvasScaler;
+using System;
+using UnityEngine.XR;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -411,25 +414,42 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //for troops
             if (spawnUnit.CompareTag("Troop"))
             {
-                //can only spawn on spawnable tiles and it had to be a land tile with no unit
-                //or on a ship
-                //or a ship on water
-                if (spawnable[curTile.pos.x, curTile.pos.y] &&
-                    (
-                    (spawnUnit.GetComponent<Ship>() == null &&
-                    curTile.terrain == "land"
-                    && curTile.unit == null)
-                    ||
-                    (curTile.unit != null && curTile.unit.gameObject.GetComponent<Ship>() != null)
-                    ||
-                    (spawnUnit.GetComponent<Ship>() != null
-                    && curTile.terrain == "water")))
+                //if not a ship
+                if (spawnUnit.GetComponent<Ship>() == null)
                 {
-                    return true;
+                    //can only spawn on spawnable tiles 
+                    if (spawnable[curTile.pos.x, curTile.pos.y])
+                    {
+                        //a land tile with no unit
+                        if (curTile.terrain == "land" && curTile.unit == null)
+                        {
+                            return true;
+                        }
+                        //on a ship
+                        else if (curTile.unit != null && curTile.unit.gameObject.GetComponent<Ship>() != null){
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return false;
+                    //only requirement of ship now is to be on water 
+                    if (curTile.terrain == "water")
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
             }
             //for buildings only need to be a land tile and no unit there
