@@ -857,8 +857,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             building.kill();
         }
 
-        mainBase.PV.RPC(nameof(mainBase.destroy), RpcTarget.Others);
-
         //clear spawnList
         foreach (SpawnInfo spawnInfo in spawnList.Values)
         {

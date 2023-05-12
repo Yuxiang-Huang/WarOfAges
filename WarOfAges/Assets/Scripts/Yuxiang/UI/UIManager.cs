@@ -333,6 +333,15 @@ public class UIManager : MonoBehaviour
         {
             SpawnInfo cur = PlayerController.instance.spawnInfoSelected;
 
+            //destroy arrow if necessary
+            Troop troopScript = cur.unit.gameObject.GetComponent<Troop>();
+            if (troopScript != null)
+            {
+                troopScript.tile = cur.spawnTile;
+                troopScript.findPath(cur.spawnTile);
+                troopScript.tile = null;
+            }
+
             //remove from list
             Destroy(cur.spawnImage);
             PlayerController.instance.spawnList.Remove(cur.spawnTile.pos);
