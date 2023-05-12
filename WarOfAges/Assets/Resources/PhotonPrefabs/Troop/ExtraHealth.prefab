@@ -83,7 +83,6 @@ MonoBehaviour:
   damage: 1
   direction: {x: 0, y: 0}
   healFactor: 2
-  tile: {fileID: 0}
   speed: 1
   ship: {fileID: 0}
   attacked: 0

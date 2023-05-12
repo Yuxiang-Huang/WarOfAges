@@ -20,10 +20,10 @@ public class ExtraHealth : Troop
             {
                 attacked = true;
 
-                if (arrow != null)
-                {
-                    Destroy(arrow);
-                }
+                //if (arrow != null)
+                //{
+                //    Destroy(arrow);
+                //}
 
                 if (curTile.unit.health > 0)
                 {
@@ -48,11 +48,10 @@ public class ExtraHealth : Troop
         {
             speedUsed = speed;
             attacked = false;
+            StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
         }
 
         base.move();
-
-        displayArrow();
     }
 
     public override void displayArrow()

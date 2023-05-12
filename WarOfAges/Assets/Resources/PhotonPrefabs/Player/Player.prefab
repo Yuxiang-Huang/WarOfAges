@@ -77,6 +77,7 @@ MonoBehaviour:
   lost: 0
   turnEnded: 0
   mainBase: {fileID: 0}
+  playerUIManager: {fileID: 0}
   mode: 
   allTroops: []
   allShips: []

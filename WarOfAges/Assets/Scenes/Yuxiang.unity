@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &19672795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6411,16 +6411,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Troop: 2\xD7 health as melee. Deals double damage when didn't move
-        this turn. Can't move if attacked this turn."
+      value: "Troop: 2\xD7 health as melee. Attack all enemies within 1 tile radius.
+        Deals double damage when didn't move this turn. Can't move if attacked this
+        turn."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 32
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
-      value: 32
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 8412051663507282502, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_TargetGraphic
