@@ -146,10 +146,6 @@ public class UIManager : MonoBehaviour
 
         PlayerController.instance.playerUIManager.PV.RPC("initilize", RpcTarget.All,
         PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
-
-        //first player start first in the first turn
-        if (PlayerController.instance.id != 0)
-            PlayerController.instance.playerUIManager.PV.RPC("setOrderIndicator", RpcTarget.All, false);
     }
 
     #endregion

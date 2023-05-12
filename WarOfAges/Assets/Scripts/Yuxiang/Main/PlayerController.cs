@@ -121,6 +121,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void startGame_all(int newID)
     {
         id = newID;
+
+        playerUIManager = UIManager.instance.playerUIManagerList[newID];
     }
 
     #endregion
