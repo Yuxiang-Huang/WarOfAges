@@ -206,6 +206,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void move()
     {
+        if (Config.debugTestMode)
+            Debug.Log("method move");
+
         //moved in this turn already
         if (speedUsed == speed) return;
 
@@ -259,8 +262,16 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         else
         {
             //still conquer water when not move if not ship
-            if (gameObject.GetComponent<Ship>() == null)
-                PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
+            if (gameObject != null)
+            {
+                if (gameObject.GetComponent<Ship>() == null)
+                    PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
+            }
+            else
+            {
+                Debug.Log("undestroyed script bug?");
+            }
+                
         }
     }
 
@@ -288,6 +299,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [PunRPC]
     public virtual void moveUpdate_RPC(int nextTileX, int nextTileY)
     {
+        if (Config.debugTestMode)
+            Debug.Log("method moveUpdate_RPC");
+
         //leave water
         if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
@@ -301,8 +315,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //leave land
         else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
         {
-            //board a ship
-            ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+            if (TileManager.instance.tiles[nextTileX, nextTileY].unit == null)
+            {
+                Debug.Log("no ship exist bug?");
+            }
+            else
+            {
+                //board a ship
+                ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+            }
         }
 
         //update tile

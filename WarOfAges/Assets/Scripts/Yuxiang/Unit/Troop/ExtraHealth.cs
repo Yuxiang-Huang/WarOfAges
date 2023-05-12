@@ -20,10 +20,10 @@ public class ExtraHealth : Troop
             {
                 attacked = true;
 
-                //if (arrow != null)
-                //{
-                //    Destroy(arrow);
-                //}
+                if (arrow != null)
+                {
+                    Destroy(arrow);
+                }
 
                 if (curTile.unit.health > 0)
                 {

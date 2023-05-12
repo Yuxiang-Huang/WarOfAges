@@ -673,16 +673,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
 
+        if (Config.debugTestMode)
+            Debug.Log("ship moving");
+
         //ships move first
         foreach (Ship ship in allShips)
         {
             ship.move();
         }
 
+        if (Config.debugTestMode)
+            Debug.Log("troop moving");
+
         foreach (Troop troop in allTroops)
         {
             troop.move();
         }
+
+        if (Config.debugTestMode)
+            Debug.Log("troop following");
 
         //recalculate path for followers
         foreach (Troop troop in allTroops)
