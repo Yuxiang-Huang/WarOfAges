@@ -21,6 +21,8 @@ public class SpawnInfo
 
     public Tile targetPathTile;
 
+    public GameObject arrow;
+
     public SpawnInfo(Tile spawnTile, string unitName, IUnit unit, GameObject spawnImage, int age, int spawnGold, int sellGold)
     {
         this.spawnTile = spawnTile;

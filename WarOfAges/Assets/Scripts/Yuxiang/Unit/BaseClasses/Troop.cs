@@ -37,7 +37,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     [Header("Movement")]
     protected List<Tile> path = new List<Tile>();
     public Tile tile { get; set; }
-    protected GameObject arrow;
+    public GameObject arrow;
 
     protected int speedUsed;
     [SerializeField] protected int speed;
@@ -440,6 +440,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public void displayArrowForSpawn(Tile location, Tile target)
     {
+        tile = location;
+
         findPath(target);
 
         displayArrow();

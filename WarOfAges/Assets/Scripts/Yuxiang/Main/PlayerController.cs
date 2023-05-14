@@ -328,16 +328,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 //for spawn troops
                 else
                 {
-                    //findPath
                     if (highlighted != null)
                     {
                         highlighted.highlight(false);
                         spawnInfoSelected.targetPathTile = highlighted;
 
-                        spawnInfoSelected.unit.gameObject.GetComponent<Troop>().tile = spawnInfoSelected.spawnTile;
-
-                        spawnInfoSelected.unit.gameObject.GetComponent<Troop>().displayArrowForSpawn(
-                            spawnInfoSelected.spawnTile, highlighted);
+                        //display arrow
+                        Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
+                        cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, highlighted);
+                        spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                        Destroy(cur.arrow);
                     }
 
                     //deselect
@@ -589,9 +589,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     allTroops.Add(newUnit.GetComponent<Troop>());
 
                     //destroy arrowed used for path finding
-                    info.unit.gameObject.GetComponent<Troop>().tile = info.spawnTile;
-                    info.unit.gameObject.GetComponent<Troop>().findPath(info.spawnTile);
-                    info.unit.gameObject.GetComponent<Troop>().tile = null;
+                    Destroy(info.arrow);
 
                     //a ship is spawned
                     if (newUnit.GetComponent<Ship>() != null)
