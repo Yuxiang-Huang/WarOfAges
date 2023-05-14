@@ -3,7 +3,7 @@ using UnityEngine;
 public class Config
 {
     //test modes
-    public static bool offlineMode = true;
+    public static bool offlineMode = false;
     public static bool sameSpawnPlaceTestMode = true;
     public static bool moreMoneyTestMode = true;
     public static bool debugTestMode = false;
@@ -19,8 +19,7 @@ public class Config
 
     //gold
     public static int basicGoldUnit = 10;
-    public static int goldFactor = 5; //each land give this many gold each turn
-    public static float goldPercent = 0.375f; //1 / (4 * goldPercent) gives percent of land player can conquer before gold goes down
+    public static int goldFactor = 5; //this factor times total number of land = total possible income
 
     //default map setting
     public static string defaultMode = "Water";

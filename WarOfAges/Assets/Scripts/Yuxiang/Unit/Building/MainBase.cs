@@ -18,6 +18,8 @@ public class MainBase : Building
     {
         base.sell();
 
+        GameManager.instance.endTurn();
+
         PlayerController.instance.end();
     }
 }

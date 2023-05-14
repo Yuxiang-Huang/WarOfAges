@@ -554,7 +554,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             gold += calculateIncome();
         }
 
-        //update visibility if didn't lost
+        //update visibility, upgrade and sell if didn't lost
         if (!lost)
         {
             List<Tile> tileList = visibleTiles.ToList();
@@ -562,21 +562,21 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 tileList[i].updateVisibility();
             }
-        }
 
-        //upgrade and sell for other players
-        foreach (IUnit unit in toUpgrade)
-        {
-            unit.PV.RPC(nameof(unit.upgrade), RpcTarget.Others);
-        }
+            //upgrade and sell for other players
+            foreach (IUnit unit in toUpgrade)
+            {
+                unit.PV.RPC(nameof(unit.upgrade), RpcTarget.Others);
+            }
 
-        foreach (IUnit unit in toSell)
-        {
-            unit.PV.RPC("destroy", RpcTarget.Others);
-        }
+            foreach (IUnit unit in toSell)
+            {
+                unit.PV.RPC("destroy", RpcTarget.Others);
+            }
 
-        toSell = new List<IUnit>();
-        toUpgrade = new List<IUnit>();
+            toSell = new List<IUnit>();
+            toUpgrade = new List<IUnit>();
+        }
 
         //reset unsellable
         GameManager.instance.unsellableUnits = new HashSet<IUnit>();
@@ -901,10 +901,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         toSell = new List<IUnit>();
         toUpgrade = new List<IUnit>();
-
-        //only end turn if quit
-        if (!GameManager.instance.turnEnded)
-            GameManager.instance.endTurn();
 
         UIManager.instance.lost();
 
