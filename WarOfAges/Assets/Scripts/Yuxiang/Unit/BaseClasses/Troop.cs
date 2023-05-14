@@ -446,7 +446,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         displayArrow();
 
-        arrow.transform.position = location.transform.position;
+        if (arrow != null)
+            arrow.transform.position = location.transform.position;
     }
 
     #endregion

@@ -334,10 +334,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
                         spawnInfoSelected.targetPathTile = highlighted;
 
                         //display arrow
+                        if (spawnInfoSelected.arrow != null)
+                            Destroy(spawnInfoSelected.arrow);
+
                         Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
                         cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, highlighted);
-                        spawnInfoSelected.arrow = Instantiate(cur.arrow);
-                        Destroy(cur.arrow);
+                        if (cur.arrow != null)
+                        {
+                            spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                            Destroy(cur.arrow);
+                        }
                     }
 
                     //deselect
