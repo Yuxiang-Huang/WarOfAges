@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //reveal starting territory
         Tile[,] tiles = TileManager.instance.tiles;
 
+        Debug.Log(spawnLocation);
+
         Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
 
         root.setDark(false);
@@ -246,6 +248,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         //select spawn info
                         spawnInfoSelected = spawnList[highlighted.pos];
+
+                        //don't show health bar
+                        if (spawnInfoSelected.spawnTile.unit != null)
+                            spawnInfoSelected.spawnTile.unit.setHealthBar(false);
 
                         //update info tab
                         UIManager.instance.updateInfoTab(spawnInfoSelected);
@@ -404,6 +410,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         spawnListSpell.Add(highlighted.pos, spawnInfo);
                     }
+
+                    //add ship if necessary
+                    if (spawnInfo.unit.gameObject.CompareTag("Troop") && spawnInfo.unit.gameObject.GetComponent<Ship>() == null)
+                    {
+                        if (spawnInfo.spawnTile.unit != null && spawnInfo.spawnTile.terrain == "water")
+                        {
+                            spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.unit.gameObject.GetComponent<Ship>();
+                        }
+                    }
+                   
 
                     //reset to prevent double spawn
                     highlighted.highlight(false);
@@ -624,6 +640,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         newUnit.GetComponent<Troop>().findPath(info.targetPathTile);
                     }
+
+                    //reset unit
+                    if (info.unit.gameObject.TryGetComponent<Troop>(out var mayeTroop))
+                        mayeTroop.ship = null;
                 }
                 else if (newUnit.CompareTag("Building"))
                 {

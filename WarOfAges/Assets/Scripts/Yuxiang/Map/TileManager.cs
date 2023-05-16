@@ -228,6 +228,7 @@ public class TileManager : MonoBehaviourPunCallbacks
             }
         }
 
+        //update spawnLocations
         spawnLocations.Add(loxPair);
         spawnLocations.Add(hixPair);
         spawnLocations.Add(loxWithLoyPair);

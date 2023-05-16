@@ -162,8 +162,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                         visited[curTile.pos.x, curTile.pos.y] = true;
 
                         //check this tile dist
-                        List<Tile> dup = new List<Tile>(cur);
-                        dup.Add(curTile);
+                        List<Tile> dup = new List<Tile>(cur)
+                        {
+                            curTile
+                        };
 
                         float curDist = TileManager.instance.dist(target, curTile);
 
