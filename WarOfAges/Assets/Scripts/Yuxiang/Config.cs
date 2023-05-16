@@ -22,11 +22,12 @@ public class Config
     public static int goldFactor = 5; //this factor times total number of land = total possible income
 
     //default map setting
-    public static string defaultMode = "Water";
+    public static string defaultMode = "Land";
     public static int defaultStartingTime = 20;
     public static int defaultTimeInc = 10;
 
     public static int mapRadius = 8;
+    public static float waterPercentage = 0.1f;
 
     //colors
     public static float territoryColorOpacity = 0.3f;

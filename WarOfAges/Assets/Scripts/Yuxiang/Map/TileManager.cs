@@ -96,18 +96,96 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         string[,] instructionGrid = new string[rows, cols];
 
+        for (int row = 0; row < rows; row++)
+        {
+            for (int col = 0; col < cols; col++)
+            {
+                instructionGrid[row, col] = "0";
+            }
+        }
+
         //decide map
         if ((string)PhotonNetwork.CurrentRoom.CustomProperties["Mode"] == "Water")
         {
-            
+            float waterLikelihood = 1f;
+
+            Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
+            tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
+
+            while (tileToGenerated.Count != 0)
+            {
+                int size = tileToGenerated.Count;
+
+                for (int i = 0; i < size; i++)
+                {
+                    Vector2Int curCor = tileToGenerated.Dequeue();
+
+                    //skip if assigned
+                    if (instructionGrid[curCor.x, curCor.y] == "0")
+                    {
+                        //assign terrain
+                        if (Random.Range(0, 1) > waterLikelihood)
+                        {
+                            instructionGrid[curCor.x, curCor.y] = "2";
+                        }
+                        else
+                        {
+                            instructionGrid[curCor.x, curCor.y] = "1";
+                        }
+
+                        //append tiles
+                        if (curCor.x % 2 == 0)
+                        {
+                            foreach (Vector2Int offset in neighborIndexEvenRow.Keys)
+                            {
+                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
+                            }
+                        }
+                        else
+                        {
+                            foreach (Vector2Int offset in neighborIndexOddRow.Keys)
+                            {
+                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
+                            }
+                        }
+                    }
+                }
+            }
         }
         else
         {
-            for (int row = 0; row < rows; row++)
+            Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
+            tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
+
+            for (int r = 0; r < Config.mapRadius; r ++)
             {
-                for (int col = 0; col < cols; col++)
+                int size = tileToGenerated.Count;
+
+                for (int i = 0; i < size; i++)
                 {
-                    instructionGrid[row, col] = "0";
+                    Vector2Int curCor = tileToGenerated.Dequeue();
+
+                    //skip if assigned
+                    if (instructionGrid[curCor.x, curCor.y] == "0")
+                    {
+                        instructionGrid[curCor.x, curCor.y] = "1";
+
+                        //append tiles
+                        if (curCor.x % 2 == 0)
+                        {
+                            foreach (Vector2Int offset in neighborIndexEvenRow.Keys)
+                            {
+                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
+                            }
+                        }
+                        else
+                        {
+                            foreach (Vector2Int offset in neighborIndexOddRow.Keys)
+                            {
+                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -131,7 +209,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     {
         //setting camera
         Camera.main.orthographicSize = 8.5f;
-        Camera.main.transform.position = new Vector3(6, 6.75f, -10);
+        Camera.main.transform.position = new Vector3(8, 27f, -10);
         
         //make map
         tiles = new Tile[rows, cols];
@@ -141,39 +219,36 @@ public class TileManager : MonoBehaviourPunCallbacks
         int count = 0;
 
         //generate the grid using instruction
-        for (int i = 0; i < tiles.GetLength(0); i++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < tiles.GetLength(1); j++)
-            {
-                //skip bottom row
-                if (!(i % 2 == 0 && j == 0))
+            for (int j = 0; j < cols; j++)
+            {                
+                //skip null
+                if (instruction[count] != '0')
                 {
                     float xPos = i * 0.5f * tileSize;
                     float yPos = j * Mathf.Sqrt(3f) * tileSize + (i % 2 * Mathf.Sqrt(3f) / 2 * tileSize);
 
                     Vector3 pos = new Vector3(xPos, yPos, 0);
 
-                    if (instruction[count] != '0')
+                    //instantiate
+                    if (instruction[count] == '1')
                     {
-                        //instantiate
-                        if (instruction[count] == '1')
-                        {
-                            tiles[i, j] = Instantiate(landTilePrefab, pos, Quaternion.identity).GetComponent<Tile>();
-                            tiles[i, j].terrain = "land";
+                        tiles[i, j] = Instantiate(landTilePrefab, pos, Quaternion.identity).GetComponent<Tile>();
+                        tiles[i, j].terrain = "land";
 
-                            totalLandTiles++;
-                        }
-                        else if (instruction[count] == '2')
-                        {
-                            tiles[i, j] = Instantiate(waterTilePrefab, pos, Quaternion.identity).GetComponent<Tile>();
-                            tiles[i, j].terrain = "water";
-                        }
-
-                        //set tile stats
-                        tiles[i, j].transform.SetParent(parent.transform);
-
-                        tiles[i, j].GetComponent<Tile>().pos = new Vector2Int(i, j);
+                        totalLandTiles++;
                     }
+                    else if (instruction[count] == '2')
+                    {
+                        tiles[i, j] = Instantiate(waterTilePrefab, pos, Quaternion.identity).GetComponent<Tile>();
+                        tiles[i, j].terrain = "water";
+                    }
+
+                    //set tile stats
+                    tiles[i, j].transform.SetParent(parent.transform);
+
+                    tiles[i, j].GetComponent<Tile>().pos = new Vector2Int(i, j);
                 }
 
                 count++;

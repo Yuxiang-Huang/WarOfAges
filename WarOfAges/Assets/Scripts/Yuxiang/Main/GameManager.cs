@@ -116,12 +116,17 @@ public class GameManager : MonoBehaviourPunCallbacks
             Tile[,] tiles = TileManager.instance.tiles;
 
             //all possible spawn points
+            //List<Vector2> spawnLocations = new()
+            //{
+            //    new Vector2(xOffset, yOffset + 1),
+            //    new Vector2(tiles.GetLength(0) - 1 - xOffset, tiles.GetLength(1) - 1 - yOffset),
+            //    new Vector2(xOffset, tiles.GetLength(1) - 1 - yOffset),
+            //    new Vector2(tiles.GetLength(0) - 1 - xOffset, yOffset + 1)
+            //};
+
             List<Vector2> spawnLocations = new()
             {
-                new Vector2(xOffset, yOffset + 1),
-                new Vector2(tiles.GetLength(0) - 1 - xOffset, tiles.GetLength(1) - 1 - yOffset),
-                new Vector2(xOffset, tiles.GetLength(1) - 1 - yOffset),
-                new Vector2(tiles.GetLength(0) - 1 - xOffset, yOffset + 1)
+                new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2)
             };
 
             if (Config.sameSpawnPlaceTestMode)
