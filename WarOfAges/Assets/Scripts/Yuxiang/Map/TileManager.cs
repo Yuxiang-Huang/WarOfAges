@@ -236,12 +236,12 @@ public class TileManager : MonoBehaviourPunCallbacks
         spawnLocations.Add(loxWithHiyPair);
         spawnLocations.Add(hixWithHiyPair);
 
-        Debug.Log(loxPair);
-        Debug.Log(hixPair);
-        Debug.Log(loxWithLoyPair);
-        Debug.Log(hixWithLoyPair);
-        Debug.Log(loxWithHiyPair);
-        Debug.Log(hixWithHiyPair);
+        //Debug.Log(loxPair);
+        //Debug.Log(hixPair);
+        //Debug.Log(loxWithLoyPair);
+        //Debug.Log(hixWithLoyPair);
+        //Debug.Log(loxWithHiyPair);
+        //Debug.Log(hixWithHiyPair);
     }
 
     [PunRPC]

@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region ID
 
     [PunRPC]
-    public void startGame(int newID, Vector2 spawnLocation)
+    public void startGame(int newID, Vector2Int spawnLocation)
     {
         //assign id
         id = newID;
@@ -95,8 +95,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //reveal starting territory
         Tile[,] tiles = TileManager.instance.tiles;
-
-        Debug.Log(spawnLocation);
 
         Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
 
@@ -416,10 +414,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         if (spawnInfo.spawnTile.unit != null && spawnInfo.spawnTile.terrain == "water")
                         {
-                            spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.unit.gameObject.GetComponent<Ship>();
+                            spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.spawnTile.unit.gameObject.GetComponent<Ship>();
                         }
                     }
-                   
 
                     //reset to prevent double spawn
                     highlighted.highlight(false);

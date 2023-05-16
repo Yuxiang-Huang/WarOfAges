@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             else
             {
                 //shuffle to get spawn position
-                List<Vector2> randomSpawnLocations = new List<Vector2>();
+                List<Vector2Int> randomSpawnLocations = new List<Vector2Int>();
                 while (TileManager.instance.spawnLocations.Count > 0)
                 {
                     int index = Random.Range(0, TileManager.instance.spawnLocations.Count);
