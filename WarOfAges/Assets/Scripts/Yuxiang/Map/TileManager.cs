@@ -96,6 +96,7 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         string[,] instructionGrid = new string[rows, cols];
 
+        //fill with null
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < cols; col++)
@@ -104,15 +105,16 @@ public class TileManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //decide map
-        
-            float waterLikelihood = 1f;
+        //initiate
+        float waterLikelihood = 1f;
 
-            Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
-            tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
+        Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
+        tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
 
+        //for every radius
         for (int r = 0; r < Config.mapRadius; r++)
         {
+            //find spawn spots here
             if (r == Config.mapRadius - 3)
                 findSpawnLocation((Vector2Int[])tileToGenerated.ToArray().Clone());
 
@@ -183,45 +185,45 @@ public class TileManager : MonoBehaviourPunCallbacks
         Vector2Int loxPair = positions[0];
         Vector2Int hixPair = positions[0];
 
-        int loy = positions[0].y;
-        int hiy = positions[0].y; ;
+        float loy = positions[0].y;
+        float hiy = positions[0].y; ;
 
         //find extreme x and extreme y
         foreach (Vector2Int cur in positions)
         {
-            if (cur.x >= hixPair.x)
+            if (getWorldPosition(cur).x >= getWorldPosition(hixPair).x)
                 hixPair = cur;
 
-            if (cur.x <= loxPair.x)
+            if (getWorldPosition(cur).x <= getWorldPosition(loxPair).x)
                 loxPair = cur;
 
-            hiy = Mathf.Max(hiy, cur.y);
-            loy = Mathf.Min(loy, cur.y);
+            hiy = Mathf.Max(hiy, getWorldPosition(cur).y);
+            loy = Mathf.Min(loy, getWorldPosition(cur).y);
         }
 
-        Vector2Int loxWithLoyPair = new Vector2Int(int.MaxValue, loy);
-        Vector2Int hixWithLoyPair = new Vector2Int(0, loy);
-        Vector2Int loxWithHiyPair = new Vector2Int(int.MaxValue, hiy);
-        Vector2Int hixWithHiyPair = new Vector2Int(0, hiy);
+        Vector2Int loxWithLoyPair = new Vector2Int(int.MaxValue, 0);
+        Vector2Int hixWithLoyPair = new Vector2Int(0, 0);
+        Vector2Int loxWithHiyPair = new Vector2Int(int.MaxValue, 0);
+        Vector2Int hixWithHiyPair = new Vector2Int(0, 0);
 
         //find upper and lower corners
         foreach (Vector2Int cur in positions)
         {
-            if (cur.y >= loxWithHiyPair.y)
+            if (getWorldPosition(cur).y >= hiy)
             {
-                if (cur.x >= hixWithHiyPair.x)
+                if (getWorldPosition(cur).x >= getWorldPosition(hixWithHiyPair).x)
                     hixWithHiyPair = cur;
 
-                if (cur.x <= loxWithHiyPair.x)
+                if (getWorldPosition(cur).x <= getWorldPosition(loxWithHiyPair).x)
                     loxWithHiyPair = cur;
             }
 
-            if (cur.y <= loxWithLoyPair.y)
+            if (getWorldPosition(cur).y <= loy)
             {
-                if (cur.x >= hixWithLoyPair.x)
+                if (getWorldPosition(cur).x >= getWorldPosition(hixWithLoyPair).x)
                     hixWithLoyPair = cur;
 
-                if (cur.x <= loxWithLoyPair.x)
+                if (getWorldPosition(cur).x <= getWorldPosition(loxWithLoyPair).x)
                     loxWithLoyPair = cur;
             }
         }
@@ -232,13 +234,6 @@ public class TileManager : MonoBehaviourPunCallbacks
         spawnLocations.Add(hixWithLoyPair);
         spawnLocations.Add(loxWithHiyPair);
         spawnLocations.Add(hixWithHiyPair);
-
-        Debug.Log(loxPair);
-        Debug.Log(hixPair);
-        Debug.Log(loxWithLoyPair);
-        Debug.Log(hixWithLoyPair);
-        Debug.Log(loxWithHiyPair);
-        Debug.Log(hixWithHiyPair);
     }
 
     [PunRPC]
@@ -494,11 +489,11 @@ public class TileManager : MonoBehaviourPunCallbacks
         return bestTile;
     }
 
-    ////get world position from row col
-    //public Vector2 getWorldPosition(Tile tile)
-    //{
-    //    return new Vector2(tile.pos.x * 0.5f, tile.pos.y * Mathf.Sqrt(3f) + (tile.pos.x % 2 * Mathf.Sqrt(3f) / 2));
-    //}
+    //get world position from row col
+    public Vector2 getWorldPosition(Vector2 indices)
+    {
+        return new Vector2(indices.x * 0.5f, indices.y * Mathf.Sqrt(3f) + (indices.x % 2 * Mathf.Sqrt(3f) / 2));
+    }
 
     //find distance between two vector2
     public float dist(Vector2 v1, Vector2 v2)
