@@ -28,7 +28,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Dictionary<Vector2Int, int> neighborIndexOddRow;
     public Dictionary<Vector2Int, int> neighborIndexEvenRow;
 
-    public List<Vector2> spawnLocations;
+    public List<Vector2Int> spawnLocations;
 
     void Awake()
     {
@@ -182,11 +182,11 @@ public class TileManager : MonoBehaviourPunCallbacks
 
     public void findSpawnLocation(Vector2Int[] positions)
     {
-        Vector2Int loxPair = positions[0];
-        Vector2Int hixPair = positions[0];
+        Vector2Int loxPair = new Vector2Int(int.MaxValue, 0);
+        Vector2Int hixPair = new Vector2Int(0, 0);
 
-        float loy = positions[0].y;
-        float hiy = positions[0].y; ;
+        float loy = getWorldPosition(positions[0]).y;
+        float hiy = getWorldPosition(positions[0]).y;
 
         //find extreme x and extreme y
         foreach (Vector2Int cur in positions)
@@ -235,6 +235,13 @@ public class TileManager : MonoBehaviourPunCallbacks
         spawnLocations.Add(hixWithLoyPair);
         spawnLocations.Add(loxWithHiyPair);
         spawnLocations.Add(hixWithHiyPair);
+
+        Debug.Log(loxPair);
+        Debug.Log(hixPair);
+        Debug.Log(loxWithLoyPair);
+        Debug.Log(hixWithLoyPair);
+        Debug.Log(loxWithHiyPair);
+        Debug.Log(hixWithHiyPair);
     }
 
     [PunRPC]
