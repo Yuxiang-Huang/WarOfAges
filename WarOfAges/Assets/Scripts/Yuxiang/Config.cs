@@ -6,7 +6,7 @@ public class Config
     public static bool offlineMode = true;
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
-    public static bool debugTestMode = true;
+    public static bool debugTestMode = false;
 
     //time factors
     public static float troopMovementTime = 0.5f;
@@ -26,7 +26,7 @@ public class Config
     public static int defaultStartingTime = 20;
     public static int defaultTimeInc = 10;
 
-    public static int mapRadius = 12;
+    public static int mapRadius = 8;
 
     //colors
     public static float territoryColorOpacity = 0.3f;

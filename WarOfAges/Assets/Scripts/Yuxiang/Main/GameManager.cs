@@ -109,43 +109,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             gameStarted = true;
 
-            //creating random spawnLocations
-            int xOffset = 6;
-            int yOffset = 1;
-
             Tile[,] tiles = TileManager.instance.tiles;
-
-            //all possible spawn points
-            //List<Vector2> spawnLocations = new()
-            //{
-            //    new Vector2(xOffset, yOffset + 1),
-            //    new Vector2(tiles.GetLength(0) - 1 - xOffset, tiles.GetLength(1) - 1 - yOffset),
-            //    new Vector2(xOffset, tiles.GetLength(1) - 1 - yOffset),
-            //    new Vector2(tiles.GetLength(0) - 1 - xOffset, yOffset + 1)
-            //};
-
-            List<Vector2> spawnLocations = new()
-            {
-                new Vector2(tiles.GetLength(0) / 2, tiles.GetLength(1) / 2)
-            };
 
             if (Config.sameSpawnPlaceTestMode)
             {
                 //ask all player to start game
                 for (int i = 0; i < allPlayers.Count; i++)
                 {
-                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, spawnLocations[0]);
+                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, TileManager.instance.spawnLocations[0]);
                 }
             }
             else
             {
-                //shuffle 
+                //shuffle to get spawn position
                 List<Vector2> randomSpawnLocations = new List<Vector2>();
-                while (spawnLocations.Count > 0)
+                while (TileManager.instance.spawnLocations.Count > 0)
                 {
-                    int index = Random.Range(0, spawnLocations.Count);
-                    randomSpawnLocations.Add(spawnLocations[index]);
-                    spawnLocations.RemoveAt(index);
+                    int index = Random.Range(0, TileManager.instance.spawnLocations.Count);
+                    randomSpawnLocations.Add(TileManager.instance.spawnLocations[index]);
+                    TileManager.instance.spawnLocations.RemoveAt(index);
                 }
 
                 //ask all player to start game

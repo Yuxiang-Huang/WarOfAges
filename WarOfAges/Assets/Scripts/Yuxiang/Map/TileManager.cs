@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Photon.Pun;
 using System.Text;
+using System.Runtime.ConstrainedExecution;
 
 public class TileManager : MonoBehaviourPunCallbacks
 {
@@ -29,6 +27,8 @@ public class TileManager : MonoBehaviourPunCallbacks
 
     public Dictionary<Vector2Int, int> neighborIndexOddRow;
     public Dictionary<Vector2Int, int> neighborIndexEvenRow;
+
+    public List<Vector2> spawnLocations;
 
     void Awake()
     {
@@ -105,23 +105,28 @@ public class TileManager : MonoBehaviourPunCallbacks
         }
 
         //decide map
-        if ((string)PhotonNetwork.CurrentRoom.CustomProperties["Mode"] == "Water")
-        {
+        
             float waterLikelihood = 1f;
 
             Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
             tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
 
-            for (int r = 0; r < Config.mapRadius; r++)
+        for (int r = 0; r < Config.mapRadius; r++)
+        {
+            if (r == Config.mapRadius - 3)
+                findSpawnLocation((Vector2Int[])tileToGenerated.ToArray().Clone());
+
+            int size = tileToGenerated.Count;
+
+            for (int i = 0; i < size; i++)
             {
-                int size = tileToGenerated.Count;
+                Vector2Int curCor = tileToGenerated.Dequeue();
 
-                for (int i = 0; i < size; i++)
+                //skip if assigned
+                if (instructionGrid[curCor.x, curCor.y] == "0")
                 {
-                    Vector2Int curCor = tileToGenerated.Dequeue();
-
-                    //skip if assigned
-                    if (instructionGrid[curCor.x, curCor.y] == "0")
+                    //assign terrain
+                    if ((string)PhotonNetwork.CurrentRoom.CustomProperties["Mode"] == "Water")
                     {
                         //assign terrain
                         if (Random.Range(0, 1f) < waterLikelihood)
@@ -132,64 +137,31 @@ public class TileManager : MonoBehaviourPunCallbacks
                         {
                             instructionGrid[curCor.x, curCor.y] = "1";
                         }
-
-                        //append tiles
-                        if (curCor.x % 2 == 0)
-                        {
-                            foreach (Vector2Int offset in neighborIndexEvenRow.Keys)
-                            {
-                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
-                            }
-                        }
-                        else
-                        {
-                            foreach (Vector2Int offset in neighborIndexOddRow.Keys)
-                            {
-                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
-                            }
-                        }
                     }
-                }
-
-                waterLikelihood -= 1f / Config.mapRadius;
-            }
-        }
-        else
-        {
-            Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
-            tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
-
-            for (int r = 0; r < Config.mapRadius; r ++)
-            {
-                int size = tileToGenerated.Count;
-
-                for (int i = 0; i < size; i++)
-                {
-                    Vector2Int curCor = tileToGenerated.Dequeue();
-
-                    //skip if assigned
-                    if (instructionGrid[curCor.x, curCor.y] == "0")
+                    else
                     {
                         instructionGrid[curCor.x, curCor.y] = "1";
+                    }
 
-                        //append tiles
-                        if (curCor.x % 2 == 0)
+                    //append tiles
+                    if (curCor.x % 2 == 0)
+                    {
+                        foreach (Vector2Int offset in neighborIndexEvenRow.Keys)
                         {
-                            foreach (Vector2Int offset in neighborIndexEvenRow.Keys)
-                            {
-                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
-                            }
+                            tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
                         }
-                        else
+                    }
+                    else
+                    {
+                        foreach (Vector2Int offset in neighborIndexOddRow.Keys)
                         {
-                            foreach (Vector2Int offset in neighborIndexOddRow.Keys)
-                            {
-                                tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
-                            }
+                            tileToGenerated.Enqueue(new Vector2Int(curCor.x + offset.x, curCor.y + offset.y));
                         }
                     }
                 }
             }
+
+            waterLikelihood -= 1f / Config.mapRadius;
         }
 
         //store type of tiles using bit
@@ -204,6 +176,69 @@ public class TileManager : MonoBehaviourPunCallbacks
         }
 
         PV.RPC(nameof(makeGrid_RPC), RpcTarget.AllViaServer, rows, cols, instruction.ToString());
+    }
+
+    public void findSpawnLocation(Vector2Int[] positions)
+    {
+        Vector2Int loxPair = positions[0];
+        Vector2Int hixPair = positions[0];
+
+        int loy = positions[0].y;
+        int hiy = positions[0].y; ;
+
+        //find extreme x and extreme y
+        foreach (Vector2Int cur in positions)
+        {
+            if (cur.x >= hixPair.x)
+                hixPair = cur;
+
+            if (cur.x <= loxPair.x)
+                loxPair = cur;
+
+            hiy = Mathf.Max(hiy, cur.y);
+            loy = Mathf.Min(loy, cur.y);
+        }
+
+        Vector2Int loxWithLoyPair = new Vector2Int(int.MaxValue, loy);
+        Vector2Int hixWithLoyPair = new Vector2Int(0, loy);
+        Vector2Int loxWithHiyPair = new Vector2Int(int.MaxValue, hiy);
+        Vector2Int hixWithHiyPair = new Vector2Int(0, hiy);
+
+        //find upper and lower corners
+        foreach (Vector2Int cur in positions)
+        {
+            if (cur.y >= loxWithHiyPair.y)
+            {
+                if (cur.x >= hixWithHiyPair.x)
+                    hixWithHiyPair = cur;
+
+                if (cur.x <= loxWithHiyPair.x)
+                    loxWithHiyPair = cur;
+            }
+
+            if (cur.y <= loxWithLoyPair.y)
+            {
+                if (cur.x >= hixWithLoyPair.x)
+                    hixWithLoyPair = cur;
+
+                if (cur.x <= loxWithLoyPair.x)
+                    loxWithLoyPair = cur;
+            }
+        }
+
+        spawnLocations.Add(loxPair);
+        spawnLocations.Add(hixPair);
+        spawnLocations.Add(loxWithLoyPair);
+        spawnLocations.Add(hixWithLoyPair);
+        spawnLocations.Add(loxWithHiyPair);
+        spawnLocations.Add(hixWithHiyPair);
+
+        Debug.Log(loxPair);
+        Debug.Log(hixPair);
+        Debug.Log(loxWithLoyPair);
+        Debug.Log(hixWithLoyPair);
+        Debug.Log(loxWithHiyPair);
+        Debug.Log(hixWithHiyPair);
     }
 
     [PunRPC]
@@ -430,6 +465,9 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         //compare with all neighbors
         Tile oneTile = tiles[roundX, roundY];
+
+        if (oneTile == null)
+            return null;
 
         Tile bestTile = oneTile;
 
