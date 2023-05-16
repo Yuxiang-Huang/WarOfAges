@@ -228,20 +228,64 @@ public class TileManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //update spawnLocations
-        spawnLocations.Add(loxPair);
-        spawnLocations.Add(hixPair);
-        spawnLocations.Add(loxWithLoyPair);
-        spawnLocations.Add(hixWithLoyPair);
-        spawnLocations.Add(loxWithHiyPair);
-        spawnLocations.Add(hixWithHiyPair);
+        //update allSpawnLocations
+        List<Vector2Int> allSpawnLocations = new List<Vector2Int>
+        {
+            loxPair,
+            hixPair,
+            loxWithLoyPair,
+            hixWithLoyPair,
+            loxWithHiyPair,
+            hixWithHiyPair
+        };
 
-        //Debug.Log(loxPair);
-        //Debug.Log(hixPair);
-        //Debug.Log(loxWithLoyPair);
-        //Debug.Log(hixWithLoyPair);
-        //Debug.Log(loxWithHiyPair);
-        //Debug.Log(hixWithHiyPair);
+        int numPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        //choose spawn locations base on number of player
+        if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6)
+        {
+            spawnLocations = new List<Vector2Int>(allSpawnLocations);
+        }
+        else if (numPlayer == 3)
+        {
+            if (Random.Range(0, 2) == 0)
+            {
+                spawnLocations.Add(loxPair);
+                spawnLocations.Add(hixWithHiyPair);
+                spawnLocations.Add(hixWithLoyPair);
+            }
+            else
+            {
+                spawnLocations.Add(hixPair);
+                spawnLocations.Add(loxWithHiyPair);
+                spawnLocations.Add(loxWithLoyPair);
+            }
+        }
+        else if (numPlayer == 4)
+        {
+            int randomChoose = Random.Range(0, 3);
+            if (randomChoose == 0)
+            {
+                spawnLocations.Add(loxPair);
+                spawnLocations.Add(hixPair);
+                spawnLocations.Add(hixWithHiyPair);
+                spawnLocations.Add(loxWithLoyPair);
+            }
+            else if (randomChoose == 1)
+            {
+                spawnLocations.Add(loxPair);
+                spawnLocations.Add(hixPair);
+                spawnLocations.Add(hixWithLoyPair);
+                spawnLocations.Add(loxWithHiyPair);
+            }
+            else
+            {
+                spawnLocations.Add(hixWithLoyPair);
+                spawnLocations.Add(loxWithHiyPair);
+                spawnLocations.Add(hixWithHiyPair);
+                spawnLocations.Add(loxWithLoyPair);
+            }
+        }
     }
 
     [PunRPC]

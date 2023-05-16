@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //reveal starting territory
         Tile[,] tiles = TileManager.instance.tiles;
 
-        Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
+        Tile root = tiles[spawnLocation.x, spawnLocation.y];
 
         root.setDark(false);
 
