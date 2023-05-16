@@ -112,7 +112,7 @@ public class TileManager : MonoBehaviourPunCallbacks
             Queue<Vector2Int> tileToGenerated = new Queue<Vector2Int>();
             tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
 
-            while (tileToGenerated.Count != 0)
+            for (int r = 0; r < Config.mapRadius; r++)
             {
                 int size = tileToGenerated.Count;
 
@@ -124,7 +124,7 @@ public class TileManager : MonoBehaviourPunCallbacks
                     if (instructionGrid[curCor.x, curCor.y] == "0")
                     {
                         //assign terrain
-                        if (Random.Range(0, 1) > waterLikelihood)
+                        if (Random.Range(0, 1f) < waterLikelihood)
                         {
                             instructionGrid[curCor.x, curCor.y] = "2";
                         }
@@ -150,6 +150,8 @@ public class TileManager : MonoBehaviourPunCallbacks
                         }
                     }
                 }
+
+                waterLikelihood -= 1f / Config.mapRadius;
             }
         }
         else
