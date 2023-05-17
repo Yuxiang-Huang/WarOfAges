@@ -17,7 +17,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public List<Color> ownerColors;
 
     //building blocks
-    public const float tileSize = 1;
+    public float tileSize = 1;
+    public float tileWidth = 0.5f;
+    public float tileHeight = Mathf.Sqrt(3);
 
     public int totalLandTiles;
     public int totalLandConquered;
@@ -292,8 +294,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public void makeGrid_RPC(int rows, int cols, string instruction)
     {
         //setting camera
-        Camera.main.orthographicSize = 8.5f;
-        Camera.main.transform.position = new Vector3(8, 27f, -10);
+        Camera.main.orthographicSize = Config.mapRadius;
+        Camera.main.transform.position = new Vector3(Config.mapRadius * tileWidth * 2,
+            Config.mapRadius * tileHeight * 2 - 0.5f * Config.mapRadius / 5, -10);
         
         //make map
         tiles = new Tile[rows, cols];
@@ -310,8 +313,8 @@ public class TileManager : MonoBehaviourPunCallbacks
                 //skip null
                 if (instruction[count] != '0')
                 {
-                    float xPos = i * 0.5f * tileSize;
-                    float yPos = j * Mathf.Sqrt(3f) * tileSize + (i % 2 * Mathf.Sqrt(3f) / 2 * tileSize);
+                    float xPos = i * tileWidth * tileSize;
+                    float yPos = j * tileHeight * tileSize + (i % 2 * tileHeight / 2 * tileSize);
 
                     Vector3 pos = new Vector3(xPos, yPos, 0);
 
@@ -495,9 +498,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Tile getTile(Vector2 pos)
     {
         //simple division to find rough x and y
-        int roundX = (int) (pos.x / 0.5f / tileSize);
+        int roundX = (int) (pos.x / tileWidth / tileSize);
 
-        int roundY = (int) (pos.y / Mathf.Sqrt(3f) / tileSize);
+        int roundY = (int) (pos.y / tileHeight / tileSize);
 
         if (roundX < 0 || roundX >= tiles.GetLength(0) || roundY < 0 || roundY >= tiles.GetLength(1))
         {
@@ -544,7 +547,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     //get world position from row col
     public Vector2 getWorldPosition(Vector2 indices)
     {
-        return new Vector2(indices.x * 0.5f, indices.y * Mathf.Sqrt(3f) + (indices.x % 2 * Mathf.Sqrt(3f) / 2));
+        return new Vector2(indices.x * tileWidth, indices.y * tileHeight + (indices.x % 2 * tileHeight / 2));
     }
 
     //find distance between two vector2

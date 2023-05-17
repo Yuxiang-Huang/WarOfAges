@@ -245,12 +245,12 @@ public class Tile : MonoBehaviour
             else
             {
                 //set to unconquerered
-                reset();
+                resetForLost();
             }
         }
     }
 
-    public void reset()
+    public void resetForLost()
     {
         //if has an owner
         if (ownerID != -1)
