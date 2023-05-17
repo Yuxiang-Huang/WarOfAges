@@ -32,7 +32,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Dictionary<Vector2Int, int> neighborIndexOddRow;
     public Dictionary<Vector2Int, int> neighborIndexEvenRow;
 
-    public List<Vector2Int> spawnLocations;
+    public List<Vector2> spawnLocations;
 
     [SerializeField] int mapRadius;
 
@@ -197,7 +197,7 @@ public class TileManager : MonoBehaviourPunCallbacks
             }
         }
 
-        PV.RPC(nameof(makeGrid_RPC), RpcTarget.AllViaServer, rows, cols, instruction.ToString());
+        PV.RPC(nameof(makeGrid_RPC), RpcTarget.AllViaServer, mapRadius, rows, cols, instruction.ToString());
     }
 
     public void findSpawnLocation(Vector2Int[] positions)
@@ -249,7 +249,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         }
 
         //update allSpawnLocations
-        List<Vector2Int> allSpawnLocations = new List<Vector2Int>
+        List<Vector2> allSpawnLocations = new List<Vector2>
         {
             loxPair,
             hixPair,
@@ -264,7 +264,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         //choose spawn locations base on number of player
         if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6)
         {
-            spawnLocations = new List<Vector2Int>(allSpawnLocations);
+            spawnLocations = new List<Vector2>(allSpawnLocations);
         }
         else if (numPlayer == 3)
         {
@@ -309,7 +309,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void makeGrid_RPC(int rows, int cols, string instruction)
+    public void makeGrid_RPC(int mapRadius, int rows, int cols, string instruction)
     {
         //setting camera
         Camera.main.orthographicSize = mapRadius;

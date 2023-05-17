@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     #region ID
 
     [PunRPC]
-    public void startGame(int newID, Vector2Int spawnLocation)
+    public void startGame(int newID, Vector2 spawnLocation)
     {
         //assign id
         id = newID;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //reveal starting territory
         Tile[,] tiles = TileManager.instance.tiles;
 
-        Tile root = tiles[spawnLocation.x, spawnLocation.y];
+        Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
 
         root.setDark(false);
 
