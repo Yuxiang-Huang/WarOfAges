@@ -25,7 +25,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] int timeInc;
 
     [Header("Start Game")]
-    public GameObject IntroText;
     [SerializeField] GameObject Shop;
     [SerializeField] GameObject AgeUI;
 
@@ -80,7 +79,6 @@ public class UIManager : MonoBehaviour
         turnBtn.SetActive(false);
         AgeUI.SetActive(false);
         cancelTurnBtn.SetActive(false);
-        IntroText.SetActive(true);
         timeText.gameObject.SetActive(false);
         turnNumText.gameObject.SetActive(false);
         sellBtn.SetActive(false);
@@ -120,7 +118,6 @@ public class UIManager : MonoBehaviour
 
         //set UI active
         bottomBar.SetActive(true);
-        IntroText.SetActive(false);
         AgeUI.SetActive(true);
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);

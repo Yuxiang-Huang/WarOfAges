@@ -47,7 +47,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             roomOptions.CustomRoomProperties = new Hashtable() {
                 { "Mode", Config.defaultMode },
                 { "initialTime", Config.defaultStartingTime },
-                { "timeInc", Config.defaultTimeInc }
+                { "timeInc", Config.defaultTimeInc },
+                { "mapRadius", Config.defaultMapRadius }
             };
 
             //create a room and a player

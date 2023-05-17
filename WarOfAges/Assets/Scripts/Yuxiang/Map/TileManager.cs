@@ -313,7 +313,7 @@ public class TileManager : MonoBehaviourPunCallbacks
     {
         //setting camera
         Camera.main.orthographicSize = mapRadius;
-        Camera.main.transform.position = new Vector3(mapRadius * tileWidth * 2,
+        Camera.main.transform.position = new Vector3(mapRadius * tileWidth * 2 - 2,
             mapRadius * tileHeight * 2 - 0.5f * mapRadius / 5, -10);
         
         //make map

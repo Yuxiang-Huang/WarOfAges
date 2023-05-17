@@ -36,7 +36,6 @@ public class TutorialManager : MonoBehaviour
 
 
         tutorialCanvas.gameObject.SetActive(true);
-        UIManager.instance.IntroText.SetActive(false);
 
         //first direction
         instructionText.text = instructions[0];
