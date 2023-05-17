@@ -3,7 +3,7 @@ using UnityEngine;
 public class Config
 {
     //test modes
-    public static bool offlineMode = true;
+    public static bool offlineMode = false;
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
     public static bool debugTestMode = false;
@@ -26,7 +26,7 @@ public class Config
     public static int defaultStartingTime = 20;
     public static int defaultTimeInc = 10;
 
-    public static int mapRadius = 14;
+    public static int defaultMapRadius = 9;
 
     //colors
     public static float territoryColorOpacity = 0.3f;

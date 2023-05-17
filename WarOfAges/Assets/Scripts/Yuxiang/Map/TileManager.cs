@@ -3,6 +3,8 @@ using UnityEngine;
 using Photon.Pun;
 using System.Text;
 using System.Runtime.ConstrainedExecution;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using System.Collections;
 
 public class TileManager : MonoBehaviourPunCallbacks
 {
@@ -31,6 +33,8 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Dictionary<Vector2Int, int> neighborIndexEvenRow;
 
     public List<Vector2Int> spawnLocations;
+
+    [SerializeField] int mapRadius;
 
     void Awake()
     {
@@ -91,10 +95,24 @@ public class TileManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void startMakeGrid()
+    {
+        StartCoroutine(nameof(waitToGetRadius));
+    }
+
+    IEnumerator waitToGetRadius()
+    {
+        yield return new WaitUntil(() => PhotonNetwork.CurrentRoom.CustomProperties["mapRadius"] != null);
+
+        makeGrid();
+    }
+
     public void makeGrid()
     {
-        int rows = Config.mapRadius * 4;
-        int cols = Config.mapRadius * 4;
+        mapRadius = (int)PhotonNetwork.CurrentRoom.CustomProperties["mapRadius"];
+
+        int rows = mapRadius * 4;
+        int cols = mapRadius * 4;
 
         string[,] instructionGrid = new string[rows, cols];
 
@@ -114,10 +132,10 @@ public class TileManager : MonoBehaviourPunCallbacks
         tileToGenerated.Enqueue(new Vector2Int(rows / 2, cols / 2));
 
         //for every radius
-        for (int r = 0; r < Config.mapRadius; r++)
+        for (int r = 0; r < mapRadius; r++)
         {
             //find spawn spots here
-            if (r == Config.mapRadius - 3)
+            if (r == mapRadius - 3)
                 findSpawnLocation((Vector2Int[])tileToGenerated.ToArray().Clone());
 
             int size = tileToGenerated.Count;
@@ -165,7 +183,7 @@ public class TileManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            waterLikelihood -= 1f / Config.mapRadius;
+            waterLikelihood -= 1f / mapRadius;
         }
 
         //store type of tiles using bit
@@ -294,9 +312,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public void makeGrid_RPC(int rows, int cols, string instruction)
     {
         //setting camera
-        Camera.main.orthographicSize = Config.mapRadius;
-        Camera.main.transform.position = new Vector3(Config.mapRadius * tileWidth * 2,
-            Config.mapRadius * tileHeight * 2 - 0.5f * Config.mapRadius / 5, -10);
+        Camera.main.orthographicSize = mapRadius;
+        Camera.main.transform.position = new Vector3(mapRadius * tileWidth * 2,
+            mapRadius * tileHeight * 2 - 0.5f * mapRadius / 5, -10);
         
         //make map
         tiles = new Tile[rows, cols];

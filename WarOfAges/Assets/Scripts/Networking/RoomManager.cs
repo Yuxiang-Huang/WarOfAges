@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 using System.IO;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using TMPro;
-using Unity.VisualScripting;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -15,6 +12,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI mapSettingText;
     [SerializeField] TMP_InputField initialTimeInput;
     [SerializeField] TMP_InputField timeIncInput;
+    [SerializeField] TMP_InputField mapRadiusInput;
 
     void Awake()
     {
@@ -110,6 +108,32 @@ public class RoomManager : MonoBehaviourPunCallbacks
             else
             {
                 timeIncInput.text = "";
+                res = false;
+            }
+        }
+
+        if (int.TryParse(mapRadiusInput.text, out int num3))
+        {
+            if (num3 >= 3)
+            {
+                hash.Add("mapRadius", num3);
+            }
+            else
+            {
+                mapRadiusInput.text = "";
+                res = false;
+            }
+        }
+        else
+        {
+            //default value
+            if (mapRadiusInput.text == "")
+            {
+                hash.Add("mapRadius", Config.defaultMapRadius);
+            }
+            else
+            {
+                mapRadiusInput.text = "";
                 res = false;
             }
         }

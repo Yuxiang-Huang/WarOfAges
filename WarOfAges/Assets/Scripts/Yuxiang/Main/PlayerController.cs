@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //master client in charge making grid
         if (PhotonNetwork.IsMasterClient)
         {
-            TileManager.instance.makeGrid();
+            TileManager.instance.startMakeGrid();
         }
 
         if (Config.moreMoneyTestMode)
