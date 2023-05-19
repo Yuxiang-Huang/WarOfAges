@@ -6,7 +6,7 @@ public class Config
     public static bool offlineMode = false;
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
-    public static bool debugTestMode = false;
+    public static bool debugTestMode = true;
 
     //time factors
     public static float troopMovementTime = 0.5f;

@@ -561,6 +561,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void spawn()
     {
+        if (Config.debugTestMode)
+            Debug.Log("spawn");
+
         //income
         if (!lost)
         {
@@ -735,6 +738,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void attack()
     {
+        if (Config.debugTestMode)
+            Debug.Log("attack");
+
         foreach (Troop troop in allTroops)
         {
             troop.attack();
@@ -765,6 +771,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void checkDeath()
     {
+        if (Config.debugTestMode)
+            Debug.Log("check death");
+
         //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
@@ -799,6 +808,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 allBuildings.Remove(allBuildings[i]);
             }
         }
+
+        if (Config.debugTestMode)
+            Debug.Log("end taking turn");
 
         if (PhotonNetwork.OfflineMode)
         {
