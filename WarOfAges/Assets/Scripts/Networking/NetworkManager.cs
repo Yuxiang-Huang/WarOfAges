@@ -60,7 +60,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
             return;
 
         RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 4;
+        roomOptions.MaxPlayers = 6;
 
         //default setting
         roomOptions.CustomRoomProperties = new Hashtable() {
@@ -199,6 +199,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
                 { "Mode", Config.defaultMode },
                 { "initialTime", Config.defaultStartingTime },
                 { "timeInc", Config.defaultTimeInc },
+                { "mapRadius", Config.defaultMapRadius },
                 { "Tutorial", true}
             };
 
