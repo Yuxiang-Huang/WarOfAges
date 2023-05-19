@@ -328,23 +328,23 @@ public class UIManager : MonoBehaviour
         //despawn
         else if (PlayerController.instance.spawnInfoSelected != null)
         {
-            SpawnInfo cur = PlayerController.instance.spawnInfoSelected;
+            SpawnInfo spawnInfo = PlayerController.instance.spawnInfoSelected;
 
             //destroy arrow if necessary
-            Troop troopScript = cur.unit.gameObject.GetComponent<Troop>();
-            if (troopScript != null)
+            if (spawnInfo.arrow != null)
+                Destroy(spawnInfo.arrow);
+
+            if (spawnInfo.unit.gameObject.TryGetComponent<Troop>(out var troopScript))
             {
-                troopScript.tile = cur.spawnTile;
-                troopScript.findPath(cur.spawnTile);
                 troopScript.tile = null;
             }
 
             //remove from list
-            Destroy(cur.spawnImage);
-            PlayerController.instance.spawnList.Remove(cur.spawnTile.pos);
+            Destroy(spawnInfo.spawnImage);
+            PlayerController.instance.spawnList.Remove(spawnInfo.spawnTile.pos);
 
             //return gold
-            PlayerController.instance.gold += cur.spawnGold;
+            PlayerController.instance.gold += spawnInfo.spawnGold;
             updateGoldText();
         }
 
