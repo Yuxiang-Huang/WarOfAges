@@ -65,7 +65,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         //update tile
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
-        tile.updateStatus(ownerID, this);
 
         //also try to conquer all water tiles around if moved to land tile
         if (tile.terrain == "land")
@@ -75,6 +74,20 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 neighbor.tryWaterConquer();
             }
         }
+        else {
+            //spawned on a ship
+            if (tile.unit != null)
+            {
+                ship = tile.unit.gameObject.GetComponent<Ship>();
+                //reset path
+                if (ship.arrow != null)
+                {
+                    Destroy(ship.arrow);
+                }
+            }
+        }
+
+        tile.updateStatus(ownerID, this);
 
         //modify images
         foreach (GameObject cur in unitImages)
@@ -308,8 +321,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
             //edge case when exchange tile
-            if (tile.unit == null)
-                tile.unit = ship;
+            //if (tile.unit == null)
+            tile.unit = ship;
             ship.tile = tile;
             ship = null;
         }

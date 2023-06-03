@@ -618,17 +618,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     {
                         allShips.Add(newUnit.GetComponent<Ship>());
                     }
-                    else
-                    {
-                        //spawned on a ship
-                        if (info.spawnTile.terrain == "water")
-                        {
-                            Ship curShip = info.spawnTile.unit.gameObject.GetComponent<Ship>();
-                            newUnit.GetComponent<Troop>().ship = curShip;
-                            //reset path
-                            curShip.findPath(curShip.tile);
-                        }
-                    }
 
                     newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
                         id, info.spawnTile.pos.x, info.spawnTile.pos.y,

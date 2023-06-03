@@ -228,12 +228,12 @@ public class Tile : MonoBehaviour
             int onlyConqueror = -1;
 
             //check all units around
-            foreach (Tile neigbhor in neighbors)
+            foreach (Tile neighbor in neighbors)
             {
-                if (neigbhor.unit != null)
+                if (neighbor.unit != null)
                 {
-                    conquerors.Add(neigbhor.unit.ownerID);
-                    onlyConqueror = neigbhor.unit.ownerID;
+                    conquerors.Add(neighbor.unit.ownerID);
+                    onlyConqueror = neighbor.unit.ownerID;
                 }
             }
 
