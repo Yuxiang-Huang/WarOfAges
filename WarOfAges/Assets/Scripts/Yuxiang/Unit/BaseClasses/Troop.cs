@@ -268,9 +268,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 }
                 else
                 {
-                    //reverse leave space
+                    //can't move; reverse leave space
                     PV.RPC(nameof(updateTileUnit), RpcTarget.All);
                     tile.unit = this;
+
+                    // clear follow
+                    toFollow = null;
                 }
             }
         }

@@ -249,6 +249,7 @@ MonoBehaviour:
   damage: 1
   direction: {x: 0, y: 0}
   healFactor: 1
+  arrow: {fileID: 0}
   speed: 1
   ship: {fileID: 0}
 --- !u!1 &5215749956686092328
