@@ -5,6 +5,8 @@ using System.Text;
 using System.Runtime.ConstrainedExecution;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using System.Collections;
+using static UnityEngine.GraphicsBuffer;
+using System.Linq;
 
 public class TileManager : MonoBehaviourPunCallbacks
 {
@@ -520,46 +522,57 @@ public class TileManager : MonoBehaviourPunCallbacks
 
         int roundY = (int) (pos.y / tileHeight / tileSize);
 
-        if (roundX < 0 || roundX >= tiles.GetLength(0) || roundY < 0 || roundY >= tiles.GetLength(1))
+        SortedDictionary<float, Tile> candidates = new SortedDictionary<float, Tile>();
+
+        // try all tiles in proximity
+        for (int i = roundX - 1; i <= roundX + 1; i++)
         {
-            return null;
-        }
-
-        //compensate for the row skipped
-        if (roundY == 0)
-        {
-            roundY++;
-        }
-
-        //compare with all neighbors
-        Tile oneTile = tiles[roundX, roundY];
-
-        if (oneTile == null)
-            return null;
-
-        Tile bestTile = oneTile;
-
-        float minDist = dist(pos, oneTile.transform.position);
-
-        foreach (Tile neighbor in oneTile.neighbors)
-        {
-            float mayDist = dist(pos, neighbor.transform.position);
-            if (mayDist < minDist)
+            for (int j = roundY - 1; j <= roundY + 1; j++)
             {
-                minDist = mayDist;
-                bestTile = neighbor;
+                if (i < 0 || i >= tiles.GetLength(0) || j < 0 || j >= tiles.GetLength(1))
+                {
+                    continue;
+                }
+
+                //compare with all neighbors
+                Tile oneTile = tiles[i, j];
+
+                if (oneTile == null)
+                {
+                    continue;
+                }
+
+                Tile bestTile = oneTile;
+
+                float minDist = dist(pos, oneTile.transform.position);
+
+                foreach (Tile neighbor in oneTile.neighbors)
+                {
+                    float mayDist = dist(pos, neighbor.transform.position);
+                    if (mayDist < minDist)
+                    {
+                        minDist = mayDist;
+                        bestTile = neighbor;
+                    }
+                }
+                foreach (Tile neighbor in oneTile.neighbors2)
+                {
+                    float mayDist = dist(pos, neighbor.transform.position);
+                    if (mayDist < minDist)
+                    {
+                        minDist = mayDist;
+                        bestTile = neighbor;
+                    }
+                }
+
+                candidates.TryAdd(minDist, bestTile);
             }
         }
-        foreach (Tile neighbor in oneTile.neighbors2)
-        {
-            float mayDist = dist(pos, neighbor.transform.position);
-            if (mayDist < minDist)
-            {
-                minDist = mayDist;
-                bestTile = neighbor;
-            }
-        }
-        return bestTile;
+
+        if (candidates.Count == 0)
+            return null;
+
+        return candidates.Values.First();
     }
 
     //get world position from row col
