@@ -66,15 +66,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //update tile
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
 
-        //also try to conquer all water tiles around if moved to land tile
-        if (tile.terrain == "land")
-        {
-            foreach (Tile neighbor in tile.neighbors)
-            {
-                neighbor.tryWaterConquer();
-            }
-        }
-        else {
+        if (tile.terrain == "water")
+        {    
             //spawned on a ship
             if (tile.unit != null)
             {
@@ -88,6 +81,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         tile.updateStatus(ownerID, this);
+
+        //also try to conquer all water tiles around if spawn on land tile
+        if (tile.terrain == "land")
+        {
+            foreach (Tile neighbor in tile.neighbors)
+            {
+                neighbor.tryWaterConquer();
+            }
+        }
 
         //modify images
         foreach (GameObject cur in unitImages)
@@ -302,12 +304,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             {
                 if (gameObject.GetComponent<Ship>() == null)
                     PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
-            }
-            else
-            {
-                Debug.Log("undestroyed script bug?");
-            }
-                
+            }                
         }
     }
 
@@ -572,6 +569,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         UIManager.instance.updateGoldText();
 
         PlayerController.instance.allTroops.Remove(this);
+        if (gameObject.GetComponent<Ship>() != null)
+            PlayerController.instance.allShips.Remove(gameObject.GetComponent<Ship>());
 
         destroy();
 

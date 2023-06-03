@@ -763,6 +763,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (allTroops[i].health <= 0)
             {
                 allTroops.Remove(allTroops[i]);
+                if (allTroops[i].gameObject.GetComponent<Ship>() != null)
+                    allShips.Remove(allTroops[i].gameObject.GetComponent<Ship>());
             }
         }
 
