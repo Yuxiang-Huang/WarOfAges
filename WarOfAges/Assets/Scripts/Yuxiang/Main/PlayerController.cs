@@ -326,8 +326,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     }
 
                     //deselect
-                    unitSelected.setImage(Color.white);
-                    unitSelected = null;
+                    if (unitSelected != null)
+                    {
+                        unitSelected.setImage(Color.white);
+                        unitSelected = null;
+                    }
                 }
                 //for spawn troops
                 else
@@ -543,8 +546,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         else if (mode == "move")
         {
             //set color of the selected unit back to white and deselect
-            unitSelected.setImage(Color.white);
-            unitSelected = null;
+            if (unitSelected != null)
+            {
+                unitSelected.setImage(Color.white);
+                unitSelected = null;
+            }
         }
 
         //clear selection
@@ -561,9 +567,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void spawn()
     {
-        if (Config.debugTestMode)
-            Debug.Log("spawn");
-
         //income
         if (!lost)
         {
@@ -686,25 +689,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
 
-        if (Config.debugTestMode)
-            Debug.Log("ship moving");
-
         //ships move first
         foreach (Ship ship in allShips)
         {
             ship.move();
         }
 
-        if (Config.debugTestMode)
-            Debug.Log("troop moving");
-
         foreach (Troop troop in allTroops)
         {
             troop.move();
         }
-
-        if (Config.debugTestMode)
-            Debug.Log("troop following");
 
         //recalculate path for followers
         foreach (Troop troop in allTroops)
@@ -727,9 +721,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void attack()
     {
-        if (Config.debugTestMode)
-            Debug.Log("attack");
-
         foreach (Troop troop in allTroops)
         {
             troop.attack();
@@ -760,9 +751,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void checkDeath()
     {
-        if (Config.debugTestMode)
-            Debug.Log("check death");
-
         //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
@@ -797,9 +785,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 allBuildings.Remove(allBuildings[i]);
             }
         }
-
-        if (Config.debugTestMode)
-            Debug.Log("end taking turn");
 
         if (PhotonNetwork.OfflineMode)
         {

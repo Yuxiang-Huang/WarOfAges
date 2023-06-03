@@ -241,9 +241,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //update direction
             direction = path[0].transform.position - tile.transform.position;
 
+            if (Config.debugTestMode)
+                Debug.Log("Just before boolean check");
+
             //if can move to tile
             if (canMoveToTile(path[0]))
             {
+                if (Config.debugTestMode)
+                    Debug.Log("First case");
+
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
                 PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
 
@@ -253,6 +259,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //edge case when ship moved away
             else if (path[0].unit != null && path[0].unit.gameObject.CompareTag("Troop"))
             {
+                if (Config.debugTestMode)
+                    Debug.Log("Ask teammate to move");
+
                 //leave space
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
                 tile.unit = ship;
@@ -262,12 +271,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 //try to move again
                 if (canMoveToTile(path[0]))
                 {
+                    if (Config.debugTestMode)
+                        Debug.Log("Try to move again");
+
                     PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
 
                     path.RemoveAt(0);
                 }
                 else
                 {
+                    if (Config.debugTestMode)
+                        Debug.Log("Can't move");
+
                     //can't move; reverse leave space
                     PV.RPC(nameof(updateTileUnit), RpcTarget.All);
                     tile.unit = this;
@@ -279,6 +294,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
         else
         {
+            if (Config.debugTestMode)
+                Debug.Log("Inside else");
+
             //still conquer water when not move if not ship
             if (gameObject != null)
             {
@@ -432,6 +450,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual bool canMoveToTile(Tile cur)
     {
+        if (Config.debugTestMode)
+            Debug.Log("Method Can move to tile");
+
         //good if no unit there and land tile
         if (cur.unit == null && cur.terrain == "land")
         {
