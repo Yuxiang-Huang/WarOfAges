@@ -525,7 +525,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         SortedDictionary<float, Tile> candidates = new SortedDictionary<float, Tile>();
 
         // try all tiles in proximity
-        for (int i = roundX - 1; i <= roundX + 1; i++)
+        for (int i = roundX; i <= roundX; i++)
         {
             for (int j = roundY - 1; j <= roundY + 1; j++)
             {

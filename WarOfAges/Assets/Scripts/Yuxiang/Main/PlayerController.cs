@@ -560,6 +560,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
             unitSelected = null;
         }
 
+        if (spawnInfoSelected != null)
+        {
+            spawnInfoSelected.setSpawnImageColor(Color.white);
+            spawnInfoSelected = null;
+        }
+
         mode = "select";
         turnEnded = true;
     }
@@ -704,6 +710,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         foreach (Troop troop in allTroops)
         {
             troop.follow();
+        }
+
+        if (Config.debugTestMode)
+        {
+            Debug.Log("end move");
         }
 
         if (PhotonNetwork.OfflineMode)
