@@ -21,9 +21,10 @@ public class TileManager : MonoBehaviourPunCallbacks
     public List<Color> ownerColors;
 
     //building blocks
-    public float tileSize = 1;
-    public float tileWidth = 0.5f;
-    public float tileHeight = Mathf.Sqrt(3);
+    readonly float tileSize = 1;
+    // difference between consecutive tiles
+    readonly float horizontalDif = 0.5f;
+    readonly float verticalDif = Mathf.Sqrt(3);
 
     public int totalLandTiles;
     public int totalLandConquered;
@@ -315,8 +316,8 @@ public class TileManager : MonoBehaviourPunCallbacks
     {
         //setting camera
         Camera.main.orthographicSize = mapRadius;
-        Camera.main.transform.position = new Vector3(mapRadius * tileWidth * 2 - 2,
-            mapRadius * tileHeight * 2 - 0.5f * mapRadius / 5, -10);
+        Camera.main.transform.position = new Vector3(mapRadius * horizontalDif * 2 - 2,
+            mapRadius * verticalDif * 2 - 0.5f * mapRadius / 5, -10);
         
         //make map
         tiles = new Tile[rows, cols];
@@ -333,8 +334,8 @@ public class TileManager : MonoBehaviourPunCallbacks
                 //skip null
                 if (instruction[count] != '0')
                 {
-                    float xPos = i * tileWidth * tileSize;
-                    float yPos = j * tileHeight * tileSize + (i % 2 * tileHeight / 2 * tileSize);
+                    float xPos = i * horizontalDif * tileSize;
+                    float yPos = j * verticalDif * tileSize + (i % 2 * verticalDif / 2 * tileSize);
 
                     Vector3 pos = new Vector3(xPos, yPos, 0);
 
@@ -518,14 +519,14 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Tile getTile(Vector2 pos)
     {
         //simple division to find rough x and y
-        int roundX = (int) (pos.x / tileWidth / tileSize);
+        int roundX = (int) (pos.x / horizontalDif / tileSize);
 
-        int roundY = (int) (pos.y / tileHeight / tileSize);
+        int roundY = (int) (pos.y / verticalDif / tileSize);
 
         SortedDictionary<float, Tile> candidates = new SortedDictionary<float, Tile>();
 
         // try all tiles in proximity
-        for (int i = roundX; i <= roundX; i++)
+        for (int i = roundX - 1; i <= roundX + 1; i++)
         {
             for (int j = roundY - 1; j <= roundY + 1; j++)
             {
@@ -572,13 +573,52 @@ public class TileManager : MonoBehaviourPunCallbacks
         if (candidates.Count == 0)
             return null;
 
-        return candidates.Values.First();
+        Tile candidate = candidates.Values.First();
+
+        // check if the point is inside the tile using vector math
+
+        float halfSizeLength = 0.5f / Mathf.Sqrt(3);
+
+        // find all vertices
+        Vector3 myPos = candidate.transform.position;
+        List<Vector2> vertices = new List<Vector2>() {
+            // top
+            new Vector2(myPos.x, myPos.y + halfSizeLength * 2),
+
+            // top left
+            new Vector2(myPos.x - horizontalDif, myPos.y + halfSizeLength),
+
+            // bottom left
+            new Vector2(myPos.x - horizontalDif, myPos.y - halfSizeLength),
+
+            // bottom
+            new Vector2(myPos.x, myPos.y - halfSizeLength * 2),
+
+            // bottom right
+            new Vector2(myPos.x + horizontalDif, myPos.y - halfSizeLength),
+
+            // top right
+            new Vector2(myPos.x + horizontalDif, myPos.y + halfSizeLength),
+
+            // top again
+            new Vector2(myPos.x, myPos.y + halfSizeLength * 2),
+        };
+
+        for (int i = 0; i < vertices.Count - 1; i++)
+        {
+            // find vectors for cross product
+            Vector2 v0 = vertices[i] - pos;
+            Vector2 v1 = vertices[i + 1] - pos;
+            if (Vector3.Cross(v0, v1).z < 0)
+                return null;
+        }
+        return candidate;
     }
 
     //get world position from row col
     public Vector2 getWorldPosition(Vector2 indices)
     {
-        return new Vector2(indices.x * tileWidth, indices.y * tileHeight + (indices.x % 2 * tileHeight / 2));
+        return new Vector2(indices.x * horizontalDif, indices.y * verticalDif + (indices.x % 2 * verticalDif / 2));
     }
 
     //find distance between two vector2

@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
 
         //no color and covered in the beginning
         territoryColor.SetActive(false);
-        dark.SetActive(true);
+        dark.SetActive(false);
     }
 
     public override string ToString()
