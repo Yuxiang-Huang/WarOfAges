@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class TutorialManager : MonoBehaviour
         string[] lines = txt.Split("\n");
 
         foreach (string line in lines)
-            instructions.Add(line);
+            instructions.Add(Regex.Unescape(line));
 
 
         tutorialCanvas.gameObject.SetActive(true);
