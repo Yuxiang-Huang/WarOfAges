@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using System.IO;
-using System.Text.RegularExpressions;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class TutorialManager : MonoBehaviour
         string[] lines = txt.Split("\n");
 
         foreach (string line in lines)
-            instructions.Add(Regex.Unescape(line));
+            instructions.Add(line);
 
 
         tutorialCanvas.gameObject.SetActive(true);
@@ -59,7 +58,7 @@ public class TutorialManager : MonoBehaviour
         }
 
         // second slide
-        if (index == 1)
+        if (index == 1 || index == 2 || index == 3)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
