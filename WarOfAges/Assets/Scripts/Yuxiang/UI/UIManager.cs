@@ -145,8 +145,8 @@ public class UIManager : MonoBehaviour
         //set gold text
         goldText = PlayerController.instance.playerUIManager.goldText;
 
-        PlayerController.instance.playerUIManager.PV.RPC("initilize", RpcTarget.All,
-        PlayerController.instance.PV.Owner.NickName, PlayerController.instance.id);
+        PlayerController.instance.playerUIManager.PV.RPC("initilize", RpcTarget.All, PlayerController.instance.PV.Owner.NickName,
+            PlayerController.instance.id);
     }
 
     #endregion

@@ -43,23 +43,32 @@ public class TutorialManager : MonoBehaviour
         //forwardbtn.SetActive(true);
     }
 
-    //public IEnumerator firstSlide()
-    //{
-    //    yield return new WaitForSeconds(1f);
+    void Update()
+    {
+        // first slide
+        if (index == 0)
+        {
+            // advance when player spawned main base
+            if (PlayerController.instance.mainBase != null)
+            {
+                index++;
+                instructionText.text = instructions[index];
+            }
+        }
 
-    //    //player spawned main base
-    //    if (PlayerController.instance.mainBase != null)
-    //    {
-    //        //first instruction
-    //        instructions[0].SetActive(true);
-    //        backwardbtn.SetActive(false);
-    //        forwardbtn.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        StartCoroutine(nameof(firstSlide));
-    //    }
-    //}
+        // second slide
+        if (index == 1)
+        {
+            // advance when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                index++;
+                instructionText.text = instructions[index];
+            }
+        }
+    }
+
+    #region old buttons
 
     public void forward()
     {
@@ -98,4 +107,6 @@ public class TutorialManager : MonoBehaviour
         Destroy(RoomManager.Instance.gameObject);
         PhotonNetwork.LoadLevel(0);
     }
+
+    #endregion
 }

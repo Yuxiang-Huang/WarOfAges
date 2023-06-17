@@ -1,5 +1,5 @@
-﻿Welcome! Begin your game by placing your <b>base</b> on a visible tile on the map.
-The highlighted area is your territory. This can be water or land, but only land generates revenue after every turn.
+﻿Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map.
+The highlighted tiles are your territory. Each tile can either be water (blue) or land (green). Click anywhere to continue.
 Select this unit in the shop. Most units are either a troop or building, but there are exceptions...
 This unit is a troop. Let’s spawn him on land someplace in your territory next to your base. 
 You can only spawn troops on land in your territory that are adjacent to a building.

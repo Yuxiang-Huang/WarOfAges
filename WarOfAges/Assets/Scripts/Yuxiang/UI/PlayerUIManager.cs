@@ -31,7 +31,10 @@ public class PlayerUIManager : MonoBehaviour
     public void initilize(string name, int colorIndex)
     {
         gameObject.SetActive(true);
-        nameText.text = name;
+        if (name == "")
+            nameText.text = "Name";
+        else
+            nameText.text = name;
         sideColor.GetComponent<Image>().color = TileManager.instance.ownerColors[colorIndex];
     }
 
