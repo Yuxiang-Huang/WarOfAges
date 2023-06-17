@@ -4838,7 +4838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1227716126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8032,7 +8032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1917293212
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8330,9 +8330,6 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 0, a: 1}
   - {r: 1, g: 0, b: 1, a: 1}
   ownerColors: []
-  tileSize: 1
-  tileWidth: 0.5
-  tileHeight: 1.7320508
   totalLandTiles: 0
   totalLandConquered: 0
   landTilePrefab: {fileID: 8283241427877351645, guid: f50b7b13635eb4925b259ebe29031913, type: 3}
@@ -8546,7 +8543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1969029245
 RectTransform:
   m_ObjectHideFlags: 0

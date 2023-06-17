@@ -39,10 +39,8 @@ public class TutorialManager : MonoBehaviour
 
         //first direction
         instructionText.text = instructions[0];
-        backwardbtn.SetActive(false);
-        forwardbtn.SetActive(true);
-
-        //StartCoroutine(nameof(firstSlide));
+        //backwardbtn.SetActive(false);
+        //forwardbtn.SetActive(true);
     }
 
     //public IEnumerator firstSlide()
