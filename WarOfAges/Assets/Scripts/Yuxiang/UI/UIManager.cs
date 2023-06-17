@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Coroutine timeCoroutine;
     [SerializeField] int curTimeUsed;
     [SerializeField] bool localTurnEnded;
+    public bool timerPaused;
 
     [Header("InfoTab - Unit")]
     [SerializeField] GameObject infoTabUnit;
@@ -186,11 +187,16 @@ public class UIManager : MonoBehaviour
 
     IEnumerator timer()
     {
+        timeText.text = curTimeUsed + "s left";
+
         for (int i = curTimeUsed; i > 0; i--)
         {
-            timeText.text = i + "s left";
-
-            curTimeUsed = i;
+            // for tutorial
+            if (!timerPaused)
+            {
+                timeText.text = i + "s left";
+                curTimeUsed = i;
+            }
 
             yield return new WaitForSeconds(1f);
         }

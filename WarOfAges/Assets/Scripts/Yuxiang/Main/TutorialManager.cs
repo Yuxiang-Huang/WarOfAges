@@ -42,6 +42,8 @@ public class TutorialManager : MonoBehaviour
 
         //first direction
         instructionText.text = instructions[0];
+
+        UIManager.instance.timerPaused = true;
     }
 
     void Update()
