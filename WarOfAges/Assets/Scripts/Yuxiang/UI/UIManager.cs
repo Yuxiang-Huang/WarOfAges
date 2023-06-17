@@ -9,6 +9,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class UIManager : MonoBehaviour
 {
+    #region Fields
+
     public static UIManager instance;
 
     public PhotonView PV;
@@ -67,6 +69,8 @@ public class UIManager : MonoBehaviour
 
     [Header("End")]
     public GameObject leaveBtn;
+
+    #endregion
 
     void Awake()
     {
@@ -163,15 +167,16 @@ public class UIManager : MonoBehaviour
 
         setIncomeText();
 
-        //don't do if lost
+        // don't do if lost
         if (!PlayerController.instance.lost)
         {
             turnBtn.SetActive(true);
 
             localTurnEnded = false;
 
-            //reset timer
-            curTimeUsed = initialTime + timeInc * PlayerController.instance.age;
+            // reset timer
+            // time limit increase by timeInc every 5 turn
+            curTimeUsed = initialTime + timeInc * (turnNum / 5);
             timeCoroutine = StartCoroutine(nameof(timer));
 
             //set my ready icon to false
