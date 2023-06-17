@@ -15,6 +15,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
 
+    [SerializeField] List<GameObject> tutorialArrows;
+
     private void Start()
     {
         //destroy if not tutorial
@@ -40,8 +42,6 @@ public class TutorialManager : MonoBehaviour
 
         //first direction
         instructionText.text = instructions[0];
-        //backwardbtn.SetActive(false);
-        //forwardbtn.SetActive(true);
     }
 
     void Update()
@@ -52,8 +52,7 @@ public class TutorialManager : MonoBehaviour
             // advance when player spawned main base
             if (PlayerController.instance.mainBase != null)
             {
-                index++;
-                instructionText.text = instructions[index];
+                advance();
             }
         }
 
@@ -63,10 +62,21 @@ public class TutorialManager : MonoBehaviour
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
             {
-                index++;
-                instructionText.text = instructions[index];
+                advance();
             }
         }
+    }
+
+    void advance()
+    {
+        if (tutorialArrows[index] != null)
+            tutorialArrows[index].SetActive(false);
+
+        index++;
+        instructionText.text = instructions[index];
+
+        if (tutorialArrows[index] != null)
+            tutorialArrows[index].SetActive(true);
     }
 
     #region old buttons

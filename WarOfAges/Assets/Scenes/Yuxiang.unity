@@ -335,6 +335,10 @@ MonoBehaviour:
   index: 0
   forwardbtn: {fileID: 1917293211}
   backwardbtn: {fileID: 1969029244}
+  tutorialArrows:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 1491566203}
 --- !u!4 &43825137
 Transform:
   m_ObjectHideFlags: 0
@@ -6326,6 +6330,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialArrow
       objectReference: {fileID: 0}
+    - target: {fileID: 810541920989922801, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 810541920989922802, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6415,6 +6423,11 @@ PrefabInstance:
 --- !u!224 &1491566202 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 810541920989922802, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
+  m_PrefabInstance: {fileID: 1491566201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1491566203 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 810541920989922801, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
   m_PrefabInstance: {fileID: 1491566201}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1522278539
