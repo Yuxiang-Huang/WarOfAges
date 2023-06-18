@@ -18,7 +18,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        //destroy if not tutorial
+        // destroy if not tutorial
         if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") ||
             !(bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
         {
@@ -27,22 +27,19 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        //read tutorial directions
+        // read tutorial directions
         TextAsset mytxtData = (TextAsset)Resources.Load("Text/TutorialText");
         string txt = mytxtData.text;
-
         string[] lines = txt.Split("\n");
-
         foreach (string line in lines)
             instructions.Add(line);
 
-
-        tutorialCanvas.gameObject.SetActive(true);
-
-        //first direction
-        instructionText.text = instructions[0];
-
+        // setup
+        index = 0;
+        instructionText.text = instructions[index];
+        //advance();
         UIManager.instance.timerPaused = true;
+        tutorialCanvas.gameObject.SetActive(true);
     }
 
     void Update()
@@ -57,11 +54,31 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        // second slide
+        // second, third, and fourth slides
         if (index == 1 || index == 2 || index == 3)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
+            {
+                advance();
+            }
+        }
+
+        // fifth slide
+        if (index == 4)
+        {
+            // advance when number of turn increases
+            if (UIManager.instance.getTurnNum() > 1)
+            {
+                advance();
+            }
+        }
+
+        // sixth slide
+        if (index == 5)
+        {
+            // advance when a unit is selected to be spawned
+            if (PlayerController.instance.toSpawnUnit != null)
             {
                 advance();
             }

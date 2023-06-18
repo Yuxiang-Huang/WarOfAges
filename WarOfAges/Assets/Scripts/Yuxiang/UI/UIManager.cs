@@ -19,9 +19,6 @@ public class UIManager : MonoBehaviour
 
     public GameObject arrowPrefab;
 
-    [SerializeField] int turnNum;
-    [SerializeField] TextMeshProUGUI turnNumText;
-
     [Header("Settting")]
     [SerializeField] int initialTime;
     [SerializeField] int timeInc;
@@ -34,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Turn")]
     [SerializeField] GameObject turnBtn;
+    [SerializeField] int turnNum;
+    [SerializeField] TextMeshProUGUI turnNumText;
     [SerializeField] GameObject cancelTurnBtn;
     [SerializeField] Coroutine timeCoroutine;
     [SerializeField] int curTimeUsed;
@@ -465,5 +464,10 @@ public class UIManager : MonoBehaviour
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
         PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, true);
+    }
+
+    public int getTurnNum()
+    {
+        return turnNum;
     }
 }

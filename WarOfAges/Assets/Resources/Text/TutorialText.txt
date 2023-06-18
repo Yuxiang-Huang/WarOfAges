@@ -1,9 +1,9 @@
-﻿Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map.
-The highlighted tiles are your territory. Each tile can either be water (blue) or land (green), but only land tiles can generate <b>income</b>.<br><br>Click anywhere to continue.
-Here is the info tab, where you can see information about every player. The coin symbol shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
-Here you can see the income you will get after this turn. The second number shows the increase in income after acquring another land tile. <br><br>Click anywhere to continue.
-
-Select this unit in the shop. Most units are either a troop or building, but there are exceptions...
+Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map. Each tile can either be water (blue) or land (green), but only land tiles can generate <b>income</b>.
+The highlighted tiles are your territory. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
+Here is the player info tab, where you can view info about each player. The hexagon symbol shows how many tiles are your territory. The coin symbol shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
+Here you can see the income you will get after this <b>turn</b>. The second number shows the increase in income after acquring another land tile. <br><br>Click anywhere to continue.
+Now click the end turn button to end this turn and see your number of gold increase.
+Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a troop or building, but there are exceptions...
 This unit is a troop. Let’s spawn him on land someplace in your territory next to your base. 
 You can only spawn troops on land in your territory that are adjacent to a building.
 Let’s press the End Turn button. When all players have done so, troops will spawn, move, and attack in this order. 
