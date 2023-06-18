@@ -80,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 529a18110c3bc4501a12b4f4c02f297c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 65ee47db177086741968254f619c10dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1.1538461}
+  m_Size: {x: 3.7, y: 4.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -466,8 +466,8 @@ SpriteRenderer:
   m_SortingLayerID: 405631003
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 14ff80214a47b44febb2bcae354cfa39, type: 3}
-  m_Color: {r: 0.14901961, g: 0.15294118, b: 0.20784314, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 023c8519a8dc2cb4c89a1d01b1bc62ee, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -543,6 +543,10 @@ PrefabInstance:
     - target: {fileID: 6251227184636454859, guid: 8cade36a267a441ffb6598535fc2f260, type: 3}
       propertyPath: m_Name
       value: Border
+      objectReference: {fileID: 0}
+    - target: {fileID: 6251227184636454859, guid: 8cade36a267a441ffb6598535fc2f260, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6868617062366801316, guid: 8cade36a267a441ffb6598535fc2f260, type: 3}
       propertyPath: m_LocalScale.x
