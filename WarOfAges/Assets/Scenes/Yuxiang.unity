@@ -3760,7 +3760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: Travel on water. Able to carry a troop. Doesn''t attack.'
+      value: 'Vehicle: Travel on water. Able to carry a troop. Doesn''t attack.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize

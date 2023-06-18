@@ -188,13 +188,15 @@ public class UIManager : MonoBehaviour
     {
         timeText.text = curTimeUsed + "s left";
 
-        for (int i = curTimeUsed; i > 0; i--)
+        int i = curTimeUsed;
+        while (i > 0)
         {
             // for tutorial
             if (!timerPaused)
             {
                 timeText.text = i + "s left";
                 curTimeUsed = i;
+                i--;
             }
 
             yield return new WaitForSeconds(1f);

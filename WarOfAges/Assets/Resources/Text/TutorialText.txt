@@ -4,7 +4,7 @@ Here is the player info tab, where you can view info about each player. The hexa
 Here you can see the income you will get after this <b>turn</b>. The second number shows the increase in income after acquring another land tile. <br><br>Click anywhere to continue.
 Now click the end turn button to end this turn and see your number of gold increase.
 Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a troop or building, but there are exceptions...
-This unit is a troop. Let’s spawn him on land someplace in your territory next to your base. 
+This unit is a troop. You can only spawn troops on your territory tiles one tile radius around a building.
 You can only spawn troops on land in your territory that are adjacent to a building.
 Let’s press the End Turn button. When all players have done so, troops will spawn, move, and attack in this order. 
 It’s your turn again now. During each turn, you may spawn units as well as move troops.
