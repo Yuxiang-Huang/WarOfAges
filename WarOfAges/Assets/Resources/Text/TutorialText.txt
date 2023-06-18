@@ -1,8 +1,8 @@
-Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map. Each tile can either be water (blue) or land (green), but only land tiles can generate <b>income</b>.
+Welcome! Begin your game by clicking on a green <b>tile</b> on the map. This will place your <b>base</b> on that tile. Tiles can be either water (blue) or land (green), only land tiles generate <b>income</b>.
 The highlighted tiles are your territory. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
-Here is the player info tab, where you can view info about each player. The hexagon symbol shows how many tiles are your territory. The coin symbol shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
-Here you can see the income you will get after this <b>turn</b>. The second number shows the increase in income after acquiring another land tile. <br><br>Click anywhere to continue.
-Now click the end turn button to end this turn and see your number of gold increase.
+Here is the player info tab, where you can see how much <b>gold</b>, how much territory, how many troops, and how many buildings each player has.<br><br>Click anywhere to continue.
+Here you can also find your gold, as well as your income after each <b>turn</b>. <br><br>Click anywhere to continue.
+Now end your <b>turn</b> by clicking the End Turn button. Notice that your gold increases.
 Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a troop or building, but there are exceptions...
 This unit is a troop. You can view its info in the <b>info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's spawn your first troop!
 The tiles you can't spawn on will also be signified by being shaded. 
