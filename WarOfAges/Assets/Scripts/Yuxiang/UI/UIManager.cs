@@ -163,7 +163,7 @@ public class UIManager : MonoBehaviour
         }
 
         turnNum++;
-        turnNumText.text = "Turn: " + turnNum;
+        turnNumText.text = "Turn " + turnNum;
 
         setIncomeText();
 

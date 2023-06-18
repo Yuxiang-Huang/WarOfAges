@@ -83,6 +83,16 @@ public class TutorialManager : MonoBehaviour
                 advance();
             }
         }
+
+        // seventh slide
+        if (index == 6)
+        {
+            // advance when a unit is spawned
+            if (PlayerController.instance.spawnList.Count != 0)
+            {
+                advance();
+            }
+        }
     }
 
     void advance()
