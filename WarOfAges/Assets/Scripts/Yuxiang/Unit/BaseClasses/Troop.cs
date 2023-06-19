@@ -331,7 +331,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     }
 
     [PunRPC]
-    public virtual void moveUpdate_RPC(int nextTileX, int nextTileY)
+    public void moveUpdate_RPC(int nextTileX, int nextTileY)
     {
         if (Config.debugTestMode)
             Debug.Log("method moveUpdate_RPC");
@@ -364,12 +364,25 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Debug.Log("update tile");
         }
 
-        //update tile
+        // count number of tiles moved
         if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && PlayerController.instance.id == ownerID)
         {
             numOfTileMoved++;
         }
-        tile = TileManager.instance.tiles[nextTileX, nextTileY];
+        Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
+
+        // update direction
+        if (nextTile.transform.position.x > tile.transform.position.x)
+        {
+            imageRenderer.flipX = false;
+        }
+        else
+        {
+            imageRenderer.flipX = true;
+        }
+
+        //update tile
+        tile = nextTile;
         tile.updateStatus(ownerID, this);
 
         //also try to conquer all water tiles around if moved to land tile
