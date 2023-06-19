@@ -7,7 +7,7 @@ public class Config
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = true;
     public static bool debugTestMode = false;
-    public static bool tutorialMode = false;
+    public static bool tutorialMode = true;
 
     //time factors
     public static float troopMovementTime = 0.5f;

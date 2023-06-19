@@ -39,9 +39,10 @@ public class TutorialManager : MonoBehaviour
             instructions.Add(line);
 
         // setup
-        index = 3;
+        index = 0;
         instructionText.text = instructions[index];
-        advance();
+        if (index != 0)
+            advance();
         UIManager.instance.timerPaused = true;
         tutorialCanvas.gameObject.SetActive(true);
     }

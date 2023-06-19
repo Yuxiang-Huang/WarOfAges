@@ -45,7 +45,7 @@ public class ExtraView : Building
         foreach (Tile curTile in tile.neighbors2)
         {
             //if can see this tile and there is enemy unit on it
-            if (!curTile.dark.activeSelf && curTile.unit != null) //&& curTile.unit.ownerID != ownerID)
+            if (!curTile.dark.activeSelf && curTile.unit != null && curTile.unit.ownerID != ownerID)
             {
                 //attack order depending on distance to mainbase
                 targets.TryAdd(TileManager.instance.dist(tile, curTile), curTile);
