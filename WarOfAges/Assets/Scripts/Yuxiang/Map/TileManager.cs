@@ -315,10 +315,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public void makeGrid_RPC(int mapRadius, int rows, int cols, string instruction)
     {
         //setting camera
-        Camera.main.orthographicSize = mapRadius;
-        Camera.main.transform.position = new Vector3(mapRadius * horizontalDif * 2 - 2,
-            mapRadius * verticalDif * 2 - 0.5f * mapRadius / 5, -10);
-        
+        Camera.main.orthographicSize = (mapRadius + 1);
+        Camera.main.transform.position = new Vector3(-mapRadius / 5, 0, -10);
+
         //make map
         tiles = new Tile[rows, cols];
 
@@ -334,8 +333,8 @@ public class TileManager : MonoBehaviourPunCallbacks
                 //skip null
                 if (instruction[count] != '0')
                 {
-                    float xPos = i * horizontalDif * tileSize;
-                    float yPos = j * verticalDif * tileSize + (i % 2 * verticalDif / 2 * tileSize);
+                    float xPos = (i - rows/2) * horizontalDif * tileSize;
+                    float yPos = (j - cols /2) * verticalDif * tileSize + (i % 2 * verticalDif / 2 * tileSize);
 
                     Vector3 pos = new Vector3(xPos, yPos, 0);
 
@@ -519,9 +518,9 @@ public class TileManager : MonoBehaviourPunCallbacks
     public Tile getTile(Vector2 pos)
     {
         //simple division to find rough x and y
-        int roundX = (int) (pos.x / horizontalDif / tileSize);
+        int roundX = (int) (pos.x / horizontalDif / tileSize) + tiles.GetLength(0) / 2;
 
-        int roundY = (int) (pos.y / verticalDif / tileSize);
+        int roundY = (int) (pos.y / verticalDif / tileSize) + tiles.GetLength(1) / 2;
 
         SortedDictionary<float, Tile> candidates = new SortedDictionary<float, Tile>();
 
