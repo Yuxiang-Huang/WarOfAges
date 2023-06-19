@@ -43,7 +43,7 @@ public class TutorialManager : MonoBehaviour
             instructions.Add(line);
 
         // setup
-        index = 12;
+        index = 0;
         instructionText.text = instructions[index*2];
         if (index != 0)
             advance();
@@ -211,6 +211,15 @@ public class TutorialManager : MonoBehaviour
 
         // The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
         if (index == 16)
+        {
+            // advance when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                advance();
+            }
+        }
+
+        if (index > 16)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))

@@ -12,7 +12,7 @@ Here is the shop. You can view info about each <b>unit</b> by hovering or holdin
 
 This unit is a troop. You can view its info in the <b>unit info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's add your first troop to the spawn list.
 
-The unit in the shop will be deselected only if you click and didn't add another unit to the spawn list. This is to allow you to spawn many units with a single selection.Let's deselect the unit in the shop now by clicking anywhere that is not a spawnable tile.
+The unit in the shop will be deselected only if you click and didn't add another unit to the spawn list. This is to allow you to spawn many units with a single selection. Let's deselect the unit in the shop now by clicking anywhere that is not a spawnable tile.
 
 Now let's click on the unit you just put on the spawn list.
 
@@ -26,13 +26,31 @@ Remember the player info tab? The soldier icon shows how many troops you have an
 
 Let's select the troop you just spawned.
 
-Again, you can see its info in the unit info bar. To move your troop now, simply click on any tile you want it to move to.
+Again, you can see its info in the unit info bar. For spawned units, you can sell them for half the price. To move your troop now, simply click on <u>any</u> tile you want it to move to.
 
 The red arrow shows the tile this troop will move to after the turn ends. End the turn by clicking the End Turn Button or the turn will automatically end after the time runs out.
 
-The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
+Your territory now includes the tile your troop moved to. The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
 
-The tiles you can't spawn on will also be signified by being shaded.
+After a turn ends, troops will spawn, move, and attack in this order.<br><br>Click anywhere to continue.
+
+You can move troops that are in the spawn list in the same way.<br><br>Click anywhere to continue.
+
+Troops can only move on land tiles. Unlock the ship and try it yourself to learn how to move troops across water.<br><br>Click anywhere to continue.
+
+You are currently in the Stone Age, but you have enough gold to advance to the next age!<br><br>Click anywhere to continue.
+
+When you advance, troops will get stronger but also cost more.<br><br>Click anywhere to continue.
+
+Note that units on your map do not advance with the ages. If you wish, you may upgrade them in the unit info bar to match the new age.<br><br>Click anywhere to continue.
+
+You can unlock a new unit everytime you advanced into a new age.<br><br>Click anywhere to continue.
+
+Buildings can be spawned on any land tile that is your territory. Ship can be spawned on any water tile that is your territory. Spells can be spawn on any visible tile. The tiles you can't spawn on will be signified by being shaded.<br><br>Click anywhere to continue.
+
+Units can't overlap, with the exception of spells.<br><br>Click anywhere to continue.
+
+As you explore the map, you will run into other players. You will have to destroy their bases while keeping your own safe in order to win.<br><br>Don't click anymore!.
 
 
 
