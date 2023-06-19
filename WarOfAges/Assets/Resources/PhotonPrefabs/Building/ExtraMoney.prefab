@@ -617,12 +617,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - Bushes
+  - Hut
+  - Windmill
+  - Farm
+  - Bank
+  - Crypto Computer
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3267935240887392887}

@@ -70,12 +70,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - 'Campfire  '
+  - Archer Platform
+  - Guarded Wall
+  - 'Telescope '
+  - Watch Tower
+  - Satellite
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 6379810984686142487}
