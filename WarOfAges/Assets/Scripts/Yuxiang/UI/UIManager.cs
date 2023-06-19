@@ -70,6 +70,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI goldNeedToAdvanceText;
 
     [Header("End")]
+    [SerializeField] GameObject askSurrenderBox;
     [SerializeField] GameObject surrenderButton;
     [SerializeField] GameObject leaveBtn;
 
@@ -481,5 +482,21 @@ public class UIManager : MonoBehaviour
     public int getTurnNum()
     {
         return turnNum;
+    }
+
+    public void askSurrender()
+    {
+        askSurrenderBox.SetActive(true);
+    }
+
+    public void noSurredner()
+    {
+        askSurrenderBox.SetActive(false);
+    }
+
+    public void yesSurredner()
+    {
+        askSurrenderBox.SetActive(false);
+        GameManager.instance.surrender();
     }
 }
