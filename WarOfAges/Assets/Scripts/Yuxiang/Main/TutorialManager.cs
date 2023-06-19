@@ -5,6 +5,9 @@ using TMPro;
 using Photon.Pun;
 using System.IO;
 using Unity.VisualScripting;
+using Photon.Realtime;
+using static Photon.Pun.UtilityScripts.TabViewManager;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -40,7 +43,7 @@ public class TutorialManager : MonoBehaviour
             instructions.Add(line);
 
         // setup
-        index = 4;
+        index = 12;
         instructionText.text = instructions[index*2];
         if (index != 0)
             advance();
@@ -65,9 +68,14 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        // The highlighted tiles are your <b>territory</b>. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
-        // Here is the player info tab, where you can view info about each player.For now, know that the hexagon symbol shows how many tiles are your territory and the coin symbol shows how many<b>gold</ b > you have.< br >< br > Click anywhere to continue.
-        // Here you can also see the amount of Gold you have. The second number shows the income you will get after this < b > turn </ b >.< br >< br > Click anywhere to continue.
+        // The highlighted tiles are your <b>territory</b>. You will learn how to expand your territory later.
+        // <br><br>Click anywhere to continue.
+
+        // Here is the player info tab, where you can view info about each player.For now, know that the hexagon symbol shows how many tiles are your territory and the coin symbol shows how many<b>gold</b> you have.
+        // <br><br>Click anywhere to continue.
+
+        // Here you can also see the amount of Gold you have. The second number shows the income you will get after this <b>turn</b>.
+        // <br><br>Click anywhere to continue.
         if (index == 1 || index == 2 || index == 3)
         {
             // advance when clicked
@@ -127,7 +135,8 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        // You can see its info in the unit info bar. You can choose to despawn it and you will get all the gold used to spawn this unit back.<br><br>Click anywhere to continue.
+        // You can see its info in the unit info bar. You can choose to despawn it and you will get all the gold used to spawn this unit back.
+        // <br><br>Click anywhere to continue.
         if (index == 9)
         {
             // advance when clicked
@@ -157,14 +166,63 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
+        // Remember the player info tab? The soldier icon shows how many troops you have and the house icon shows how many buliding you have.
+        // <br><br>Click anywhere to continue.
+        if (index == 12)
+        {
+            // advance when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                advance();
+            }
+        }
 
+        // Let's select the troop you just spawned.
+        if (index == 13)
+        {
+            // advance when a troop is selected
+            if (PlayerController.instance.unitSelected != null)
+            {
+                advance();
+            }
+        }
+
+        // Again, you can see its info in the unit info bar. To move your troop now, simply click on any tile you want it to move to.
+        if (index == 14)
+        {
+            // advance when troop has an arrow
+            if (PlayerController.instance.allTroops[0].arrow != null)
+            {
+                advance();
+                // timer on
+                UIManager.instance.timerPaused = false;
+            }
+        }
+
+        // The red arrow shows the tile this troop will move to after the turn ends. End the turn by clicking the End Turn Button or the turn will automatically end after the time runs out.
+        if (index == 15)
+        {
+            // advance when it is the fourth turn
+            if (UIManager.instance.getTurnNum() > 3)
+            {
+                advance();
+            }
+        }
+
+        // The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
+        if (index == 16)
+        {
+            // advance when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                advance();
+            }
+        }
     }
-
     void advance()
     {
         if (tutorialArrows[index] != null)
             tutorialArrows[index].SetActive(false);
-
         index++;
         instructionText.text = instructions[index*2];
 

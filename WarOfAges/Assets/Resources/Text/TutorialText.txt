@@ -2,7 +2,7 @@ Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile<
 
 The highlighted tiles are your <b>territory</b>. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
 
-Here is the player info tab, where you can view info about each player. For now, know that the hexagon symbol shows how many tiles are your territory and the coin symbol shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
+Here is the player info tab, where you can view info about each player. For now, know that the hexagon icon shows how many tiles are your territory and the coin icon shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
 
 Here you can also see the amount of Gold you have. The second number shows the income you will get after this <b>turn</b>.<br><br>Click anywhere to continue.
 
@@ -10,17 +10,27 @@ Now end your turn by clicking the End Turn button. Notice that your gold increas
 
 Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a <b>troop</b> or <b>building</b>, but there are <i>exceptions</i>…
 
-This unit is a troop. You can view its info in the <b>unit info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's spawn your first troop!
+This unit is a troop. You can view its info in the <b>unit info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's add your first troop to the spawn list.
 
-Let's deselect the unit in the shop by clicking anywhere that is not a spawnable tile.
+The unit in the shop will be deselected only if you click and didn't add another unit to the spawn list. This is to allow you to spawn many units with a single selection.Let's deselect the unit in the shop now by clicking anywhere that is not a spawnable tile.
 
 Now let's click on the unit you just put on the spawn list.
 
 You can see its info in the unit info bar. You can choose to despawn it and you will get all the gold used to spawn this unit back.<br><br>Click anywhere to continue.
 
-Put a unit in the spawn list.
+Put a troop in the spawn list.
 
-Units will be spawned after the turn ends. Let's end your turn by clicking the End Turn button.
+All units in the spawn list will be spawned after the turn ends. Let's end your turn by clicking the End Turn button.
+
+Remember the player info tab? The soldier icon shows how many troops you have and the house icon shows how many buliding you have.<br><br>Click anywhere to continue.
+
+Let's select the troop you just spawned.
+
+Again, you can see its info in the unit info bar. To move your troop now, simply click on any tile you want it to move to.
+
+The red arrow shows the tile this troop will move to after the turn ends. End the turn by clicking the End Turn Button or the turn will automatically end after the time runs out.
+
+The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
 
 The tiles you can't spawn on will also be signified by being shaded.
 
