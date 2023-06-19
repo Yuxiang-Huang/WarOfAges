@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: d249388699ee14a169b1cb57c0c7bb48
   - enabled: 1
+    path: Assets/Scenes/Yuxiang.unity
+    guid: 4ec66f7bd8905480797377cd57c9b1df
+  - enabled: 0
     path: Assets/Scenes/Yuxiang Old.unity
     guid: 66e929c799e054081ac2dfbc650b44b6
   m_configObjects: {}

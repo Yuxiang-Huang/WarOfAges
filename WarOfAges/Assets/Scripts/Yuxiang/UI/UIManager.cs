@@ -60,7 +60,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject playerUIManagerParent;
     public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
-    public Dictionary<Color, string> colorToString;
 
     [Header("Age")]
     public List<string> ageNameList;
@@ -100,15 +99,6 @@ public class UIManager : MonoBehaviour
         {
             player.gameObject.SetActive(false);
         }
-
-        //initialize color to string
-        colorToString = new Dictionary<Color, string>
-        {
-            { new Color(0, 1, 1), "Cyan" },
-            { new Color(1, 0, 0), "Red" },
-            { new Color(1, 1, 0), "Yellow" },
-            { new Color(1, 0, 1), "Purple" }
-        };
 
         ageText.text = ageNameList[0];
     }
