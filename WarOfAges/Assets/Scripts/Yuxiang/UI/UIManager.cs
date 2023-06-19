@@ -55,8 +55,9 @@ public class UIManager : MonoBehaviour
     [Header("InfoTab - Player")]
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI shopGoldText;
     [SerializeField] TextMeshProUGUI incomeText;
-    [SerializeField] TextMeshProUGUI marginalIncomeText;
+    //[SerializeField] TextMeshProUGUI marginalIncomeText;
     [SerializeField] GameObject playerUIManagerParent;
     public List<PlayerUIManager> playerUIManagerList;
     [SerializeField] List<GameObject> readyIconList;
@@ -387,16 +388,16 @@ public class UIManager : MonoBehaviour
     {
         incomeText.text = "+" + PlayerController.instance.calculateIncome();
 
-        int marginalIncome = PlayerController.instance.calculateMarginalIncome();
+        //int marginalIncome = PlayerController.instance.calculateMarginalIncome();
 
-        if (marginalIncome > 0)
-        {
-            marginalIncomeText.text = "+" + marginalIncome;
-        }
-        else
-        {
-            marginalIncomeText.text = marginalIncome.ToString();
-        }
+        //if (marginalIncome > 0)
+        //{
+        //    marginalIncomeText.text = "+" + marginalIncome;
+        //}
+        //else
+        //{
+        //    marginalIncomeText.text = marginalIncome.ToString();
+        //}
     }
 
     #endregion
@@ -447,6 +448,7 @@ public class UIManager : MonoBehaviour
     public void updateGoldText()
     {
         goldText.text = PlayerController.instance.gold.ToString();
+        shopGoldText.text = PlayerController.instance.gold.ToString();
     }
 
     [PunRPC]
