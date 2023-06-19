@@ -7,6 +7,8 @@ using System.IO;
 
 public class TutorialManager : MonoBehaviour
 {
+    public static TutorialManager instance;
+
     [SerializeField] Canvas tutorialCanvas;
     [SerializeField] List<string> instructions;
     [SerializeField] TextMeshProUGUI instructionText;
@@ -26,6 +28,8 @@ public class TutorialManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        instance = this;
 
         // read tutorial directions
         TextAsset mytxtData = (TextAsset)Resources.Load("Text/TutorialText");

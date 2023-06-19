@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("Spawned") && (bool)p.Value.CustomProperties["Spawned"]))
         {
-            //players move one by one
+            // players move one by one
             allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
         }
     }
@@ -325,6 +325,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region endGame
+
+    public void surrender()
+    {
+        PlayerController.instance.mainBase.sell();
+        PlayerController.instance.toSell.Add(PlayerController.instance.mainBase);
+    }
 
     public void leave()
     {

@@ -907,9 +907,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //remove from gameManager playerlist
         PV.RPC(nameof(removeFromPlayerList), RpcTarget.All);
 
-        //display leave button
-        UIManager.instance.leaveBtn.SetActive(true);
-
         //reset everything
         gold = 0;
         territory = new HashSet<Tile>();
@@ -925,9 +922,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //last update in player info tab
         UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
             UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
-
-        //ask all player to recalculate income
-        UIManager.instance.PV.RPC(nameof(UIManager.instance.setIncomeText), RpcTarget.All);
     }
 
     [PunRPC]

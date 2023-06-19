@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -69,7 +70,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI goldNeedToAdvanceText;
 
     [Header("End")]
-    public GameObject leaveBtn;
+    [SerializeField] GameObject surrenderButton;
+    [SerializeField] GameObject leaveBtn;
 
     #endregion
 
@@ -290,6 +292,10 @@ public class UIManager : MonoBehaviour
             if (!GameManager.instance.unsellableUnits.Contains(unit))
                 sellBtn.SetActive(true);
 
+            // can't sell main base unless tutorial
+            if (TutorialManager.instance == null && unit.gameObject.GetComponent<MainBase>() != null)
+                sellBtn.SetActive(false);
+
             //able to upgrade if lower age
             if (unit.age < PlayerController.instance.age)
                 upgradeBtn.SetActive(true);
@@ -459,9 +465,17 @@ public class UIManager : MonoBehaviour
 
     public void lost()
     {
+        // turn stuff...
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
         PV.RPC(nameof(setEndTurn), RpcTarget.All, PlayerController.instance.id, true);
+
+        //display leave button
+        surrenderButton.SetActive(false);
+        leaveBtn.SetActive(true);
+
+        //ask all player to recalculate income
+        PV.RPC(nameof(UIManager.instance.setIncomeText), RpcTarget.All);
     }
 
     public int getTurnNum()

@@ -5193,7 +5193,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UPGRADE FOR 20 GOLD
+  m_text: UPGRADE FOR 2000 GOLD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: da33492f40039cd4b9c5d0dccee775af, type: 2}
   m_sharedMaterial: {fileID: 2129810829913635677, guid: da33492f40039cd4b9c5d0dccee775af, type: 2}
@@ -7707,7 +7707,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1602756415}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: leave
+        m_MethodName: surrender
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8746,6 +8746,7 @@ MonoBehaviour:
   ageAdvanceBtn: {fileID: 829458720}
   ageText: {fileID: 660951266}
   goldNeedToAdvanceText: {fileID: 1597940931}
+  surrenderButton: {fileID: 1573375920}
   leaveBtn: {fileID: 109603864}
 --- !u!4 &1655113465
 Transform:

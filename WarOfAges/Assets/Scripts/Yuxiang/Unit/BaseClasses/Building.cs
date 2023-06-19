@@ -93,7 +93,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     #region UI
 
-    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
+    public virtual void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         string unitName = ToString();
@@ -103,12 +103,6 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
         healText.text = "Heal: " + getHealGold() + " Gold";
-
-        //main base
-        if (sellGold == 0)
-        {
-            sellText.text = "Quit";
-        }
     }
 
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
