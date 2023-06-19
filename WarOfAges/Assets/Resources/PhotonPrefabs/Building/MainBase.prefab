@@ -351,12 +351,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - Cave
+  - Temple
+  - Castle
+  - Palace
+  - Military Base
+  - Space Station
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 2989181452901921751}

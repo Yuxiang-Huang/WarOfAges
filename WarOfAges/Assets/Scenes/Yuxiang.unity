@@ -1051,11 +1051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Building: Generate gold equal to 1/8 of its cost each turn.'
+      value: 'Money (Building): Generate Gold equal to 1/8 of its cost each turn.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 43.75
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -1260,13 +1260,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Spell: After one turn, reveal all tiles within three tiles radius.
-        3\xD7 damage on tile. 2\xD7 damage one tile away. 1\xD7 damage two tiles
-        away."
+      value: "AOE (Spell): When spawned, reveal all tiles within three tiles radius.
+        After one turn, deal 3\xD7 damage on tile, 2\xD7 damage one tile away, and
+        1\xD7 damage two tiles away."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 29.1
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -1511,11 +1511,11 @@ PrefabInstance:
       objectReference: {fileID: 275125257}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -1535,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1543,7 +1543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1583,11 +1583,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -700
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2170,13 +2170,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Building: Reveal all tile within three tiles radius. Deal 1\xD7 damage
-        to one enemy unit within two tiles radius that is closest to the main base
-        each turn."
+      value: "Tower (Building): Reveal all tile within three tiles radius. Deal 1\xD7
+        damage to one enemy unit within two tiles radius that is closest to the Main
+        Base each turn."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 28
+      value: 29.1
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -4181,11 +4181,11 @@ PrefabInstance:
       objectReference: {fileID: 860585683}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -4205,7 +4205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -4213,7 +4213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4253,11 +4253,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -570
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4624,11 +4624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Vehicle: Travel on water. Able to carry a troop. Doesn''t attack.'
+      value: 'Ship (Vehicle):  Travel on water. Can carry a troop. Doesn''t attack.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 43.75
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -5064,7 +5064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1096395844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5925,11 +5925,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: Can attack within two tiles radius. Half the health as melee.'
+      value: 'Long Range (Troop:): Can attack within two tiles radius. Half the health
+        as Melee.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 40.8
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -6386,11 +6387,11 @@ PrefabInstance:
       objectReference: {fileID: 1268171186}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -6410,7 +6411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -6418,7 +6419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -6458,11 +6459,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -440
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7795,13 +7796,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Troop: 2\xD7 health as melee. Attack all enemies within 1 tile radius.
-        Deals double damage when didn't move this turn. Can't move if attacked this
-        turn."
+      value: "Health (Troop): 2\xD7 health as Melee. Attack all enemies within 1
+        tile radius. Deals double damage when didn't move this turn. Can't move if
+        attacked this turn."
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 28
+      value: 29.1
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -9428,11 +9429,11 @@ PrefabInstance:
       objectReference: {fileID: 1708768072}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -9452,7 +9453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -9460,7 +9461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -9500,11 +9501,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9808,12 +9809,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: "Troop: Can move two tiles each turn. 1.5\xD7 health as melee and deal
-        damage in proportion to the number of tiles moved this turn. "
+      value: "Speed (Troop): Can move two tiles each turn. 1.5\xD7 health as Melee
+        and deal damage in proportion to the number of tiles moved this turn. "
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 32
+      value: 29.1
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -10216,11 +10217,11 @@ PrefabInstance:
       objectReference: {fileID: 1936620266}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -10240,7 +10241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -10248,7 +10249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -10288,11 +10289,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -310
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10961,12 +10962,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_text
-      value: 'Troop: Most basic unit that attack one enemy unit within one tile radius
-        and move one tile each turn.'
+      value: 'Melee (Troop): Most basic unit that attack one enemy unit within one
+        tile radius and move one tile each turn.'
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSize
-      value: 34
+      value: 34.95
       objectReference: {fileID: 0}
     - target: {fileID: 7078796322576820809, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: m_fontSizeBase
@@ -11011,11 +11012,11 @@ PrefabInstance:
       objectReference: {fileID: 6950465278614329761}
     - target: {fileID: 6950465279496145295, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279584959592, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_Pivot.x
@@ -11035,7 +11036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.x
@@ -11043,7 +11044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_SizeDelta.x
@@ -11083,11 +11084,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 215
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 6950465279649391443, guid: 60419328f50404187b4c392034d37a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

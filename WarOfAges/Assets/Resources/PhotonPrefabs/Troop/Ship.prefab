@@ -647,12 +647,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sellGold: 0
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - Raft
+  - Canoe
+  - Cog Boat
+  - Junk Ship
+  - Carrier
+  - UFO
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 5773739095086486922}

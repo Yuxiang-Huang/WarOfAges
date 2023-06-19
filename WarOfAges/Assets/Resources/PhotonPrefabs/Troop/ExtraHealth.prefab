@@ -71,12 +71,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sellGold: 0
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - Mammothman
+  - Hoplite
+  - Shieldsman
+  - Cannon
+  - Tank
+  - Megazord
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 4600649402545732444}

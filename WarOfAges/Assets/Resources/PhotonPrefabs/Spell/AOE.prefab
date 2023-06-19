@@ -73,12 +73,12 @@ MonoBehaviour:
   turnNeeded: 2
   sellGold: 0
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - 'Meteorite    '
+  - 'Arrow Rain '
+  - 'Trebuchet Boulder '
+  - 'Mortar Shell '
+  - Nuclear Bomb
+  - Orbital Laser
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3948774224610545761}

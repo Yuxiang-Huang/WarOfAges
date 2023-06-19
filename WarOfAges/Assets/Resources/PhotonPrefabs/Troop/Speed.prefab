@@ -71,12 +71,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sellGold: 0
   unitNames:
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
-  - '?'
+  - Boar Rider
+  - Chariot
+  - Knight
+  - Conquistador
+  - Truck
+  - Spaceship
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3245960860382827716}
