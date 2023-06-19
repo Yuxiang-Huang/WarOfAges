@@ -616,7 +616,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0454c8fdc5682424ba05d161e2ccd90a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
+  unitNames:
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3267935240887392887}

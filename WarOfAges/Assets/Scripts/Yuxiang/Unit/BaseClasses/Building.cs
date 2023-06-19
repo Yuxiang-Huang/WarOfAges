@@ -20,6 +20,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     [Header("UI")]
     protected int sellGold;
     public int upgradeGold { get; set; }
+    [SerializeField] List<string> unitNames;
 
     public SpriteRenderer imageRenderer;
 
@@ -96,8 +97,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     public virtual void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
+        nameText.text = unitNames[age];
         healthText.text = "Health: " + health + " / " + fullHealth;
         damageText.text = "Damage: " + damage;
         sellText.text = "Sell: " + sellGold + " Gold";
@@ -108,8 +108,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
+        nameText.text = unitNames[age];
         healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, PlayerController.instance.age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
         sellText.text = "Despawn";

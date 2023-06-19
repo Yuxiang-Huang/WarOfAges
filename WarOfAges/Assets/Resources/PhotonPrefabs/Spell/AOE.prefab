@@ -69,10 +69,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dd6e802d773421c87d16160e612192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
   turnSinceSpawned: 0
   turnNeeded: 2
   sellGold: 0
+  unitNames:
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 3948774224610545761}

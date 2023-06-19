@@ -236,6 +236,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sellGold: 0
+  unitNames:
+  - Spearman
+  - Bowman
+  - Crossbowman
+  - Musketeer
+  - Rifleman
+  - Laser Gunner
   imageRenderer: {fileID: 4922159749772890136}
   unitImages:
   - {fileID: 8877495227682824630}

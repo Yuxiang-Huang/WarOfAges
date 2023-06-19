@@ -24,6 +24,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     [Header("UI")]
     [SerializeField] int sellGold;
     public int upgradeGold { get; set; }
+    [SerializeField] List<string> unitNames;
 
     public SpriteRenderer imageRenderer;
 
@@ -98,8 +99,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
+        nameText.text = unitNames[age];
         healthText.text = "Full Health: n/a";
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
         sellText.text = "Despawn";

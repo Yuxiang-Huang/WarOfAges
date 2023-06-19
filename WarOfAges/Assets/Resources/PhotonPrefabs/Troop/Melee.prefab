@@ -351,6 +351,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sellGold: 0
+  unitNames:
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
   imageRenderer: {fileID: 3717804148828446538}
   unitImages:
   - {fileID: 4487582498603874043}

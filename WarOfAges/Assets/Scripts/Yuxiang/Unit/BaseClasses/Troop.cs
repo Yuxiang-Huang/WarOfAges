@@ -18,6 +18,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     [Header("UI")]
     [SerializeField] int sellGold;
+    [SerializeField] List<string> unitNames;
 
     public int upgradeGold { get; set; }
 
@@ -544,8 +545,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
     TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
+        nameText.text = unitNames[age];
         healthText.text = "Health: " + health + " / " + fullHealth;
         damageText.text = "Damage: " + damage;
         sellText.text = "Sell: " + sellGold + " Gold";
@@ -556,8 +556,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
     {
-        string unitName = ToString();
-        nameText.text = unitName.Substring(0, unitName.IndexOf("("));
+        nameText.text = unitNames[age];
         healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
         sellText.text = "Despawn";

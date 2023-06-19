@@ -350,6 +350,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4f33ca6f97d642c1b3656f05ed71e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitNames:
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
+  - '?'
   imageRenderer: {fileID: 0}
   unitImages:
   - {fileID: 2989181452901921751}
