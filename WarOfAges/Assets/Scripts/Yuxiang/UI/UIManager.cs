@@ -26,7 +26,8 @@ public class UIManager : MonoBehaviour
     [Header("Start Game")]
     [SerializeField] GameObject Shop;
     [SerializeField] GameObject AgeUI;
-
+    [SerializeField] TextMeshProUGUI roomNameText;
+    [SerializeField] GameObject topBar;
     [SerializeField] GameObject bottomBar;
 
     [Header("Turn")]
@@ -81,7 +82,6 @@ public class UIManager : MonoBehaviour
         Shop.SetActive(false);
         infoTabUnit.SetActive(false);
         turnBtn.SetActive(false);
-        AgeUI.SetActive(false);
         cancelTurnBtn.SetActive(false);
         timeText.gameObject.SetActive(false);
         turnNumText.gameObject.SetActive(false);
@@ -89,6 +89,7 @@ public class UIManager : MonoBehaviour
         upgradeBtn.SetActive(false);
         leaveBtn.SetActive(false);
         bottomBar.SetActive(false);
+        topBar.SetActive(false);
 
         foreach (GameObject icon in readyIconList)
         {
@@ -114,17 +115,20 @@ public class UIManager : MonoBehaviour
 
     #region Start Game
 
+    // don't show until player place down base
     public void startGameLocal()
     {
         //time option setting
         initialTime = (int)PhotonNetwork.CurrentRoom.CustomProperties["initialTime"];
         timeInc = (int)PhotonNetwork.CurrentRoom.CustomProperties["timeInc"];
 
-        //set UI active
+        //set some UI active
         bottomBar.SetActive(true);
+        topBar.SetActive(true);
         AgeUI.SetActive(true);
         timeText.gameObject.SetActive(true);
         turnNumText.gameObject.SetActive(true);
+        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
         //icons
         for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
@@ -135,16 +139,16 @@ public class UIManager : MonoBehaviour
         goldNeedToAdvanceText.text = "Click to advance! Costs " + PlayerController.instance.goldNeedToAdvance;
     }
 
+    // don't show until everyone place down base
     public void startGameAll()
     {
-        //don't show until everyone is ready
+        // show shop
         Shop.SetActive(true);
-
-        //Player list
                 
-        //set gold text
+        // set gold text
         goldText = PlayerController.instance.playerUIManager.goldText;
 
+        // initilize player UI
         PlayerController.instance.playerUIManager.PV.RPC("initilize", RpcTarget.All, PlayerController.instance.PV.Owner.NickName,
             PlayerController.instance.id);
     }

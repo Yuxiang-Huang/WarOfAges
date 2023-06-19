@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             };
 
             //create a room and a player
-            PhotonNetwork.CreateRoom("offline", roomOptions);
+            PhotonNetwork.CreateRoom("Tutorial", roomOptions);
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player/PlayerManager"), Vector3.zero, Quaternion.identity);
         }
     }
