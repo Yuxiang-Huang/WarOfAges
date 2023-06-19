@@ -246,8 +246,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("Spawned") && (bool)p.Value.CustomProperties["Spawned"]))
         {
-            // players move one by one
-            allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
+            // edge case of 0 player left
+            if (allPlayers.Count == 0)
+            {
+                UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
+
+                StartCoroutine(nameof(delayAttack));
+            }
+            else
+            {
+                // players move one by one
+                allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
+            }
         }
     }
 
@@ -305,11 +315,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             turnEnded = false;
 
-            //different player start every turn
-            allPlayers[0].startFirstIndicator(false);
-            allPlayers.Add(allPlayers[0]);
-            allPlayers.RemoveAt(0);
-            allPlayers[0].startFirstIndicator(true);
+            if (allPlayers.Count > 0)
+            {
+                //different player start every turn
+                allPlayers[0].startFirstIndicator(false);
+                allPlayers.Add(allPlayers[0]);
+                allPlayers.RemoveAt(0);
+                allPlayers[0].startFirstIndicator(true);
+            }
 
             //ask every playercontroller owner to update their info
             foreach (PlayerController player in allPlayers)
@@ -341,7 +354,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         //disconnect before leaving
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LeaveLobby();
+
+        // can't leave lobby if tutorial
+        if (TutorialManager.instance == null)
+            PhotonNetwork.LeaveLobby();
+
         PhotonNetwork.Disconnect();
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         Destroy(RoomManager.Instance.gameObject);
