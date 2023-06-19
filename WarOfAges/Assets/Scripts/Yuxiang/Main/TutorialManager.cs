@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using System.IO;
+using Unity.VisualScripting;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -39,17 +40,22 @@ public class TutorialManager : MonoBehaviour
             instructions.Add(line);
 
         // setup
-        index = 0;
-        instructionText.text = instructions[index];
+        index = 4;
+        instructionText.text = instructions[index*2];
         if (index != 0)
             advance();
         UIManager.instance.timerPaused = true;
         tutorialCanvas.gameObject.SetActive(true);
+
+        // hide all arrows
+        foreach (GameObject arrow in tutorialArrows)
+            if (arrow != null)
+                arrow.SetActive(false);
     }
 
     void Update()
     {
-        // first slide
+        // Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map. Each tile can either be water (blue) or land (green), but only land tiles can generate <b>income</b>.
         if (index == 0)
         {
             // advance when player spawned main base
@@ -59,7 +65,9 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        // second, third, and fourth slides
+        // The highlighted tiles are your <b>territory</b>. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
+        // Here is the player info tab, where you can view info about each player.For now, know that the hexagon symbol shows how many tiles are your territory and the coin symbol shows how many<b>gold</ b > you have.< br >< br > Click anywhere to continue.
+        // Here you can also see the amount of Gold you have. The second number shows the income you will get after this < b > turn </ b >.< br >< br > Click anywhere to continue.
         if (index == 1 || index == 2 || index == 3)
         {
             // advance when clicked
@@ -69,27 +77,27 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        // fifth slide
+        // Now end your turn by clicking the End Turn button. Notice that your gold increases.
         if (index == 4)
         {
-            // advance when number of turn increases
+            // advance when it is the second turn
             if (UIManager.instance.getTurnNum() > 1)
             {
                 advance();
             }
         }
 
-        // sixth slide
+        // Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a <b>troop</b> or <b>building</b>, but there are <i>exceptions</i>…
         if (index == 5)
         {
-            // advance when a unit is selected to be spawned
+            // advance when a spawnButton is selected
             if (PlayerController.instance.toSpawnUnit != null)
             {
                 advance();
             }
         }
 
-        // seventh slide
+        // This unit is a troop. You can view its info in the <b>unit info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's spawn your first troop!
         if (index == 6)
         {
             // advance when a unit is spawned
@@ -98,6 +106,58 @@ public class TutorialManager : MonoBehaviour
                 advance();
             }
         }
+
+        // Let's deselect the unit in the shop by clicking anywhere that is not a spawnable tile.
+        if (index == 7)
+        {
+            // advance when the spawnButton is deselected
+            if (PlayerController.instance.toSpawnUnit == null)
+            {
+                advance();
+            }
+        }
+
+        // Now let's click on the unit you just put on the spawn list.
+        if (index == 8)
+        {
+            // advance when a spawninfo is selected
+            if (PlayerController.instance.spawnInfoSelected != null)
+            {
+                advance();
+            }
+        }
+
+        // You can see its info in the unit info bar. You can choose to despawn it and you will get all the gold used to spawn this unit back.<br><br>Click anywhere to continue.
+        if (index == 9)
+        {
+            // advance when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                advance();
+            }
+        }
+
+        // Put a unit in the spawn list.
+        if (index == 10)
+        {
+            // advance when a unit is put on spawn list
+            if (PlayerController.instance.spawnList.Count != 0)
+            {
+                advance();
+            }
+        }
+
+        // Units will be spawned after the turn ends. Let's end your turn by clicking the End Turn button.
+        if (index == 11)
+        {
+            // advance when it is the third turn
+            if (UIManager.instance.getTurnNum() > 2)
+            {
+                advance();
+            }
+        }
+
+
     }
 
     void advance()
@@ -106,7 +166,7 @@ public class TutorialManager : MonoBehaviour
             tutorialArrows[index].SetActive(false);
 
         index++;
-        instructionText.text = instructions[index];
+        instructionText.text = instructions[index*2];
 
         if (tutorialArrows[index] != null)
             tutorialArrows[index].SetActive(true);

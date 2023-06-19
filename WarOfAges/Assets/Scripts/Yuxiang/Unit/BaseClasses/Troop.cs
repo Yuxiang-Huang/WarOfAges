@@ -372,7 +372,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
 
         // update direction
-        if (nextTile.transform.position.x > tile.transform.position.x)
+        if (nextTile.transform.position.x >= tile.transform.position.x)
         {
             imageRenderer.flipX = false;
         }

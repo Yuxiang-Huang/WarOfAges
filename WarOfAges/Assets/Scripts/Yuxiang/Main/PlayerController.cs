@@ -433,6 +433,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     //clear selection
                     SpawnManager.instance.resetSpawnButtonImage();
 
+                    //reset
+                    toSpawnUnit = null;
+
                     //clear gray
                     foreach (Tile tile in visibleTiles)
                     {
