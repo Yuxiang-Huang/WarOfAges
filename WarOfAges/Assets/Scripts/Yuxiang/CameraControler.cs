@@ -53,6 +53,8 @@ public class CameraControler : MonoBehaviour
 
             prevTouch0Pos = touch0.position;
             prevTouch1Pos = touch1.position;
+
+            prevMousePosition = Input.mousePosition;
         }
         else
         {

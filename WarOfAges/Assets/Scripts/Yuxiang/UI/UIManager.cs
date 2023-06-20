@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Age")]
     public List<string> ageNameList;
+    [SerializeField] List<Color> ageColorList;
     [SerializeField] GameObject ageAdvanceBtn;
     [SerializeField] TextMeshProUGUI ageText;
     [SerializeField] TextMeshProUGUI goldNeedToAdvanceText;
@@ -423,6 +424,7 @@ public class UIManager : MonoBehaviour
             //modify age
             PlayerController.instance.age++;
             ageText.text = ageNameList[PlayerController.instance.age];
+            ageText.color = ageColorList[PlayerController.instance.age];
 
             //modify gold
             PlayerController.instance.goldNeedToAdvance *= Config.ageCostFactor;
