@@ -3,11 +3,11 @@ using UnityEngine;
 public class Config
 {
     //test 
-    public static bool offlineMode = true;
+    public static bool offlineMode = false;
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
     public static bool debugTestMode = false;
-    public static bool tutorialMode = true;
+    public static bool tutorialMode = false;
 
     //time factors
     public static float troopMovementTime = 0.5f;
