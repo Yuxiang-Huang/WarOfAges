@@ -50,7 +50,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        ScreenManager.Instance.DisplayScreen("Main");
+        ScreenManager.Instance.DisplayScreen("Title");
         Debug.Log("Joined Lobby");
     }
 
@@ -204,7 +204,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
             };
 
         //create a room
-        PhotonNetwork.CreateRoom("offline", roomOptions);
+        PhotonNetwork.CreateRoom("Tutorial", roomOptions);
 
         PhotonNetwork.LoadLevel(1);
     }
