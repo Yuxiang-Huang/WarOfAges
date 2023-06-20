@@ -5,9 +5,12 @@ using UnityEngine;
 public class CameraControler : MonoBehaviour
 {
     [SerializeField] float keyboardMovementSpeed = 10f;
-    [SerializeField] float touchMovementSpeed = 10f;
     [SerializeField] float keyboardZoomSpeed = 2f;
-    [SerializeField] float touchZoomSpeed = 0.5f;       
+    [SerializeField] float touchZoomSpeed = 0.5f;
+
+    [SerializeField] Vector3 lastMousePosition;
+    [SerializeField] bool isDragging;
+    [SerializeField] float touchMovementSpeed = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,24 @@ public class CameraControler : MonoBehaviour
         else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.Equals))
         {
             Camera.main.orthographicSize -= Time.deltaTime * keyboardZoomSpeed;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastMousePosition = Input.mousePosition;
+            isDragging = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
+
+        if (isDragging)
+        {
+            Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
+            lastMousePosition = Input.mousePosition;
+            Vector3 moveDelta = Time.deltaTime * touchMovementSpeed * -mouseDelta;
+            transform.position += moveDelta;
         }
 
         // if there are two touches on the device
