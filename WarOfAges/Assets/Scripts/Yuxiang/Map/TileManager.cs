@@ -317,6 +317,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         //setting camera
         Camera.main.orthographicSize = (mapRadius + 1);
         Camera.main.transform.position = new Vector3(-mapRadius / 5, 0, -10);
+        CameraControler.maxZoom = Camera.main.orthographicSize;
 
         //make map
         tiles = new Tile[rows, cols];

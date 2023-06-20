@@ -6,11 +6,14 @@ public class CameraControler : MonoBehaviour
 {
     [SerializeField] float keyboardMovementSpeed = 10f;
     [SerializeField] float keyboardZoomSpeed = 2f;
+
     [SerializeField] float touchZoomSpeed = 0.5f;
 
     [SerializeField] Vector3 lastMousePosition;
     [SerializeField] bool isDragging;
     [SerializeField] float touchMovementSpeed = 2f;
+
+    public static float maxZoom;
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +34,16 @@ public class CameraControler : MonoBehaviour
         if (Input.GetKey(KeyCode.Minus))
         {
             Camera.main.orthographicSize += Time.deltaTime * keyboardZoomSpeed;
+            // boundaries
+            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
         }
-        else if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) && Input.GetKey(KeyCode.Equals))
+        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKey(KeyCode.Equals))
         {
             Camera.main.orthographicSize -= Time.deltaTime * keyboardZoomSpeed;
+            // boundaries
+            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -75,9 +84,6 @@ public class CameraControler : MonoBehaviour
 
             // ... change the orthographic size based on the change in distance between the touches.
             Camera.main.orthographicSize += deltaMagnitudeDiff * touchZoomSpeed;
-
-            // Make sure the orthographic size never drops below zero.
-            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 0.1f);
         }
     }
 }
