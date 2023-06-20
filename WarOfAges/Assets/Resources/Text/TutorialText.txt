@@ -1,56 +1,57 @@
-Welcome! Begin your game by placing your <b>base</b> on a visible green <b>tile</b> on the map. Each tile can either be water (blue) or land (green), but only land tiles can generate <b>income</b>.
+Welcome, player! To begin our game, we need to give our <b>base</b> a starting position.<br><br>Click anywhere to continue.
 
-The highlighted tiles are your <b>territory</b>. You will learn how to expand your territory later.<br><br>Click anywhere to continue.
+Click on any exposed <b>tile</b> to place our base there, as long as it is a green tile. Tiles are either <b>water</b> (blue) or <b>land</b> (green).
 
-Here is the player info tab, where you can view info about each player. For now, know that the hexagon icon shows how many tiles are your territory and the coin icon shows how many <b>gold</b> you have.<br><br>Click anywhere to continue.
+The highlighted tiles are our <b>territory</b>. We will learn about expanding our territory later.<br><br>Click anywhere to continue.
 
-Here you can also see the amount of Gold you have. The second number shows the income you will get after this <b>turn</b>.<br><br>Click anywhere to continue.
+Here in the player info tab, we can find information about each player. We can find how much gold and territory they each have, and how many troops and buildings they each have. We can also see which <b>age</b> they are in.<br><br>Click anywhere to continue.
 
-Now end your turn by clicking the End Turn button. Notice that your gold increases.
+This is how much gold we have. The number beside it is the <b>income</b> we will receive after every <b>turn</b>. Our income depends on how many land tiles are within our territory.<br><br>Click anywhere to continue.
 
-Here is the shop. You can view info about each <b>unit</b> by hovering or holding on its image. Let's learn how to spawn a unit now. First, you select a unit in the shop. Most units are either a <b>troop</b> or <b>building</b>, but there are <i>exceptions</i>…
+Now let's end our turn, by clicking this End Turn button. Notice as our gold increases!
 
-This unit is a troop. You can view its info in the <b>unit info bar</b> on the right. You can spawn troops only on territory adjacent to a building. Your base is a building. Let's add your first troop to the spawn list.
+Now that we have more gold, we can head over to the shop and spawn in a <b>unit</b>. Units can be either a <b>troop</b>, a <b>building</b>, or a <b>spell</b>.<br><br>Click anywhere to continue.
 
-The unit in the shop will be deselected only if you click and didn't add another unit to the spawn list. This is to allow you to spawn many units with a single selection. Let's deselect the unit in the shop now by clicking anywhere that is not a spawnable tile.
+We can view a unit's stats if we select it. You may also simply hover over it in the shop to view its description.<br><br>Click anywhere to continue.
 
-Now let's click on the unit you just put on the spawn list.
+Now, select the first unit. This is a troop.
 
-You can see its info in the unit info bar. You can choose to despawn it and you will get all the gold used to spawn this unit back.<br><br>Click anywhere to continue.
+To spawn this troop, we must do so on land territory adjacent to a building. Since our base is a building, let's place our troop on an adjacent land tile.
 
-Put a troop in the spawn list.
+Great! Our troop will spawn when the turn ends. Click away to stop placing troops.
 
-All units in the spawn list will be spawned after the turn ends. Let's end your turn by clicking the End Turn button.
+If we no longer want to spawn a troop, we can click on it and despawn it for a full refund. However, once a troop spawns, you may only sell it for half its original price.<br><br>Click anywhere to continue.
 
-Remember the player info tab? The soldier icon shows how many troops you have and the house icon shows how many buliding you have.<br><br>Click anywhere to continue.
+Let's end our turn again. Our troop will then spawn onto the map!
 
-Let's select the troop you just spawned.
+Now that we have a troop, we can use it to claim more territory. A tile becomes our territory once a troop moves onto it.<br><br>Click anywhere to continue.
 
-Again, you can see its info in the unit info bar. For spawned units, you can sell them for half the price. To move your troop now, simply click on <u>any</u> tile you want it to move to.
+To move our troop, simply click on it and then click on a destination. This can be an adjacent tile, a far-away tile, or even another troop. For now, pick an adjacent land tile outside our territory.
 
-The red arrow shows the tile this troop will move to after the turn ends. End the turn by clicking the End Turn Button or the turn will automatically end after the time runs out.
+The red arrow indicates where the troop plans to move on its next turn. To cancel, simply set its destination to the tile it is already on.<br><br>Click anywhere to continue.
 
-Your territory now includes the tile your troop moved to. The troop will continue to move to its destination tile, which you set last turn. To prevent a troop from moving next turn, you can simply set its destination tile to the tile it is on.<br><br>Click anywhere to continue.
+Let's just end our turn to see it move!
 
-After a turn ends, troops will spawn, move, and attack in this order.<br><br>Click anywhere to continue.
+Great! We have a new piece of territory, and our income has increased.<br><br>Click anywhere to continue.
 
-You can move troops that are in the spawn list in the same way.<br><br>Click anywhere to continue.
+We always start off in the Stone Age. As a result, all the <b>units</b> in our shop will belong to the Stone Age.<br><br>Click anywhere to continue.
 
-Troops can only move on land tiles. Unlock the ship and try it yourself to learn how to move troops across water.<br><br>Click anywhere to continue.
+Once we have enough gold, we can advance to the next age! This will <b>upgrade</b> all units in the shop to a stronger version, but they will cost more gold.<br><br>Click anywhere to continue. 
 
-You are currently in the Stone Age, but you have enough gold to advance to the next age!<br><br>Click anywhere to continue.
+Note that units on your map do not advance with the ages. We will need to click on it and manually upgrade it with gold.<br><br>Click anywhere to continue.
 
-When you advance, troops will get stronger but also cost more.<br><br>Click anywhere to continue.
+When advancing to a new age, we are allowed to unlock a new type of unit! We entered the Stone Age when we started the game, so we have actually had a free unit unlock since the game began! Let's unlock the third unit, the ship type. 
 
-Note that units on your map do not advance with the ages. If you wish, you may upgrade them in the unit info bar to match the new age.<br><br>Click anywhere to continue.
+Go ahead and spawn a ship on a water tile within your territory. The ship can be moved along water and carries troops.
 
-You can unlock a new unit everytime you advanced into a new age.<br><br>Click anywhere to continue.
+You may try out its mechanics throughout this tutorial (move our troop onto the ship then move the ship).<br><br>Click anywhere to continue.
 
-Buildings can be spawned on any land tile that is your territory. Ship can be spawned on any water tile that is your territory. Spells can be spawn on any visible tile. The tiles you can't spawn on will be signified by being shaded.<br><br>Click anywhere to continue.
+As the game progresses, you will have to learn how each unit works and where they may be placed. I can't hold your hand forever.<br><br>Click anywhere to continue.
 
-Units can't overlap, with the exception of spells.<br><br>Click anywhere to continue.
+And as you explore the map, you will inevitably encounter other players.<br><br>Click anywhere to continue.
 
-As you explore the map, you will run into other players. You will have to destroy their bases while keeping your own safe in order to win.<br><br>Don't click anymore!.
+You will have to overtake their territory, eliminate their troops and buildings, and ultimately destroy their base while keeping your own safe.<br><br>Click anywhere to continue.
 
+If your base is still standing when every other player's base is destroyed, you will have won the game!<br><br>Click anywhere to continue.
 
-
+Best of luck!<br><br>Click to exit tutorial.
