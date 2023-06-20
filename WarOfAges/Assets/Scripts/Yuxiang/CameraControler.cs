@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class CameraControler : MonoBehaviour
 {
-    [SerializeField] float keyboardMovementSpeed = 1f;
-    [SerializeField] float keyboardZoomSpeed = 2f;
+    [SerializeField] float keyboardMovementSpeed;
+    [SerializeField] float keyboardZoomSpeed;
 
-    [SerializeField] float touchZoomSpeed = 0.5f;
+    [SerializeField] float touchZoomSpeed;
 
     [SerializeField] Vector3 lastMousePosition;
     [SerializeField] bool isDragging;
-    [SerializeField] float touchMovementSpeed = 2f;
+    [SerializeField] float touchMovementSpeed;
 
     public static float maxZoom;
 
@@ -31,18 +31,18 @@ public class CameraControler : MonoBehaviour
             Touch touchZero = Input.GetTouch(0);
             Touch touchOne = Input.GetTouch(1);
 
-            // Find the position in the previous frame of each touch.
+            // find the position in the previous frame of each touch.
             Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
             Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
 
-            // Find the magnitude of the vector (the distance) between the touches in each frame.
+            // find the magnitude of the vector (the distance) between the touches in each frame.
             float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
             float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
 
-            // Find the difference in the distances between each frame.
-            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+            // find the difference in the distances between each frame.
+            float deltaMagnitudeDiff = touchDeltaMag - prevTouchDeltaMag;
 
-            // ... change the orthographic size based on the change in distance between the touches.
+            // change the orthographic size based on the change in distance between the touches.
             Camera.main.orthographicSize += deltaMagnitudeDiff * touchZoomSpeed;
 
             // boundaries

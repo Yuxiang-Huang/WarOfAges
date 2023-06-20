@@ -210,6 +210,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             path.RemoveAt(0);
         }
 
+        // edge case where sell while clicking on a tile to find path
         displayArrow();
     }
 
