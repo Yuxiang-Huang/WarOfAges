@@ -3,7 +3,7 @@ using UnityEngine;
 public class Config
 {
     //test 
-    public static bool offlineMode = false;
+    public static bool offlineMode = true;
     public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
     public static bool debugTestMode = false;
