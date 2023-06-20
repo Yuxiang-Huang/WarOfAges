@@ -20,6 +20,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
 
+    [SerializeField] List<GameObject> tutorialFilters;
     [SerializeField] List<GameObject> tutorialArrows;
 
     private void Start()
@@ -54,6 +55,11 @@ public class TutorialManager : MonoBehaviour
         foreach (GameObject arrow in tutorialArrows)
             if (arrow != null)
                 arrow.SetActive(false);
+
+        // hide all filters
+        foreach (GameObject filter in tutorialFilters)
+            if (filter != null)
+                filter.SetActive(false);
     }
 
     void Update()
@@ -230,13 +236,17 @@ public class TutorialManager : MonoBehaviour
     }
     void advance()
     {
-        if (tutorialArrows[index] != null)
+        if (tutorialArrows[index] != null) 
             tutorialArrows[index].SetActive(false);
+        if (tutorialFilters[index] != null)
+            tutorialFilters[index].SetActive(false);
         index++;
         instructionText.text = instructions[index*2];
 
         if (tutorialArrows[index] != null)
             tutorialArrows[index].SetActive(true);
+        if (tutorialFilters[index] != null)
+            tutorialFilters[index].SetActive(true);
     }
 
     #region old buttons
