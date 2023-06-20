@@ -212,8 +212,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         // edge case where sell while clicking on a tile to find path
         displayArrow();
-
-        Debug.Log(gameObject.activeSelf);
     }
 
     public void follow()
