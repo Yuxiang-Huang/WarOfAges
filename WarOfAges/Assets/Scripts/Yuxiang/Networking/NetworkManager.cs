@@ -33,10 +33,16 @@ public class NetworkManager: MonoBehaviourPunCallbacks
         roomNameInput.text = "Room " + Random.Range(0, 1000).ToString("0000");
     }
 
-    public void Start()
+    public void Connect()
     {
+        ScreenManager.Instance.DisplayScreen("Loading");
         Debug.Log("Connecting to Master");
         PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public void Disconnect()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     public override void OnConnectedToMaster()
@@ -50,7 +56,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        ScreenManager.Instance.DisplayScreen("Title");
+        ScreenManager.Instance.DisplayScreen("Play");
         Debug.Log("Joined Lobby");
     }
 

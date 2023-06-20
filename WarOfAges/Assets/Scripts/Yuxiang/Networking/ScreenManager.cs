@@ -13,7 +13,7 @@ public class ScreenManager : MonoBehaviour
         Instance = this;
         for (int i = 0; i < screens.Length; i++)
         {
-            if (screens[i].screenName == "Loading")
+            if (screens[i].screenName == "Title")
             {
                 screens[i].Display();
             }

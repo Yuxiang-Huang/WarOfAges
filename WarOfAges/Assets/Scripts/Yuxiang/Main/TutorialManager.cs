@@ -46,8 +46,6 @@ public class TutorialManager : MonoBehaviour
         // setup
         index = 0;
         instructionText.text = instructions[index*2];
-        if (index != 0)
-            advance();
         UIManager.instance.timerPaused = true;
         tutorialCanvas.gameObject.SetActive(true);
 
@@ -238,51 +236,17 @@ public class TutorialManager : MonoBehaviour
     }
     void advance()
     {
-        if (tutorialArrows[index] != null) 
+        if (tutorialArrows[index] != null)
             tutorialArrows[index].SetActive(false);
-        if (tutorialFilters[index] != null)
-            tutorialFilters[index].SetActive(false);
+        //if (tutorialFilters[index] != null)
+        //    tutorialFilters[index].SetActive(false);
         index++;
-        instructionText.text = instructions[index*2];
+        instructionText.text = instructions[index * 2];
 
         if (tutorialArrows[index] != null)
             tutorialArrows[index].SetActive(true);
-        if (tutorialFilters[index] != null)
-            tutorialFilters[index].SetActive(true);
-    }
-
-    #region old buttons
-
-    public void forward()
-    {
-        if (index == 0)
-        {
-            backwardbtn.SetActive(true);
-        }
-
-        index++;
-        instructionText.text = instructions[index];
-
-        if (index == instructions.Count - 1)
-        {
-            forwardbtn.SetActive(false);
-        }
-    }
-
-    public void backward()
-    {
-        if (index == instructions.Count - 1)
-        {
-            forwardbtn.SetActive(true);
-        }
-
-        index--;
-        instructionText.text = instructions[index];
-
-        if (index == 0)
-        {
-            backwardbtn.SetActive(false);
-        }
+        //if (tutorialFilters[index] != null)
+        //    tutorialFilters[index].SetActive(true);
     }
 
     public void endTutorial()
@@ -290,6 +254,4 @@ public class TutorialManager : MonoBehaviour
         Destroy(RoomManager.Instance.gameObject);
         PhotonNetwork.LoadLevel(0);
     }
-
-    #endregion
 }
