@@ -32,6 +32,9 @@ public class LongRange : Troop
         //attack if possible and end
         if (targets.Count > 0)
         {
+            GameObject target = targets.Values.Last().unit.gameObject;
+            // flip direction to the attacking direction
+            PV.RPC(nameof(flipDirection), RpcTarget.All, target.transform.position.x < transform.position.x);
             targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage);
             return;
         }
@@ -60,6 +63,9 @@ public class LongRange : Troop
 
         if (targets.Count > 0)
         {
+            GameObject target = targets.Values.Last().unit.gameObject;
+            // flip direction to the attacking direction
+            PV.RPC(nameof(flipDirection), RpcTarget.All, target.transform.position.x < transform.position.x);
             targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage);
         }
     }

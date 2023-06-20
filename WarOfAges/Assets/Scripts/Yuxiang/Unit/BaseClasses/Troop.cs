@@ -556,6 +556,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         imageRenderer.color = color;
     }
 
+    [PunRPC]
+    public void flipDirection(bool status)
+    {
+        imageRenderer.flipX = status;
+    }
+
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
     TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
