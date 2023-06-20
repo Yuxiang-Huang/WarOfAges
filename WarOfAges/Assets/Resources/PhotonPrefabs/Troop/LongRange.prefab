@@ -241,7 +241,7 @@ MonoBehaviour:
   - Bowman
   - Crossbowman
   - Musketeer
-  - Rifleman
+  - Sniper
   - Laser Gunner
   imageRenderer: {fileID: 4922159749772890136}
   unitImages:
@@ -332,12 +332,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 9669469fb0da34b7f9d50807351ed216, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ca46818526f646c989bcbc1129c39d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -845,7 +845,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1778001171383348722
 Transform:
   m_ObjectHideFlags: 0
