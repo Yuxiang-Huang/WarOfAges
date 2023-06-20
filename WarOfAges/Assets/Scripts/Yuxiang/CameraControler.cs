@@ -8,8 +8,10 @@ public class CameraControler : MonoBehaviour
     [SerializeField] float keyboardZoomSpeed;
 
     [SerializeField] float touchZoomSpeed;
+    [SerializeField] Vector2 prevTouch0Pos;
+    [SerializeField] Vector2 prevTouch1Pos;
 
-    [SerializeField] Vector3 lastMousePosition;
+    [SerializeField] Vector3 prevMousePosition;
     [SerializeField] bool isDragging;
     [SerializeField] float touchMovementSpeed;
 
@@ -27,27 +29,36 @@ public class CameraControler : MonoBehaviour
         // if there are two touches on the device
         if (Input.touchCount == 2)
         {
-            // Store both touches.
-            Touch touchZero = Input.GetTouch(0);
-            Touch touchOne = Input.GetTouch(1);
+            // store both touches.
+            Touch touch0 = Input.GetTouch(0);
+            Touch touch1 = Input.GetTouch(1);
 
-            // find the position in the previous frame of each touch.
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+            // first occurrence
+            if (!(prevTouch0Pos == Vector2.zero && prevTouch1Pos == Vector2.zero))
+            {
+                // find the magnitude of the the distance between the touches in each frame.
+                float prevTouchDeltaMag = (prevTouch0Pos - prevTouch1Pos).magnitude;
+                float touchDeltaMag = (touch0.position - touch1.position).magnitude;
 
-            // find the magnitude of the vector (the distance) between the touches in each frame.
-            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+                // find the difference in the distances between each frame.
+                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-            // find the difference in the distances between each frame.
-            float deltaMagnitudeDiff = touchDeltaMag - prevTouchDeltaMag;
+                // change the orthographic size based on the change in distance between the touches.
+                Camera.main.orthographicSize += deltaMagnitudeDiff * touchZoomSpeed;
 
-            // change the orthographic size based on the change in distance between the touches.
-            Camera.main.orthographicSize += deltaMagnitudeDiff * touchZoomSpeed;
+                // boundaries
+                Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+                Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
+            }
 
-            // boundaries
-            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
-            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
+            prevTouch0Pos = touch0.position;
+            prevTouch1Pos = touch1.position;
+        }
+        else
+        {
+            // reset
+            prevTouch0Pos = Vector2.zero;
+            prevTouch1Pos = Vector2.zero;
         }
 
         // Keyboard zooming
@@ -66,22 +77,27 @@ public class CameraControler : MonoBehaviour
             Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
         }
 
-        // touch moving
-        if (Input.GetMouseButtonDown(0))
+
+        // disable touch moving when zooming
+        if (Input.touchCount < 2)
         {
-            lastMousePosition = Input.mousePosition;
-            isDragging = true;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-        }
-        if (isDragging)
-        {
-            Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
-            lastMousePosition = Input.mousePosition;
-            Vector3 moveDelta = Time.deltaTime * touchMovementSpeed * -mouseDelta;
-            transform.position += moveDelta;
+            // touch moving
+            if (Input.GetMouseButtonDown(0))
+            {
+                prevMousePosition = Input.mousePosition;
+                isDragging = true;
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                isDragging = false;
+            }
+            if (isDragging)
+            {
+                Vector3 mouseDelta = Input.mousePosition - prevMousePosition;
+                prevMousePosition = Input.mousePosition;
+                Vector3 moveDelta = Time.deltaTime * touchMovementSpeed * -mouseDelta;
+                transform.position += moveDelta;
+            }
         }
 
         // Keyboard moving
