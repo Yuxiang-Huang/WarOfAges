@@ -219,7 +219,15 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index > 22)
+        if (index == 28)
+        {
+            // exit when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                endTutorial();
+            }
+        }
+        else if (index > 22)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
