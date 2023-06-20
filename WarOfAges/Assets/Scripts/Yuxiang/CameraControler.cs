@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraControler : MonoBehaviour
 {
-    [SerializeField] float keyboardMovementSpeed = 10f;
+    [SerializeField] float keyboardMovementSpeed = 1f;
     [SerializeField] float keyboardZoomSpeed = 2f;
 
     [SerializeField] float touchZoomSpeed = 0.5f;
@@ -24,46 +24,6 @@ public class CameraControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector3 movement = keyboardMovementSpeed * Time.deltaTime * new Vector3(horizontal, vertical, 0);
-
-        transform.position += movement;
-
-        if (Input.GetKey(KeyCode.Minus))
-        {
-            Camera.main.orthographicSize += Time.deltaTime * keyboardZoomSpeed;
-            // boundaries
-            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
-            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
-        }
-        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKey(KeyCode.Equals))
-        {
-            Camera.main.orthographicSize -= Time.deltaTime * keyboardZoomSpeed;
-            // boundaries
-            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
-            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            lastMousePosition = Input.mousePosition;
-            isDragging = true;
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-        }
-
-        if (isDragging)
-        {
-            Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
-            lastMousePosition = Input.mousePosition;
-            Vector3 moveDelta = Time.deltaTime * touchMovementSpeed * -mouseDelta;
-            transform.position += moveDelta;
-        }
-
         // if there are two touches on the device
         if (Input.touchCount == 2)
         {
@@ -84,6 +44,59 @@ public class CameraControler : MonoBehaviour
 
             // ... change the orthographic size based on the change in distance between the touches.
             Camera.main.orthographicSize += deltaMagnitudeDiff * touchZoomSpeed;
+
+            // boundaries
+            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
         }
+
+        // Keyboard zooming
+        if (Input.GetKey(KeyCode.Minus))
+        {
+            Camera.main.orthographicSize -= Time.deltaTime * keyboardZoomSpeed;
+            // boundaries
+            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
+        }
+        else if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && Input.GetKey(KeyCode.Equals))
+        {
+            Camera.main.orthographicSize += Time.deltaTime * keyboardZoomSpeed;
+            // boundaries
+            Camera.main.orthographicSize = Mathf.Max(Camera.main.orthographicSize, 3);
+            Camera.main.orthographicSize = Mathf.Min(Camera.main.orthographicSize, maxZoom);
+        }
+
+        // touch moving
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastMousePosition = Input.mousePosition;
+            isDragging = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+        }
+        if (isDragging)
+        {
+            Vector3 mouseDelta = Input.mousePosition - lastMousePosition;
+            lastMousePosition = Input.mousePosition;
+            Vector3 moveDelta = Time.deltaTime * touchMovementSpeed * -mouseDelta;
+            transform.position += moveDelta;
+        }
+
+        // Keyboard moving
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 movement = keyboardMovementSpeed * Camera.main.orthographicSize * Time.deltaTime * new Vector3(horizontal, vertical, 0);
+        transform.position += movement;
+
+        // boundary
+        transform.position = new Vector3(Mathf.Min(transform.position.x, maxZoom/2),
+                                         Mathf.Min(transform.position.y, maxZoom/2),
+                                         transform.position.z);
+
+        transform.position = new Vector3(Mathf.Max(transform.position.x, -maxZoom/2),
+                                         Mathf.Max(transform.position.y, -maxZoom/2),
+                                         transform.position.z);
     }
 }
