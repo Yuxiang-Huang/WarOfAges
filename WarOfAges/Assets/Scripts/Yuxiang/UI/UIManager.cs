@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI unitNameText;
     [SerializeField] TextMeshProUGUI unitHealthText;
     [SerializeField] TextMeshProUGUI unitDamageText;
+    [SerializeField] TextMeshProUGUI unitTypeText;
     [SerializeField] TextMeshProUGUI unitSellText;
     [SerializeField] TextMeshProUGUI unitUpgradeText;
     [SerializeField] TextMeshProUGUI unitHealText;
@@ -280,7 +281,7 @@ public class UIManager : MonoBehaviour
     public void updateInfoTab(IUnit unit, bool myUnit)
     {
         infoTabUnit.SetActive(true);
-        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitSellText, unitUpgradeText, unitHealText);
+        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, unitUpgradeText, unitHealText);
 
         //only display buttons if my units
         if (myUnit)
@@ -316,14 +317,14 @@ public class UIManager : MonoBehaviour
     public void updateInfoTabSpawn(IUnit unit)
     {
         infoTabUnit.SetActive(true);
-        unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, PlayerController.instance.age);
+        unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, PlayerController.instance.age);
     }
 
     //for spawn images
     public void updateInfoTab(SpawnInfo spawnInfo)
     {
         infoTabUnit.SetActive(true);
-        spawnInfo.unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, spawnInfo.age);
+        spawnInfo.unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, spawnInfo.age);
         sellBtn.SetActive(true);
     }
 

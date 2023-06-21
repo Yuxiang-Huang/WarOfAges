@@ -672,23 +672,27 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         imageRenderer.flipX = status;
     }
 
-    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-    TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         nameText.text = unitNames[age];
         healthText.text = "Health: " + health + " / " + fullHealth;
         damageText.text = "Damage: " + damage;
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
         healText.text = "Heal: " + getHealGold() + " Gold";
     }
 
-    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
+    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
         healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Despawn";
     }
 

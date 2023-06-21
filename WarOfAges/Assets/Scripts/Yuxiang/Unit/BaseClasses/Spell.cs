@@ -93,18 +93,20 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     #region UI
 
-    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         //can't be selected after spawn
     }
 
-    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
+    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
         healthText.text = "Full Health: n/a";
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Despawn";
     }
 

@@ -219,10 +219,10 @@ public class TutorialManager : MonoBehaviour
 
         if (index == 28)
         {
-            // exit when clicked
+            // end of tutorial when clicked
             if (Input.GetMouseButtonDown(0))
             {
-                endTutorial();
+                tutorialCanvas.gameObject.SetActive(false);
             }
         }
         else if (index > 22)

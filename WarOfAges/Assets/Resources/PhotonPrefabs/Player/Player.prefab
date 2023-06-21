@@ -78,7 +78,6 @@ MonoBehaviour:
   turnEnded: 0
   mainBase: {fileID: 0}
   playerUIManager: {fileID: 0}
-  mode: 
   allTroops: []
   allShips: []
   allBuildings: []
@@ -91,3 +90,4 @@ MonoBehaviour:
   gold: 0
   age: 0
   goldNeedToAdvance: 320
+  mode: 

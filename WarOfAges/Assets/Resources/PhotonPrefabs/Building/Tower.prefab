@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1061412589344761502}
   - component: {fileID: -3725387192500250385}
   m_Layer: 0
-  m_Name: ExtraView
+  m_Name: Tower
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
