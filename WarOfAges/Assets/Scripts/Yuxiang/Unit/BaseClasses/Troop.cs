@@ -213,7 +213,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             path.RemoveAt(0);
         }
 
-        // edge case where sell while clicking on a tile to find path
         displayArrow();
     }
 
@@ -315,6 +314,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void displayArrow()
     {
+        // don't show arrow if bot
+        if (PhotonNetwork.OfflineMode && ownerID == 1)
+            return;
+
         //destroy arrow
         if (arrow != null)
         {
@@ -403,8 +406,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Debug.Log("animate movement");
         }
 
-        //owner so animate movement
-        if (ownerID == ownerController.id)
+        //owner so animate movement and don't translate if bot
+        if (ownerID == ownerController.id && (!(PhotonNetwork.OfflineMode && ownerID == 1)))
         {
             StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
             if (ship != null)
