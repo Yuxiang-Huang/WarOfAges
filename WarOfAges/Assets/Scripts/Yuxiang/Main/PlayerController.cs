@@ -26,37 +26,37 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
     public IUnit unitSelected;
     public SpawnInfo spawnInfoSelected;
 
-    [Header("Belongings")]
-    public List<Troop> allTroops = new List<Troop>();
-    public List<Ship> allShips = new List<Ship>();
-    public List<Building> allBuildings = new List<Building>();
+    //[Header("Belongings")]
+    public List<Troop> allTroops { get; set; } = new List<Troop>();
+    public List<Ship> allShips { get; set; } = new List<Ship>();
+    public List<Building> allBuildings { get; set; } = new List<Building>();
     public List<Spell> allSpells { get; set; } = new List<Spell>();
 
     public HashSet<Tile> territory { get; set; } = new HashSet<Tile>();
     public int landTerritory { get; set; }
-    public HashSet<Tile> visibleTiles = new HashSet<Tile>();
+    public HashSet<Tile> visibleTiles { get; set; } = new HashSet<Tile>();
 
-    public int[,] extraViewTiles;
+    public int[,] extraViewTiles { get; set; }
 
-    [Header("Spawn")]
-    public bool[,] spawnable;
-    public Vector2[,] spawnDirection;
-    public string toSpawnPath;
-    public GameObject toSpawnImage;
-    public GameObject toSpawnUnit;
-    public int goldNeedToSpawn;
+    //[Header("Spawn")]
+    public bool[,] spawnable { get; set; }
+    public Vector2[,] spawnDirection { get; set; }
+    public string toSpawnPath { get; set; }
+    public GameObject toSpawnImage { get; set; }
+    public GameObject toSpawnUnit { get; set; }
+    public int goldNeedToSpawn { get; set; }
      
-    public Dictionary<Vector2, SpawnInfo> spawnList = new Dictionary<Vector2, SpawnInfo>();
-    public Dictionary<Vector2, SpawnInfo> spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
+    public Dictionary<Vector2, SpawnInfo> spawnList { get; set; } = new Dictionary<Vector2, SpawnInfo>();
+    public Dictionary<Vector2, SpawnInfo> spawnListSpell { get; set; } = new Dictionary<Vector2, SpawnInfo>();
 
-    [Header("Gold")]
-    public int gold;
-    public int age;
-    public int goldNeedToAdvance;
+    //[Header("Gold")]
+    public int gold { get; set; }
+    public int age { get; set; }
+    public int goldNeedToAdvance { get; set; }
 
-    [Header("Actions")]
-    public List<IUnit> toSell = new List<IUnit>();
-    public List<IUnit> toUpgrade = new List<IUnit>();
+    //[Header("Actions")]
+    public List<IUnit> toSell { get; set; } = new List<IUnit>();
+    public List<IUnit> toUpgrade { get; set; } = new List<IUnit>();
 
     private void Awake()
     {

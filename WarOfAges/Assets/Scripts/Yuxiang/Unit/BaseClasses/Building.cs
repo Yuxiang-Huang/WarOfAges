@@ -13,6 +13,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public IController ownerController;
+
     public Tile tile { get; set; }
 
     public int age { get; set; }
@@ -46,6 +48,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         string path, int age, int sellGold)
     {
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
         tile.updateStatus(ownerID, this);
 
@@ -78,12 +81,16 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     //can spawn troop on tiles around building
     public virtual void updateCanSpawn()
     {
-        foreach (Tile neighbor in tile.neighbors)
+        // no need for bots
+        if (ownerController.gameObject.GetComponent<BotController>() == null)
         {
-            PlayerController.instance.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
+            foreach (Tile neighbor in tile.neighbors)
+            {
+                ownerController.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
 
-            PlayerController.instance.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
-                neighbor.transform.position - tile.transform.position;
+                ownerController.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
+                    neighbor.transform.position - tile.transform.position;
+            }
         }
     }
 
@@ -109,7 +116,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
-        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, PlayerController.instance.age);
+        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, ownerController.age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
         sellText.text = "Despawn";
     }
@@ -158,10 +165,10 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void sell()
     {
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
-        PlayerController.instance.allBuildings.Remove(this);
+        ownerController.allBuildings.Remove(this);
 
         foreach (Tile neighbor in tile.neighbors)
         {
