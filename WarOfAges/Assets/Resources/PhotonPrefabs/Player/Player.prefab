@@ -78,15 +78,3 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   playerUIManager: {fileID: 0}
   mode: 
-  allTroops: []
-  allShips: []
-  allBuildings: []
-  allSpells: []
-  landTerritory: 0
-  toSpawnPath: 
-  toSpawnImage: {fileID: 0}
-  toSpawnUnit: {fileID: 0}
-  goldNeedToSpawn: 0
-  gold: 40
-  age: 0
-  goldNeedToAdvance: 320

@@ -6844,9 +6844,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: cancelEndTurn
+      - m_Target: {fileID: 1655113464}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: cancelEndTurnUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7990,9 +7990,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: endTurn
+      - m_Target: {fileID: 1655113464}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: endTurnUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8354,12 +8354,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb81fa71cb334a5797e66884a5a03e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PV: {fileID: 0}
-  allPlayersOriginal: []
-  allPlayers: []
-  numPlayerMoved: 0
-  gameStarted: 0
-  turnEnded: 0
   player: {fileID: 0}
   bot: {fileID: 0}
   numPlayerMoved: 0
@@ -9865,8 +9859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PV: {fileID: 0}
-  allPlayersOriginal: []
-  allPlayers: []
   numPlayerMoved: 0
   gameStarted: 0
   turnEnded: 0
@@ -11072,18 +11064,6 @@ MonoBehaviour:
   mainBase: {fileID: 0}
   playerUIManager: {fileID: 0}
   mode: 
-  allTroops: []
-  allShips: []
-  allBuildings: []
-  allSpells: []
-  landTerritory: 0
-  toSpawnPath: 
-  toSpawnImage: {fileID: 0}
-  toSpawnUnit: {fileID: 0}
-  goldNeedToSpawn: 0
-  gold: 0
-  age: 0
-  goldNeedToAdvance: 0
 --- !u!4 &1715823947
 Transform:
   m_ObjectHideFlags: 0

@@ -150,7 +150,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Turn (shouldn't be call by buttons) 
+    #region Turn
 
     //call by startTurn in gameManager
     public void startTurnUI()
@@ -212,7 +212,6 @@ public class UIManager : MonoBehaviour
             GameManager.instance.endTurn();
     }
 
-    //call by endTurn in gameManager
     public void endTurnUI()
     {
         localTurnEnded = true;
@@ -225,11 +224,14 @@ public class UIManager : MonoBehaviour
         //only if have time left
         if (curTimeUsed > 0)
             cancelTurnBtn.SetActive(true);
+
+        GameManager.instance.endTurn();
     }
 
-    //call by cancelEndTurn in gameManager
     public void cancelEndTurnUI()
     {
+        GameManager.instance.cancelEndTurn();
+
         localTurnEnded = false;
 
         //UI

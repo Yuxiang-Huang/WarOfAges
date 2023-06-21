@@ -40,18 +40,25 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public virtual void startTurn()
     {
-        
+
     }
 
+    //call by endTurn in UIManager
     [PunRPC]
     public virtual void endTurn()
     {
-
+        
     }
 
-    public virtual void cancelEndTurn()
+    //call by cancelEndTurn in UIManager
+    public void cancelEndTurn()
     {
-       
+        PlayerController.instance.turnEnded = false;
+
+        //revert endturn property
+        Hashtable playerProperties = new Hashtable();
+        playerProperties.Add("EndTurn", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
     }
 
     #endregion

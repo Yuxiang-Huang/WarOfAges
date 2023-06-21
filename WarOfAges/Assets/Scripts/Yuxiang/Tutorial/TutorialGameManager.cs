@@ -40,8 +40,6 @@ public class TutorialGameManager : GameManager
         #region turns
 
         //start turn
-        else if (changedProps.ContainsKey("EndTurn")) checkEndTurn();
-
         else if (changedProps.ContainsKey("Spawned")) checkSpawn();
 
         else if (changedProps.ContainsKey("Moved")) checkMove();
@@ -105,55 +103,29 @@ public class TutorialGameManager : GameManager
         PlayerController.instance.turnEnded = false;
     }
 
-    [PunRPC]
-    public override void endTurn()
-    {
-        //stop action of player
-        PlayerController.instance.stop();
-
-        UIManager.instance.endTurnUI();
-
-        //ask master client to count player
-        Hashtable playerProperties = new Hashtable();
-        playerProperties.Add("EndTurn", true);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-    }
-
-    public override void cancelEndTurn()
-    {
-        PlayerController.instance.turnEnded = false;
-
-        UIManager.instance.cancelEndTurnUI();
-
-        //revert endturn property
-        Hashtable playerProperties = new Hashtable();
-        playerProperties.Add("EndTurn", false);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-    }
-
     #endregion
 
     #region TakeTurn
 
+    public override void endTurn()
+    {
+        // stop action of player
+        PlayerController.instance.stop();
+
+        // just end turn
+        checkEndTurn();
+    }
+
     public override void checkEndTurn()
     {
-        //edge case of cancel when just ended
-        if (turnEnded) return;
+        // only one player so no need to check
+        UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Take Turns...");
+        UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
 
-        //everyone is ready
-        var players = PhotonNetwork.CurrentRoom.Players;
-        if (players.All(p => p.Value.CustomProperties.ContainsKey("EndTurn") && (bool)p.Value.CustomProperties["EndTurn"]))
+        //all players spawn
+        foreach (IController player in allPlayersOriginal)
         {
-            turnEnded = true;
-
-            UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Take Turns...");
-            UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
-
-            //all players spawn
-            foreach (IController player in allPlayersOriginal)
-            {
-                player.PV.RPC("spawn", player.PV.Owner);
-            }
+            player.PV.RPC("spawn", player.PV.Owner);
         }
     }
 

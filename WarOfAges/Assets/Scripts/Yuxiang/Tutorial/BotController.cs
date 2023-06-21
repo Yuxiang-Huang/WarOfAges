@@ -126,10 +126,6 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         allBuildings.Add(mainBase);
 
         mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
-
-        UIManager.instance.startGameLocal();
-
-        GameManager.instance.endTurn();
     }
 
     [PunRPC]

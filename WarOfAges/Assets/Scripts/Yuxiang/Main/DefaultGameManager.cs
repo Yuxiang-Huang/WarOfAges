@@ -170,35 +170,20 @@ public class DefaultGameManager : GameManager
         PlayerController.instance.turnEnded = false;
     }
 
-    [PunRPC]
+    #endregion
+
+    #region TakeTurn
+
     public override void endTurn()
     {
         //stop action of player
         PlayerController.instance.stop();
-
-        UIManager.instance.endTurnUI();
 
         //ask master client to count player
         Hashtable playerProperties = new Hashtable();
         playerProperties.Add("EndTurn", true);
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
     }
-
-    public override void cancelEndTurn()
-    {
-        PlayerController.instance.turnEnded = false;
-
-        UIManager.instance.cancelEndTurnUI();
-
-        //revert endturn property
-        Hashtable playerProperties = new Hashtable();
-        playerProperties.Add("EndTurn", false);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-    }
-
-    #endregion
-
-    #region TakeTurn
 
     public override void checkEndTurn()
     {

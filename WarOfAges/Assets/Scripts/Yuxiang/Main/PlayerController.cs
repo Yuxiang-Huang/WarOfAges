@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
         {
             gold = 40000000;
         }
+        else
+        {
+            gold = 40;
+        }
     }
 
     #region ID
@@ -184,7 +188,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
 
                 UIManager.instance.startGameLocal();
 
-                GameManager.instance.endTurn();
+                UIManager.instance.endTurnUI();
             }
         }
         //select
