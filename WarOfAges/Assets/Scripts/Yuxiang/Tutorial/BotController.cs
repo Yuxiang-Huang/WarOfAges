@@ -68,6 +68,8 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         }
 
         PV = GetComponent<PhotonView>();
+
+        instance = this;
     }
 
     #region ID

@@ -72,7 +72,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1ca0dd41f0a4a028f7bcc5a86eb4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PV: {fileID: 4434306806922390120}
   id: -1
   lost: 0
   turnEnded: 0

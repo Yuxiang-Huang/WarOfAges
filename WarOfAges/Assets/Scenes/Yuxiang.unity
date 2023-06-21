@@ -8354,8 +8354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb81fa71cb334a5797e66884a5a03e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allPlayersOriginal: []
-  allPlayers: []
+  player: {fileID: 0}
+  bot: {fileID: 0}
   numPlayerMoved: 0
   gameStarted: 0
   turnEnded: 0
@@ -11040,6 +11040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1715823947}
   - component: {fileID: 1715823946}
+  - component: {fileID: 1715823948}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Untagged
@@ -11059,6 +11060,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339d85c55ad784dce806e572ad6f5ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  lost: 0
+  turnEnded: 0
+  mainBase: {fileID: 0}
+  playerUIManager: {fileID: 0}
+  mode: 
+  allTroops: []
+  allShips: []
+  allBuildings: []
+  allSpells: []
+  landTerritory: 0
+  toSpawnPath: 
+  toSpawnImage: {fileID: 0}
+  toSpawnUnit: {fileID: 0}
+  goldNeedToSpawn: 0
+  gold: 0
+  age: 0
+  goldNeedToAdvance: 0
 --- !u!4 &1715823947
 Transform:
   m_ObjectHideFlags: 0
@@ -11074,6 +11093,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715823948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715823945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 7
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1740608516
 GameObject:
   m_ObjectHideFlags: 0

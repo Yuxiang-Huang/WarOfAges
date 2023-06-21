@@ -265,7 +265,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         int numPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
 
         //choose spawn locations base on number of player
-        if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6)
+        if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6 || PhotonNetwork.OfflineMode)
         {
             spawnLocations = new List<Vector2>(allSpawnLocations);
         }

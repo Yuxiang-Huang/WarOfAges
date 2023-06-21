@@ -32,12 +32,6 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             return;
         }
-
-        player = PlayerController.instance;
-        bot = BotController.instance;
-
-        allPlayersOriginal.Add(player);
-        allPlayersOriginal.Add(bot);
     }
 
     //called when any player is ready
@@ -68,25 +62,24 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
     public void checkStart()
     {
-        // no need to check because only one player
-        Tile[,] tiles = TileManager.instance.tiles;
+        player = PlayerController.instance;
+        bot = BotController.instance;
 
+        allPlayersOriginal = new List<IController>();
+        allPlayersOriginal.Add(player);
+        allPlayersOriginal.Add(bot);
+        allPlayers = new List<IController>(allPlayersOriginal);
+
+        // no need to check because only one player
         if (Config.sameSpawnPlaceTestMode)
         {
-            //ask player and bot to start game in the same spot
-            player.PV.RPC("startGame", player.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
-            bot.PV.RPC("startGame", bot.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
+            player.startGame(0, TileManager.instance.spawnLocations[0]);
+            bot.startGame(1, TileManager.instance.spawnLocations[0]);
         }
         else
         {
-            // tutorial mode
-            if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
-            (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
-            {
-                player.PV.RPC("startGame", player.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
-                bot.PV.RPC("startGame", bot.PV.Owner, 1, TileManager.instance.spawnLocations[Random.Range(1, 6)]);
-                return;
-            }
+            player.startGame(0, TileManager.instance.spawnLocations[0]);
+            bot.startGame(1, TileManager.instance.spawnLocations[Random.Range(1, 6)]);
         }
     }
 
@@ -94,7 +87,6 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
     #region Start Turn
 
-    [PunRPC]
     public void startTurn()
     {
         UIManager.instance.startTurnUI();
@@ -247,11 +239,11 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
             if (allPlayers.Count > 0)
             {
-                ////different player start every turn
-                //allPlayers[0].startFirstIndicator(false);
-                //allPlayers.Add(allPlayers[0]);
-                //allPlayers.RemoveAt(0);
-                //allPlayers[0].startFirstIndicator(true);
+                //different player start every turn
+                allPlayers[0].startFirstIndicator(false);
+                allPlayers.Add(allPlayers[0]);
+                allPlayers.RemoveAt(0);
+                allPlayers[0].startFirstIndicator(true);
             }
 
             //ask every playercontroller owner to update their info
@@ -261,7 +253,7 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
             }
 
             //next turn
-            //PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
+            startTurn();
         }
     }
 

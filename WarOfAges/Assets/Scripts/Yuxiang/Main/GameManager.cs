@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             if (Config.sameSpawnPlaceTestMode)
             {
-                //ask all player to start game
+                //ask all player to start game in same spot
                 for (int i = 0; i < allPlayers.Count; i++)
                 {
                     allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, TileManager.instance.spawnLocations[0]);
