@@ -690,7 +690,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1602756415}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: leave
         m_Mode: 1
@@ -6844,7 +6844,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1602756415}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: cancelEndTurn
         m_Mode: 1
@@ -7990,7 +7990,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1602756415}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: endTurn
         m_Mode: 1
@@ -8354,6 +8354,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb81fa71cb334a5797e66884a5a03e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PV: {fileID: 0}
+  allPlayersOriginal: []
+  allPlayers: []
+  numPlayerMoved: 0
+  gameStarted: 0
+  turnEnded: 0
   player: {fileID: 0}
   bot: {fileID: 0}
   numPlayerMoved: 0
@@ -9800,10 +9806,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1602756414}
-  - component: {fileID: 1602756415}
   - component: {fileID: 1602756416}
+  - component: {fileID: 1602756417}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: DefaultGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9824,24 +9830,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1602756415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602756413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e6ddde09271a4ddd92a7ec8a9115c6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PV: {fileID: 0}
-  allPlayersOriginal: []
-  allPlayers: []
-  numPlayerMoved: 0
-  gameStarted: 0
-  turnEnded: 0
 --- !u!114 &1602756416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9864,6 +9852,24 @@ MonoBehaviour:
   sceneViewId: 998
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1602756417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602756413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6436b5b2616e48818b2aeff390d89ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PV: {fileID: 0}
+  allPlayersOriginal: []
+  allPlayers: []
+  numPlayerMoved: 0
+  gameStarted: 0
+  turnEnded: 0
 --- !u!1 &1612285968
 GameObject:
   m_ObjectHideFlags: 0
@@ -11112,7 +11118,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 7
+  sceneViewId: 995
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1740608516

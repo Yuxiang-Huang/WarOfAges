@@ -1,32 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System.Linq;
+using System.IO;
 
-public class TutorialGameManager : GameManager
+public class DefaultGameManager : GameManager
 {
-    [SerializeField] PlayerController player;
-    [SerializeField] BotController bot;
+    public PhotonView PV;
 
     [SerializeField] int numPlayerMoved;
 
     [SerializeField] bool gameStarted;
     public bool turnEnded;
 
-    void Start()
+    private void Awake()
     {
-        // destroy if not offline
-        if (! PhotonNetwork.OfflineMode)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         instance = this;
+        PV = GetComponent<PhotonView>();
+
+        // destroy if offline mode
+        if (Config.offlineMode)
+        {
+            //offline mode
+            PhotonNetwork.OfflineMode = true;
+
+            //default room options
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.CustomRoomProperties = new Hashtable() {
+                { "Mode", Config.defaultMode },
+                { "initialTime", Config.defaultStartingTime },
+                { "timeInc", Config.defaultTimeInc },
+                { "mapRadius", Config.defaultMapRadius },
+                { "Tutorial", Config.tutorialMode}
+            };
+
+            //create a room and a player
+            PhotonNetwork.CreateRoom("Tutorial", roomOptions);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player/PlayerManager"), Vector3.zero, Quaternion.identity);
+
+            // destroy
+            Destroy(gameObject);
+        }
+        // also destroy if tutorial
+        else if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
+            (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
+        {
+            // destroy
+            Destroy(gameObject);
+        }
+        else
+        {
+            //not able to access after game begins
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
     }
 
     //called when any player is ready
@@ -55,26 +85,60 @@ public class TutorialGameManager : GameManager
 
     #region Begin Game
 
+    public override void createPlayerList()
+    {
+        //everyone joined
+        if (playerList.Count == PhotonNetwork.CurrentRoom.PlayerCount)
+        {
+            //sorted list depending on actor number to assign id
+            foreach (KeyValuePair<int, IController> kvp in playerList)
+            {
+                allPlayersOriginal.Add(kvp.Value);
+            }
+
+            //this one will change
+            allPlayers = new List<IController>(allPlayersOriginal);
+        }
+    }
+
     public override void checkStart()
     {
-        player = PlayerController.instance;
-        bot = BotController.instance;
+        //only start game once
+        if (gameStarted) return;
 
-        allPlayersOriginal = new List<IController>();
-        allPlayersOriginal.Add(player);
-        allPlayersOriginal.Add(bot);
-        allPlayers = new List<IController>(allPlayersOriginal);
+        //master client start game once when everyone is ready
+        var players = PhotonNetwork.PlayerList;
+        if (players.All(p => p.CustomProperties.ContainsKey("Ready") && (bool)p.CustomProperties["Ready"]))
+        {
+            gameStarted = true;
 
-        // no need to check because only one player
-        if (Config.sameSpawnPlaceTestMode)
-        {
-            player.startGame(0, TileManager.instance.spawnLocations[0]);
-            bot.startGame(1, TileManager.instance.spawnLocations[0]);
-        }
-        else
-        {
-            player.startGame(0, TileManager.instance.spawnLocations[0]);
-            bot.startGame(1, TileManager.instance.spawnLocations[Random.Range(1, 6)]);
+            Tile[,] tiles = TileManager.instance.tiles;
+
+            if (Config.sameSpawnPlaceTestMode)
+            {
+                //ask all player to start game in same spot
+                for (int i = 0; i < allPlayers.Count; i++)
+                {
+                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, TileManager.instance.spawnLocations[0]);
+                }
+            }
+            else
+            {
+                //shuffle to get spawn position
+                List<Vector2> randomSpawnLocations = new List<Vector2>();
+                while (TileManager.instance.spawnLocations.Count > 0)
+                {
+                    int index = Random.Range(0, TileManager.instance.spawnLocations.Count);
+                    randomSpawnLocations.Add(TileManager.instance.spawnLocations[index]);
+                    TileManager.instance.spawnLocations.RemoveAt(index);
+                }
+
+                //ask all player to start game
+                for (int i = 0; i < allPlayers.Count; i++)
+                {
+                    allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, randomSpawnLocations[i]);
+                }
+            }
         }
     }
 
@@ -82,6 +146,7 @@ public class TutorialGameManager : GameManager
 
     #region Start Turn
 
+    [PunRPC]
     public override void startTurn()
     {
         UIManager.instance.startTurnUI();
@@ -150,7 +215,7 @@ public class TutorialGameManager : GameManager
             UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
 
             //all players spawn
-            foreach (IController player in allPlayersOriginal)
+            foreach (PlayerController player in allPlayersOriginal)
             {
                 player.PV.RPC("spawn", player.PV.Owner);
             }
@@ -201,7 +266,7 @@ public class TutorialGameManager : GameManager
         yield return new WaitForSeconds(1f);
 
         //all players attack
-        foreach (IController player in allPlayersOriginal)
+        foreach (PlayerController player in allPlayersOriginal)
         {
             player.PV.RPC(nameof(player.attack), player.PV.Owner);
         }
@@ -214,7 +279,7 @@ public class TutorialGameManager : GameManager
         if (players.All(p => p.Value.CustomProperties.ContainsKey("Attacked") && (bool)p.Value.CustomProperties["Attacked"]))
         {
             //all players check death
-            foreach (IController player in allPlayersOriginal)
+            foreach (PlayerController player in allPlayersOriginal)
             {
                 player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
             }
@@ -242,13 +307,13 @@ public class TutorialGameManager : GameManager
             }
 
             //ask every playercontroller owner to update their info
-            foreach (IController player in allPlayers)
+            foreach (PlayerController player in allPlayers)
             {
                 player.PV.RPC(nameof(player.fillInfoTab), player.PV.Owner);
             }
 
             //next turn
-            startTurn();
+            PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
         }
     }
 

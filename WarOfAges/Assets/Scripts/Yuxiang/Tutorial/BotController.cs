@@ -30,10 +30,10 @@ public class BotController : MonoBehaviourPunCallbacks, IController
     public List<Troop> allTroops = new List<Troop>();
     public List<Ship> allShips = new List<Ship>();
     public List<Building> allBuildings = new List<Building>();
-    public List<Spell> allSpells = new List<Spell>();
+    public List<Spell> allSpells { get; set; } = new List<Spell>();
 
-    public HashSet<Tile> territory = new HashSet<Tile>();
-    public int landTerritory;
+    public HashSet<Tile> territory { get; set; } = new HashSet<Tile>();
+    public int landTerritory { get; set; }
     public HashSet<Tile> visibleTiles = new HashSet<Tile>();
 
     public int[,] extraViewTiles;
@@ -84,22 +84,52 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
         mode = "start";
 
-        //reveal starting territory
+        // get starting territory that are land
         Tile[,] tiles = TileManager.instance.tiles;
+
+        List<Tile> possibleBaseTiles = new List<Tile>();
 
         Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
 
-        root.setDark(false);
+        if (root.terrain == "land")
+            possibleBaseTiles.Add(root);
 
         foreach (Tile neighbor in root.neighbors)
         {
-            neighbor.setDark(false);
+            if (neighbor.terrain == "land")
+                possibleBaseTiles.Add(neighbor);
         }
 
         foreach (Tile neighbor in root.neighbors2)
         {
-            neighbor.setDark(false);
+            if (neighbor.terrain == "land")
+                possibleBaseTiles.Add(neighbor);
         }
+
+        // choose a tile randomly as base tile
+        Tile baseTile = possibleBaseTiles[Random.Range(0, possibleBaseTiles.Count)];
+
+        //initialize double arrays
+        extraViewTiles = new int[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
+        spawnable = new bool[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
+        spawnDirection = new Vector2[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
+
+        //spawn castle
+        mainBase = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Building/MainBase"),
+            baseTile.transform.position, Quaternion.identity).
+            GetComponent<MainBase>();
+
+        mainBase.gameObject.GetPhotonView().RPC("Init", RpcTarget.All, id, baseTile.pos.x, baseTile.pos.y,
+             "Building/MainBase", age, 0);
+
+        mainBase.GetComponent<Building>().updateCanSpawn();
+        allBuildings.Add(mainBase);
+
+        mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
+
+        UIManager.instance.startGameLocal();
+
+        GameManager.instance.endTurn();
     }
 
     [PunRPC]
@@ -114,7 +144,7 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             foreach (Tile tile in TileManager.instance.tiles)
             {

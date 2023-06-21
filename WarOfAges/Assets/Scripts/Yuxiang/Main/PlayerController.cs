@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
     public List<Troop> allTroops = new List<Troop>();
     public List<Ship> allShips = new List<Ship>();
     public List<Building> allBuildings = new List<Building>();
-    public List<Spell> allSpells = new List<Spell>();
+    public List<Spell> allSpells { get; set; } = new List<Spell>();
 
-    public HashSet<Tile> territory = new HashSet<Tile>();
-    public int landTerritory;
+    public HashSet<Tile> territory { get; set; } = new HashSet<Tile>();
+    public int landTerritory { get; set; }
     public HashSet<Tile> visibleTiles = new HashSet<Tile>();
 
     public int[,] extraViewTiles;
