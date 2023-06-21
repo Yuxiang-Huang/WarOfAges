@@ -86,30 +86,33 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
         mode = "start";
 
-        // get starting territory that are land
+        // base tile is the tile with most land neighbors
         Tile[,] tiles = TileManager.instance.tiles;
-
-        List<Tile> possibleBaseTiles = new List<Tile>();
 
         Tile root = tiles[(int)spawnLocation.x, (int)spawnLocation.y];
 
-        if (root.terrain == "land")
-            possibleBaseTiles.Add(root);
+        Tile baseTile = root;
+        int maxLandTile = countLandNeighbor(root);
 
         foreach (Tile neighbor in root.neighbors)
         {
-            if (neighbor.terrain == "land")
-                possibleBaseTiles.Add(neighbor);
+            int landNeighbor = countLandNeighbor(neighbor);
+            if (landNeighbor > maxLandTile)
+            {
+                baseTile = neighbor;
+                maxLandTile = landNeighbor;
+            }
         }
 
         foreach (Tile neighbor in root.neighbors2)
         {
-            if (neighbor.terrain == "land")
-                possibleBaseTiles.Add(neighbor);
+            int landNeighbor = countLandNeighbor(neighbor);
+            if (landNeighbor > maxLandTile)
+            {
+                baseTile = neighbor;
+                maxLandTile = landNeighbor;
+            }
         }
-
-        // choose a tile randomly as base tile
-        Tile baseTile = possibleBaseTiles[Random.Range(0, possibleBaseTiles.Count)];
 
         //initialize double arrays
         extraViewTiles = new int[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
@@ -128,6 +131,21 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         allBuildings.Add(mainBase);
 
         mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
+    }
+
+    // count number of land tile neighbors, return 0 is tile is water
+    public int countLandNeighbor (Tile tile)
+    {
+        if (tile.terrain != "land")
+            return 0;
+
+        int ans = 0;
+        foreach (Tile neighbor in tile.neighbors)
+        {
+            if (neighbor.terrain == "land")
+                ans++;
+        }
+        return ans;
     }
 
     [PunRPC]
