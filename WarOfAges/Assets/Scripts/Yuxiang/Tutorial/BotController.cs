@@ -124,32 +124,50 @@ public class BotController : Controller
             // try spawn AOE
             spawnButtons[7].selectSpawnUnitBot();
 
+            // try attack main base first
+            Tile bestTile = PlayerController.instance.mainBase.tile;
+            foreach (Tile neighbor in bestTile.neighbors)
+            {
+                if (neighbor.ownerID == id && canSpawn(bestTile, toSpawnUnit))
+                {
+                    // attack if possible
+                    addToSpawnList(bestTile);
+
+                    gold -= goldNeedToSpawn;
+
+                    break;
+                }
+            }
+
             if (gold >= goldNeedToSpawn)
             {
                 // check for enemy building
                 foreach (Building building in PlayerController.instance.allBuildings)
                 {
-                    // check any neighbor is my territory
-                    bool canAttack = false;
-
-                    foreach (Tile neighbor in building.tile.neighbors)
+                    // attack tower / extra view
+                    if (building.GetComponent<ExtraView>() != null)
                     {
-                        if (neighbor.ownerID == id)
+                        bool canAttack = false;
+
+                        foreach (Tile neighbor in building.tile.neighbors)
                         {
-                            canAttack = true;
+                            if (neighbor.ownerID == id)
+                            {
+                                canAttack = true;
+                            }
                         }
-                    }
 
-                    // attack if possible
-                    if (canAttack)
-                    {
-                        addToSpawnList(building.tile);
+                        // attack if possible
+                        if (canAttack && canSpawn(building.tile, toSpawnUnit))
+                        {
+                            addToSpawnList(building.tile);
 
-                        gold -= goldNeedToSpawn;
+                            gold -= goldNeedToSpawn;
 
-                        // not enough gold
-                        if (gold < goldNeedToSpawn)
-                            break;
+                            // not enough gold
+                            if (gold < goldNeedToSpawn)
+                                break;
+                        }
                     }
                 }
             }
@@ -223,7 +241,7 @@ public class BotController : Controller
                     spawnButtons[5].selectSpawnUnitBot();
 
                     // spawn money building farthest away from player base
-                    Tile safestTile = findTileUsingComparator(farther);
+                    Tile safestTile = findLandTileUsingComparator(farther);
                     if (gold >= goldNeedToSpawn && canSpawn(safestTile, toSpawnUnit))
                         addToSpawnList(safestTile);
                 }
@@ -233,7 +251,7 @@ public class BotController : Controller
                     spawnButtons[6].selectSpawnUnitBot();
 
                     // spawn money building closest to player base
-                    Tile closeTile = findTileUsingComparator(closer);
+                    Tile closeTile = findLandTileUsingComparator(closer);
                     if (gold >= goldNeedToSpawn && canSpawn(closeTile, toSpawnUnit))
                         addToSpawnList(closeTile);
                 }
@@ -262,7 +280,16 @@ public class BotController : Controller
                 SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
 
                 // set path
-                spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+                if (randomNum == 3)
+                {
+                    // speed go far
+                    spawnInfoSelected.targetPathTile = findFarthestUnconqueredLandTile(curTile);
+                }
+                else
+                {
+                    // other troop go close
+                    spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+                }
 
                 // arrows in bot test mode
                 if (Config.botTestMode)
@@ -361,7 +388,7 @@ public class BotController : Controller
         return cur - orig < 0;
     }
 
-    Tile findTileUsingComparator(ComparingFunction function)
+    Tile findLandTileUsingComparator(ComparingFunction function)
     {
         Tile bestTile = mainBase.tile;
         float dist = Vector3.Magnitude(bestTile.transform.position - PlayerController.instance.mainBase.transform.position);
@@ -411,6 +438,26 @@ public class BotController : Controller
         }
 
         return PlayerController.instance.mainBase.tile;
+    }
+
+    Tile findFarthestUnconqueredLandTile(Tile startingTile)
+    {
+        Tile bestTile = mainBase.tile;
+        float dist = Vector3.Magnitude(bestTile.transform.position - startingTile.transform.position);
+
+        foreach (Tile curTile in territory)
+        {
+            if (curTile.terrain == "land" && curTile.ownerID != id)
+            {
+                float curDist = Vector3.Magnitude(curTile.transform.position - startingTile.transform.position);
+                if (curDist > dist)
+                {
+                    dist = curDist;
+                    bestTile = curTile;
+                }
+            }
+        }
+        return bestTile;
     }
 
     #endregion

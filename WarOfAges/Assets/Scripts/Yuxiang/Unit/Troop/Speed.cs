@@ -39,6 +39,200 @@ public class Speed : Troop
         }
     }
 
+    // don't go where units are
+    public override void findPathBot(Tile target)
+    {
+        //same tile reset
+        if (target == tile)
+        {
+            path = new List<Tile>();
+
+            Destroy(arrow);
+
+            return;
+        }
+
+        float minDist = TileManager.instance.dist(target, tile);
+
+        //initiated a queue
+        Queue<List<Tile>> allPath = new Queue<List<Tile>>();
+
+        List<Tile> root = new() { tile };
+
+        allPath.Enqueue(root);
+
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        bool reach = false;
+
+        //bfs
+        while (allPath.Count != 0 && !reach)
+        {
+            List<Tile> cur = allPath.Dequeue();
+            Tile lastTile = cur[cur.Count - 1];
+
+            foreach (Tile curTile in lastTile.neighbors)
+            {
+                //not visited and no unit (Doesn't matter what terrain)
+                if (!visited[curTile.pos.x, curTile.pos.y] && curTile.unit == null)
+                {
+                    //no team building
+                    if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
+                        curTile.unit.ownerID != ownerID)
+                    {
+                        visited[curTile.pos.x, curTile.pos.y] = true;
+
+                        //check this tile dist
+                        List<Tile> dup = new List<Tile>(cur)
+                        {
+                            curTile
+                        };
+
+                        float curDist = TileManager.instance.dist(target, curTile);
+
+                        if (curDist < 0.01)
+                        {
+                            reach = true;
+                            path = dup;
+                            minDist = curDist;
+                        }
+                        else if (curDist < minDist)
+                        {
+                            minDist = curDist;
+                            path = dup;
+                        }
+
+                        allPath.Enqueue(dup);
+                    }
+                }
+            }
+        }
+
+        //a path is found
+        if (path.Count != 0)
+        {
+            //remove first tile
+            path.RemoveAt(0);
+        }
+
+        // add all water tile to be ship needed tiles
+        foreach (Tile curTile in path)
+        {
+            // if no water and no ship
+            if (curTile.terrain == "water" && curTile.unit == null
+                && !BotController.instance.spawnList.ContainsKey(curTile.pos))
+            {
+                BotController.instance.shipNeedTiles.Add(curTile);
+            }
+        }
+
+        //-------------------------------------------------------------------------------
+        // recalculate path (edge case where a ship can't be spawned on time)
+        refindPathBot(target);
+    }
+
+    // adding no unit on tile condition
+    void refindPathBot(Tile target)
+    {
+        //follow this troop if in my team
+        if (target.unit != null && target.unit.ownerID == ownerID)
+        {
+            toFollow = target.unit;
+        }
+        else
+        {
+            toFollow = null;
+        }
+
+        //same tile reset
+        if (target == tile)
+        {
+            path = new List<Tile>();
+
+            Destroy(arrow);
+
+            return;
+        }
+
+        float minDist = TileManager.instance.dist(target, tile);
+
+        //initiated a queue
+        Queue<List<Tile>> allPath = new Queue<List<Tile>>();
+
+        List<Tile> root = new() { tile };
+
+        allPath.Enqueue(root);
+
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        bool reach = false;
+
+        //bfs
+        while (allPath.Count != 0 && !reach)
+        {
+            List<Tile> cur = allPath.Dequeue();
+            Tile lastTile = cur[cur.Count - 1];
+
+            foreach (Tile curTile in lastTile.neighbors)
+            {
+                //not visited and land tile or
+                //water tile on ship or with ship on it
+                if (!visited[curTile.pos.x, curTile.pos.y] &&
+                    (curTile.terrain == "land" ||
+                    (curTile.terrain == "water" &&
+                    (ship != null ||
+                    curTile.unit != null && curTile.unit.ownerID == ownerID))))
+                {
+                    // no unit here
+                    if (curTile.unit == null)
+                    {
+                        //no team building
+                        if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
+                            curTile.unit.ownerID != ownerID)
+                        {
+                            visited[curTile.pos.x, curTile.pos.y] = true;
+
+                            //check this tile dist
+                            List<Tile> dup = new List<Tile>(cur)
+                        {
+                            curTile
+                        };
+
+                            float curDist = TileManager.instance.dist(target, curTile);
+
+                            if (curDist < 0.01)
+                            {
+                                reach = true;
+                                path = dup;
+                                minDist = curDist;
+                            }
+                            else if (curDist < minDist)
+                            {
+                                minDist = curDist;
+                                path = dup;
+                            }
+
+                            allPath.Enqueue(dup);
+                        }
+                    }
+                }
+            }
+        }
+
+        //a path is found
+        if (path.Count != 0)
+        {
+            //remove first tile
+            path.RemoveAt(0);
+        }
+
+        displayArrow();
+    }
+
     public override void move()
     {
         base.move();
