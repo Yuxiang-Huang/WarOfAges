@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEditor;
-using static UnityEngine.GraphicsBuffer;
 
 public class BotController : Controller
 {
@@ -207,101 +206,75 @@ public class BotController : Controller
         {
             int randomNum = Random.Range(0, age + 3);
 
-            // ship turn to money
-            if (randomNum == 2)
+            // not troop index, go again
+            while (randomNum == 2 || randomNum > 4)
             {
-                spawnButtons[5].selectSpawnUnitBot();
-
-                // spawn money building farthest away from player base
-                Tile safestTile = findSafestLandTile();
-                if (gold >= goldNeedToSpawn && canSpawn(safestTile, toSpawnUnit))
-                    addToSpawnList(safestTile);
-            }
-            else
-            {
-                spawnButtons[randomNum].selectSpawnUnitBot();
-
-                if (gold >= goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))// && allTroops.Count < 2)
+                // ship turn to money
+                if (randomNum == 2)
                 {
-                    addToSpawnList(curTile);
+                    spawnButtons[5].selectSpawnUnitBot();
 
-                    // set destination for newly spawned troop
-                    SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
+                    // spawn money building farthest away from player base
+                    Tile safestTile = findTileUsingComparator(farther);
+                    if (gold >= goldNeedToSpawn && canSpawn(safestTile, toSpawnUnit))
+                        addToSpawnList(safestTile);
+                }
+                // the tower
+                else if (randomNum == 6)
+                {
+                    spawnButtons[6].selectSpawnUnitBot();
 
-                    // set path
-                    spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+                    // spawn money building closest to player base
+                    Tile closeTile = findTileUsingComparator(closer);
+                    if (gold >= goldNeedToSpawn && canSpawn(closeTile, toSpawnUnit))
+                        addToSpawnList(closeTile);
+                }
 
-                    // arrows in bot test mode
-                    if (Config.botTestMode)
+                // money or AOE -> choose either speed or health
+                if (randomNum == 5 || randomNum == 7)
+                {
+                    randomNum = Random.Range(3, 5);
+                }
+                // random pick again
+                else
+                {
+                    randomNum = Random.Range(0, age + 3);
+                }
+            }
+
+            // select the corresponding troop
+            spawnButtons[randomNum].selectSpawnUnitBot();
+
+            // check condition for spawning
+            if (gold >= goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))// && allTroops.Count < 2)
+            {
+                addToSpawnList(curTile);
+
+                // set destination for newly spawned troop
+                SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
+
+                // set path
+                spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+
+                // arrows in bot test mode
+                if (Config.botTestMode)
+                {
+                    if (spawnInfoSelected.arrow != null)
+                        Destroy(spawnInfoSelected.arrow);
+
+                    Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
+                    cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile);
+                    if (cur.arrow != null)
                     {
-                        if (spawnInfoSelected.arrow != null)
-                            Destroy(spawnInfoSelected.arrow);
-
-                        Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
-                        cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile);
-                        if (cur.arrow != null)
-                        {
-                            spawnInfoSelected.arrow = Instantiate(cur.arrow);
-                            Destroy(cur.arrow);
-                        }
+                        spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                        Destroy(cur.arrow);
                     }
                 }
             }
         }
 
+        // the green ready icon
         UIManager.instance.setEndTurn(id, true);
-    }
-
-    Tile findSafestLandTile()
-    {
-        Tile bestTile = mainBase.tile;
-        float longestDist = Vector3.Magnitude(bestTile.transform.position - PlayerController.instance.mainBase.transform.position);
-
-        foreach (Tile curTile in territory)
-        {
-            if (curTile.terrain == "land" && canSpawn(curTile, toSpawnUnit))
-            {
-                float curDist = Vector3.Magnitude(curTile.transform.position - PlayerController.instance.mainBase.transform.position);
-                if (curDist > longestDist)
-                {
-                    longestDist = curDist;
-                    bestTile = curTile;
-                }
-            }
-        }
-        return bestTile;
-    }
-
-    Tile findClosestUnconqueredLandTile(Tile curTile)
-    {
-        //initiated a queue
-        Queue<Tile> tilesToLook = new Queue<Tile>();
-        tilesToLook.Enqueue(curTile);
-
-        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
-                                   TileManager.instance.tiles.GetLength(1)];
-
-        //bfs
-        while (tilesToLook.Count != 0)
-        {
-            Tile nextTile = tilesToLook.Dequeue();
-
-            // return if land and unconquered
-            if (nextTile.terrain == "land" && nextTile.ownerID != id)
-                return nextTile;
-
-            foreach (Tile neighbor in nextTile.neighbors)
-            {
-                //not visited
-                if (!visited[neighbor.pos.x, neighbor.pos.y])
-                {
-                    visited[neighbor.pos.x, neighbor.pos.y] = true;
-                    tilesToLook.Enqueue(neighbor);
-                }
-            }
-        }
-
-        return PlayerController.instance.mainBase.tile;
     }
 
     void addToSpawnList(Tile spawnTile)
@@ -689,6 +662,74 @@ public class BotController : Controller
     //        }
     //    }
     //}
+
+    #region Finding Tile depending on need
+
+    delegate bool ComparingFunction(float orig, float cur);
+
+    public bool farther(float orig, float cur)
+    {
+        return cur - orig > 0;
+    }
+
+    public bool closer(float orig, float cur)
+    {
+        return cur - orig < 0;
+    }
+
+    Tile findTileUsingComparator(ComparingFunction function)
+    {
+        Tile bestTile = mainBase.tile;
+        float dist = Vector3.Magnitude(bestTile.transform.position - PlayerController.instance.mainBase.transform.position);
+
+        foreach (Tile curTile in territory)
+        {
+            if (curTile.terrain == "land" && canSpawn(curTile, toSpawnUnit))
+            {
+                float curDist = Vector3.Magnitude(curTile.transform.position - PlayerController.instance.mainBase.transform.position);
+                if (function(dist, curDist))
+                {
+                    dist = curDist;
+                    bestTile = curTile;
+                }
+            }
+        }
+        return bestTile;
+    }
+
+    Tile findClosestUnconqueredLandTile(Tile curTile)
+    {
+        //initiated a queue
+        Queue<Tile> tilesToLook = new Queue<Tile>();
+        tilesToLook.Enqueue(curTile);
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        //bfs
+        while (tilesToLook.Count != 0)
+        {
+            Tile nextTile = tilesToLook.Dequeue();
+
+            // return if land and unconquered
+            if (nextTile.terrain == "land" && nextTile.ownerID != id)
+                return nextTile;
+
+            foreach (Tile neighbor in nextTile.neighbors)
+            {
+                //not visited
+                if (!visited[neighbor.pos.x, neighbor.pos.y])
+                {
+                    visited[neighbor.pos.x, neighbor.pos.y] = true;
+                    tilesToLook.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return PlayerController.instance.mainBase.tile;
+    }
+
+    #endregion
 
     public override void stop()
     {
