@@ -112,8 +112,17 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     #endregion
 
-    //// Update is called once per frame
-    //void Update()
+    void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            foreach (Tile tile in TileManager.instance.tiles)
+            {
+                if (tile != null)
+                    tile.setDark(false);
+            }
+        }
+    }
     //{
     //    if (!PV.IsMine) return;
 

@@ -188,21 +188,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         UIManager.instance.endTurnUI();
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
-
-            //in case player quit
-            if (allPlayers.Count > 0)
-                allPlayers[0].spawn();
-        }
-        else
-        {
-            //ask master client to count player
-            Hashtable playerProperties = new Hashtable();
-            playerProperties.Add("EndTurn", true);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        }
+        //ask master client to count player
+        Hashtable playerProperties = new Hashtable();
+        playerProperties.Add("EndTurn", true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
     }
 
     public void cancelEndTurn()
