@@ -160,7 +160,7 @@ public class Controller : MonoBehaviour
         if (!lost)
         {
             // want to see whole map for testing bot
-            if (! Config.botTestMode)
+            if (!Config.botTestMode)
             {
                 List<Tile> tileList = visibleTiles.ToList();
                 for (int i = tileList.Count - 1; i >= 0; i--)
