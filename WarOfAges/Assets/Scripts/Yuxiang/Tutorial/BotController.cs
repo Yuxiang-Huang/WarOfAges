@@ -965,6 +965,8 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         //last update in player info tab
         UIManager.instance.playerUIManagerList[id].PV.RPC("fillInfo", RpcTarget.All,
             UIManager.instance.ageNameList[age], gold, territory.Count, allTroops.Count, allBuildings.Count, 0f);
+
+        // 
     }
 
     [PunRPC]

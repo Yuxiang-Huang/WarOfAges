@@ -117,7 +117,13 @@ public class TutorialGameManager : GameManager
         {
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
-            StartCoroutine(nameof(delayAttack));
+            //all players attack
+            foreach (IController player in allPlayersOriginal)
+            {
+                player.attack();
+            }
+
+            checkAttack();
         }
         else
         {
@@ -139,7 +145,7 @@ public class TutorialGameManager : GameManager
             //all players attack
             foreach (IController player in allPlayersOriginal)
             {
-                player.PV.RPC(nameof(player.attack), player.PV.Owner);
+                player.attack();
             }
 
             checkAttack();
@@ -157,7 +163,7 @@ public class TutorialGameManager : GameManager
         //all players check death
         foreach (IController player in allPlayersOriginal)
         {
-            player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
+            player.checkDeath();
         }
 
         checkDeath();
@@ -188,36 +194,6 @@ public class TutorialGameManager : GameManager
 
         //next turn
         startTurn();
-    }
-
-    #endregion
-
-    #region endGame
-
-    public override void surrender()
-    {
-        PlayerController.instance.mainBase.sell();
-        PlayerController.instance.toSell.Add(PlayerController.instance.mainBase);
-    }
-
-    public override void leave()
-    {
-        StartCoroutine(nameof(leaveEnu));
-    }
-
-    public override IEnumerator leaveEnu()
-    {
-        //disconnect before leaving
-        PhotonNetwork.LeaveRoom();
-
-        // can't leave lobby if tutorial
-        if (TutorialManager.instance == null)
-            PhotonNetwork.LeaveLobby();
-
-        PhotonNetwork.Disconnect();
-        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
-        Destroy(RoomManager.Instance.gameObject);
-        PhotonNetwork.LoadLevel(0);
     }
 
     #endregion

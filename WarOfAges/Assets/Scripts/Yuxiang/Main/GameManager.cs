@@ -96,23 +96,4 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     #endregion
-
-    #region endGame
-
-    public virtual void surrender()
-    {
-
-    }
-
-    public virtual void leave()
-    {
-
-    }
-
-    public virtual IEnumerator leaveEnu()
-    {
-        yield return new WaitForEndOfFrame();
-    }
-
-    #endregion
 }

@@ -498,9 +498,34 @@ public class UIManager : MonoBehaviour
         askSurrenderBox.SetActive(false);
     }
 
-    public void yesSurredner()
+    #region endGame
+
+    public void yesSurrender()
     {
         askSurrenderBox.SetActive(false);
-        GameManager.instance.surrender();
+        PlayerController.instance.mainBase.sell();
+        PlayerController.instance.toSell.Add(PlayerController.instance.mainBase);
     }
+
+    public void leave()
+    {
+        StartCoroutine(nameof(leaveEnu));
+    }
+
+    public IEnumerator leaveEnu()
+    {
+        //disconnect before leaving
+        PhotonNetwork.LeaveRoom();
+
+        // can't leave lobby if tutorial
+        if (TutorialManager.instance == null)
+            PhotonNetwork.LeaveLobby();
+
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
+        Destroy(RoomManager.Instance.gameObject);
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    #endregion
 }

@@ -303,34 +303,4 @@ public class DefaultGameManager : GameManager
     }
 
     #endregion
-
-    #region endGame
-
-    public override void surrender()
-    {
-        PlayerController.instance.mainBase.sell();
-        PlayerController.instance.toSell.Add(PlayerController.instance.mainBase);
-    }
-
-    public override void leave()
-    {
-        StartCoroutine(nameof(leaveEnu));
-    }
-
-    public override IEnumerator leaveEnu()
-    {
-        //disconnect before leaving
-        PhotonNetwork.LeaveRoom();
-
-        // can't leave lobby if tutorial
-        if (TutorialManager.instance == null)
-            PhotonNetwork.LeaveLobby();
-
-        PhotonNetwork.Disconnect();
-        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
-        Destroy(RoomManager.Instance.gameObject);
-        PhotonNetwork.LoadLevel(0);
-    }
-
-    #endregion
 }
