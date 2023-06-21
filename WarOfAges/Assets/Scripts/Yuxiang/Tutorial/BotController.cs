@@ -142,18 +142,25 @@ public class BotController : Controller
         // upgrade troops
         foreach (Troop troop in allTroops)
         {
-            if (troop.age < age && gold > troop.upgradeGold)
+            // don't upgrade ships
+            if (!allShips.Contains(troop))
             {
-                gold -= troop.upgradeGold;
-                troop.upgrade();
+                // check condition
+                if (troop.age < age && gold > troop.upgradeGold)
+                {
+                    gold -= troop.upgradeGold;
+                    troop.upgrade();
+                }
             }
         }
 
         // upgrade buildings
         foreach (Building building in allBuildings)
         {
+            // ignore main base
             if (building.gameObject.GetComponent<MainBase>() == null)
             {
+                // check condition
                 if (building.age < age && gold > building.upgradeGold)
                 {
                     gold -= building.upgradeGold;
@@ -162,10 +169,13 @@ public class BotController : Controller
             }
         }
 
-        // just spawn Melees now
-        spawnButtons[0].selectSpawnUnitBot();
+        // spawn troops
         foreach (Tile curTile in spawnableTile)
         {
+            int randomNum = Random.Range(0, age + 2);
+
+            spawnButtons[randomNum].selectSpawnUnitBot();
+
             if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))
             {
                 addToSpawnList(curTile);
@@ -175,41 +185,45 @@ public class BotController : Controller
 
                 // set path
                 spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+
+                // arrows in bot test mode
+                if (Config.botTestMode)
+                {
+                    if (spawnInfoSelected.arrow != null)
+                        Destroy(spawnInfoSelected.arrow);
+
+                    Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
+                    cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile);
+                    if (cur.arrow != null)
+                    {
+                        spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                        Destroy(cur.arrow);
+                    }
+                }
             }
         }
 
         UIManager.instance.setEndTurn(id, true);
     }
 
-    Tile findClosestUnconqueredLandTile(Tile curTile)
+    Tile findClosestUnconqueredLandTile(Tile startingTile)
     {
-        //initiated a queue
-        Queue<Tile> tilesToLook = new Queue<Tile>();
-        tilesToLook.Enqueue(curTile);
+        Tile bestTile = PlayerController.instance.mainBase.tile;
+        float shortestDist = Vector3.Magnitude(bestTile.transform.position - startingTile.transform.position);
 
-        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
-                                   TileManager.instance.tiles.GetLength(1)];
-
-        //bfs
-        while (tilesToLook.Count != 0)
+        foreach (Tile curTile in TileManager.instance.tiles)
         {
-            Tile nextTile = tilesToLook.Dequeue();
-
-            // return if land and unconquered
-            if (nextTile.terrain == "land" && nextTile.ownerID != id)
-                return nextTile;
-
-            foreach (Tile neighbor in nextTile.neighbors)
+            if (curTile != null && curTile.terrain == "land" && curTile.ownerID != id)
             {
-                //not visited
-                if (!visited[neighbor.pos.x, neighbor.pos.y])
+                float curDist = Vector3.Magnitude(curTile.transform.position - startingTile.transform.position);
+                if (curDist < shortestDist)
                 {
-                    tilesToLook.Enqueue(neighbor);
+                    shortestDist = curDist;
+                    bestTile = curTile;
                 }
             }
         }
-
-        return PlayerController.instance.mainBase.tile;
+        return bestTile;
     }
 
     void addToSpawnList(Tile spawnTile)
@@ -253,14 +267,18 @@ public class BotController : Controller
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            foreach (Tile tile in TileManager.instance.tiles)
+        //if (Config.botTestMode)
+        //{
+            if (Input.GetKeyDown(KeyCode.RightShift))
             {
-                if (tile != null)
-                    tile.setDark(false);
+                Config.botTestMode = true;
+                foreach (Tile tile in TileManager.instance.tiles)
+                {
+                    if (tile != null)
+                        tile.setDark(false);
+                }
             }
-        }
+        //}
     }
     //{
     //    if (!PV.IsMine) return;

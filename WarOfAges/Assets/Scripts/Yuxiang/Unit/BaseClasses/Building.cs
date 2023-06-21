@@ -112,7 +112,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
-        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, ownerController.age);
+        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
         sellText.text = "Despawn";
     }

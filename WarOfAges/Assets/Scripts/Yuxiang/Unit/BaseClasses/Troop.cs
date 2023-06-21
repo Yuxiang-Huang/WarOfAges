@@ -219,16 +219,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void findPathBot(Tile target)
     {
-        //follow this troop if in my team
-        if (target.unit != null && target.unit.ownerID == ownerID)
-        {
-            toFollow = target.unit;
-        }
-        else
-        {
-            toFollow = null;
-        }
-
         //same tile reset
         if (target == tile)
         {
@@ -417,9 +407,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void displayArrow()
     {
-        // don't show arrow if bot
-        //if (PhotonNetwork.OfflineMode && ownerID == 1)
-        //    return;
+        // want to see arow for testing bot though
+        if (!Config.botTestMode)
+            // don't show arrow if bot
+            if (PhotonNetwork.OfflineMode && ownerID == 1)
+                return;
 
         //destroy arrow
         if (arrow != null)
