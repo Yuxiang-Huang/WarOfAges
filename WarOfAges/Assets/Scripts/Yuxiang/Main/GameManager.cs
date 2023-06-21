@@ -31,13 +31,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         instance = this;
         PV = GetComponent<PhotonView>();
 
-        if (!Config.offlineMode)
-        {
-            //not able to access after game begins
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-        }
-        else
+        // destroy if offline mode
+        if (Config.offlineMode)
         {
             //offline mode
             PhotonNetwork.OfflineMode = true;
@@ -55,6 +50,22 @@ public class GameManager : MonoBehaviourPunCallbacks
             //create a room and a player
             PhotonNetwork.CreateRoom("Tutorial", roomOptions);
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player/PlayerManager"), Vector3.zero, Quaternion.identity);
+
+            // destroy
+            Destroy(gameObject);
+        }
+        // also destroy if tutorial
+        else if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
+            (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
+        {
+            // destroy
+            Destroy(gameObject);
+        }
+        else
+        {
+            //not able to access after game begins
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
         }
     }
 
