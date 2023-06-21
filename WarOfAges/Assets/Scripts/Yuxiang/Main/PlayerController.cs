@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerController : MonoBehaviourPunCallbacks
+public class PlayerController : MonoBehaviourPunCallbacks, IController
 {
-    public PhotonView PV;
+    public PhotonView PV { get; set; }
 
     public static PlayerController instance;
 

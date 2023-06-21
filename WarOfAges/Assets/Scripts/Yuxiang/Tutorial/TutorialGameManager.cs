@@ -9,8 +9,11 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TutorialGameManager : MonoBehaviourPunCallbacks
 {
-    public List<PlayerController> allPlayersOriginal;
-    public List<PlayerController> allPlayers;
+    [SerializeField] PlayerController player;
+    [SerializeField] BotController bot;
+
+    public List<IController> allPlayersOriginal;
+    public List<IController> allPlayers;
 
     [SerializeField] int numPlayerMoved;
 
@@ -30,11 +33,11 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
             return;
         }
 
-        allPlayersOriginal = new List<PlayerController>();
-        allPlayersOriginal.Add(PlayerController.instance);
+        player = PlayerController.instance;
+        bot = BotController.instance;
 
-        //this one will change
-        allPlayers = new List<PlayerController>(allPlayersOriginal);
+        allPlayersOriginal.Add(player);
+        allPlayersOriginal.Add(bot);
     }
 
     //called when any player is ready
@@ -70,11 +73,9 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
         if (Config.sameSpawnPlaceTestMode)
         {
-            //ask all player to start game
-            for (int i = 0; i < allPlayers.Count; i++)
-            {
-                allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, TileManager.instance.spawnLocations[0]);
-            }
+            //ask player and bot to start game in the same spot
+            player.PV.RPC("startGame", player.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
+            bot.PV.RPC("startGame", bot.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
         }
         else
         {
@@ -82,7 +83,8 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
             (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
             {
-                allPlayers[0].PV.RPC("startGame", allPlayers[0].PV.Owner, 0, TileManager.instance.spawnLocations[0]);
+                player.PV.RPC("startGame", player.PV.Owner, 0, TileManager.instance.spawnLocations[0]);
+                bot.PV.RPC("startGame", bot.PV.Owner, 1, TileManager.instance.spawnLocations[Random.Range(1, 6)]);
                 return;
             }
         }
@@ -124,21 +126,10 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
         UIManager.instance.endTurnUI();
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
-
-            //in case player quit
-            if (allPlayers.Count > 0)
-                allPlayers[0].spawn();
-        }
-        else
-        {
-            //ask master client to count player
-            Hashtable playerProperties = new Hashtable();
-            playerProperties.Add("EndTurn", true);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        }
+        //ask master client to count player
+        Hashtable playerProperties = new Hashtable();
+        playerProperties.Add("EndTurn", true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
     }
 
     public void cancelEndTurn()
@@ -256,11 +247,11 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
 
             if (allPlayers.Count > 0)
             {
-                //different player start every turn
-                allPlayers[0].startFirstIndicator(false);
-                allPlayers.Add(allPlayers[0]);
-                allPlayers.RemoveAt(0);
-                allPlayers[0].startFirstIndicator(true);
+                ////different player start every turn
+                //allPlayers[0].startFirstIndicator(false);
+                //allPlayers.Add(allPlayers[0]);
+                //allPlayers.RemoveAt(0);
+                //allPlayers[0].startFirstIndicator(true);
             }
 
             //ask every playercontroller owner to update their info
