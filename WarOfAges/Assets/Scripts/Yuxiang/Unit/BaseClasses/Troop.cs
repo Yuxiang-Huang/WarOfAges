@@ -77,8 +77,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             {
                 ship = tile.unit.gameObject.GetComponent<Ship>();
 
-                Debug.Log(tile.gameObject.transform.position);
-
                 //reset path
                 if (ship.arrow != null)
                 {
@@ -354,8 +352,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
             if (Config.debugTestMode)
                 Debug.Log("Just before boolean check");
-
-            Debug.Log(canMoveToTile(path[0]));
 
             //if can move to tile
             if (canMoveToTile(path[0]))

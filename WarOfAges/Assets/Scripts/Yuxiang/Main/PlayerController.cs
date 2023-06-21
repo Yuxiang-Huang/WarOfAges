@@ -510,8 +510,8 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
                 }
                 else
                 {
-                    //only requirement of ship now is to be on water 
-                    if (curTile.terrain == "water")
+                    //only requirement of ship now is to be on water and no unit
+                    if (curTile.terrain == "water" && curTile.unit == null)
                     {
                         return true;
                     }
