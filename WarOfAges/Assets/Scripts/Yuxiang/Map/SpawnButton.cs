@@ -148,7 +148,7 @@ public class SpawnButton : MonoBehaviour
     {
         BotController.instance.toSpawnPath = path;
         BotController.instance.toSpawnImage = spawnImage;
-        BotController.instance.goldNeedToSpawn = goldNeedToSpawn;
+        BotController.instance.goldNeedToSpawn = goldNeedToSpawn * (int)Mathf.Pow(Config.ageCostFactor, BotController.instance.age);
         BotController.instance.toSpawnUnit = spawnUnit;
     }
 

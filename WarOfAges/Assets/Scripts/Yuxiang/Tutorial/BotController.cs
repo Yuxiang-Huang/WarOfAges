@@ -160,7 +160,7 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         // just spawn something now
         foreach(Tile curTile in spawnableTile)
         {
-            if (canSpawn(curTile, toSpawnUnit))
+            if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))
             {
                 addToSpawnList(curTile);
             }
@@ -178,6 +178,12 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         //spawn an image
         GameObject spawnImage = Instantiate(toSpawnImage,
         spawnTile.gameObject.transform.position, Quaternion.identity);
+        //set all ages inactive except the current one (need to do because age can be different from player's age)
+        foreach (Transform cur in spawnImage.transform)
+        {
+            cur.gameObject.SetActive(false);
+        }
+        spawnImage.transform.GetChild(Config.numAges - age - 1).gameObject.SetActive(true);
         spawnImage.SetActive(true);
 
         //add to spawn list
