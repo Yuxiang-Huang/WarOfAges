@@ -86,7 +86,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         {
             foreach (Tile neighbor in tile.neighbors)
             {
-                ownerController.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
+                ownerController.spawnableTile.Add(neighbor);
 
                 ownerController.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
                     neighbor.transform.position - tile.transform.position;

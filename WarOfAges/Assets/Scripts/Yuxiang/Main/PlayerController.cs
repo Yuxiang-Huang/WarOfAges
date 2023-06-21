@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
     public int[,] extraViewTiles { get; set; }
 
     //[Header("Spawn")]
-    public bool[,] spawnable { get; set; }
+    public HashSet<Tile> spawnableTile { get; set; }
     public Vector2[,] spawnDirection { get; set; }
     public string toSpawnPath { get; set; }
     public GameObject toSpawnImage { get; set; }
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
 
                 //initialize double arrays
                 extraViewTiles = new int[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
-                spawnable = new bool[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
+                spawnableTile = new HashSet<Tile>();
                 spawnDirection = new Vector2[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
 
                 //spawn castle
@@ -486,7 +486,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
                 if (spawnUnit.GetComponent<Ship>() == null)
                 {
                     //can only spawn on spawnable tiles 
-                    if (spawnable[curTile.pos.x, curTile.pos.y])
+                    if (spawnableTile.Contains(curTile))
                     {
                         //a land tile with no unit
                         if (curTile.terrain == "land" && curTile.unit == null)

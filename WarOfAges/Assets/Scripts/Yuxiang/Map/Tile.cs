@@ -195,7 +195,7 @@ public class Tile : MonoBehaviour
         }
 
         //can't be spawn anymore
-        PlayerController.instance.spawnable[pos.x, pos.y] = false;
+        PlayerController.instance.spawnableTile.Remove(TileManager.instance.tiles[pos.x, pos.y]);
     }
 
     public void updateVisibility()

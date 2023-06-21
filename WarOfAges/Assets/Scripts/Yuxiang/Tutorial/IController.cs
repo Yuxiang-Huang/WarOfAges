@@ -26,7 +26,7 @@ public interface IController
     public int[,] extraViewTiles { get; set; }
 
     //[Header("Spawn")]
-    public bool[,] spawnable { get; set; }
+    public HashSet<Tile> spawnableTile { get; set; }
     public Vector2[,] spawnDirection { get; set; }
     public string toSpawnPath { get; set; }
     public GameObject toSpawnImage { get; set; }

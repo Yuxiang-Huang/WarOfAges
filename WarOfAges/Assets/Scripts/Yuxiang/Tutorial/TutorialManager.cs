@@ -13,9 +13,9 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager instance;
 
-    public Canvas tutorialCanvas;
+    [SerializeField] Canvas tutorialCanvas;
     [SerializeField] List<string> instructions;
-    public TextMeshProUGUI instructionText;
+    [SerializeField] TextMeshProUGUI instructionText;
     [SerializeField] int index;
     [SerializeField] GameObject forwardbtn;
     [SerializeField] GameObject backwardbtn;
