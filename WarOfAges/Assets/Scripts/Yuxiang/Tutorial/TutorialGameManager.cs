@@ -270,7 +270,7 @@ public class TutorialGameManager : MonoBehaviourPunCallbacks
             }
 
             //next turn
-            PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
+            //PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
         }
     }
 
