@@ -121,30 +121,38 @@ public class BotController : Controller
         }
         else
         {
-        //    // try spawn AOE
-        //    spawnButtons[7].selectSpawnUnitBot();
+            // try spawn AOE
+            spawnButtons[7].selectSpawnUnitBot();
 
-        //    if (gold >= goldNeedToSpawn)
-        //    {
-        //        // check for enemy building
-        //        foreach (Tile curTile in visibleTiles)
-        //        {
-        //            if (curTile.unit != null && curTile.unit.ownerID != id &&
-        //                curTile.unit.gameObject.GetComponent<Building>() != null)
-        //            {
-        //                if (canSpawn(curTile, toSpawnUnit))
-        //                {
-        //                    addToSpawnList(curTile);
+            if (gold >= goldNeedToSpawn)
+            {
+                // check for enemy building
+                foreach (Building building in PlayerController.instance.allBuildings)
+                {
+                    // check any neighbor is my territory
+                    bool canAttack = false;
 
-        //                    gold -= goldNeedToSpawn;
+                    foreach (Tile neighbor in building.tile.neighbors)
+                    {
+                        if (neighbor.ownerID == id)
+                        {
+                            canAttack = true;
+                        }
+                    }
 
-        //                    // not enough gold
-        //                    if (gold < goldNeedToSpawn)
-        //                        break;
-        //                }
-        //            }
-        //        }
-        //    }
+                    // attack if possible
+                    if (canAttack)
+                    {
+                        addToSpawnList(building.tile);
+
+                        gold -= goldNeedToSpawn;
+
+                        // not enough gold
+                        if (gold < goldNeedToSpawn)
+                            break;
+                    }
+                }
+            }
         }
 
         // troops directions (can be improved by not going somewhere another troop is already going)
@@ -331,337 +339,6 @@ public class BotController : Controller
             }
         //}
     }
-    //{
-    //    if (!PV.IsMine) return;
-
-    //    Tile newHighlighted = null;
-
-    //    if (TileManager.instance.tiles != null)
-    //    {
-    //        //tile at mousePosition
-    //        newHighlighted = TileManager.instance.getTile(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-    //    }
-
-    //    //spawn castle in the start
-    //    if (mode == "start")
-    //    {
-    //        //highlight revealed land tiles
-    //        if (highlighted != newHighlighted)
-    //        {
-    //            if (highlighted != null)
-    //                highlighted.highlight(false);
-
-    //            highlighted = newHighlighted;
-
-    //            if (highlighted != null)
-    //            {
-    //                if (!highlighted.dark.activeSelf && highlighted.terrain == "land")
-    //                {
-    //                    highlighted.highlight(true);
-    //                }
-    //                else
-    //                {
-    //                    highlighted = null;
-    //                }
-    //            }
-    //        }
-
-    //        if (Input.GetMouseButtonDown(0) && highlighted != null)
-    //        {
-    //            Tile[,] tiles = TileManager.instance.tiles;
-
-    //            //initialize double arrays
-    //            extraViewTiles = new int[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
-    //            spawnable = new bool[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
-    //            spawnDirection = new Vector2[TileManager.instance.tiles.GetLength(0), TileManager.instance.tiles.GetLength(1)];
-
-    //            //spawn castle
-    //            Vector2Int startingTile = highlighted.pos;
-
-    //            mainBase = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Building/MainBase"),
-    //                highlighted.transform.position, Quaternion.identity).
-    //                GetComponent<MainBase>();
-
-    //            mainBase.gameObject.GetPhotonView().RPC("Init", RpcTarget.All, id, startingTile.x, startingTile.y,
-    //                 "Building/MainBase", age, 0);
-
-    //            mainBase.GetComponent<Building>().updateCanSpawn();
-    //            allBuildings.Add(mainBase);
-
-    //            mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
-
-    //            UIManager.instance.startGameLocal();
-
-    //            GameManager.instance.endTurn();
-    //        }
-    //    }
-    //    //select
-    //    else if (mode == "select")
-    //    {
-    //        //highlight any revealed
-    //        if (highlighted != newHighlighted)
-    //        {
-    //            //change previous
-    //            if (highlighted != null)
-    //            {
-    //                highlighted.highlight(false);
-
-    //                if (highlighted.unit != null)
-    //                    highlighted.unit.setHealthBar(false);
-    //            }
-
-    //            highlighted = newHighlighted;
-
-    //            //change current
-    //            if (highlighted != null && !highlighted.dark.activeSelf)
-    //            {
-    //                highlighted.highlight(true);
-    //            }
-    //            else
-    //            {
-    //                highlighted = null;
-    //            }
-    //        }
-
-    //        //show healthbar if there is a unit here
-    //        if (highlighted != null && highlighted.unit != null)
-    //        {
-    //            highlighted.unit.setHealthBar(true);
-    //        }
-
-    //        //select unit when mouse pressed and not after turn ended
-    //        if (Input.GetMouseButtonDown(0) && !turnEnded)
-    //        {
-    //            UIManager.instance.hideInfoTab();
-
-    //            //deselect if something is selected
-    //            if (unitSelected != null)
-    //            {
-    //                unitSelected.setImage(Color.white);
-    //                unitSelected = null;
-    //            }
-    //            if (spawnInfoSelected != null)
-    //            {
-    //                spawnInfoSelected.setSpawnImageColor(Color.white);
-    //                spawnInfoSelected = null;
-    //            }
-
-    //            //if a tile is highlighted
-    //            if (highlighted != null)
-    //            {
-    //                //if I am going to spawn a unit here
-    //                if (spawnList.ContainsKey(highlighted.pos))
-    //                {
-    //                    //select spawn info
-    //                    spawnInfoSelected = spawnList[highlighted.pos];
-
-    //                    //don't show health bar
-    //                    if (spawnInfoSelected.spawnTile.unit != null)
-    //                        spawnInfoSelected.spawnTile.unit.setHealthBar(false);
-
-    //                    //update info tab
-    //                    UIManager.instance.updateInfoTab(spawnInfoSelected);
-
-    //                    //change color to show selection
-    //                    spawnInfoSelected.setSpawnImageColor(Color.grey);
-
-    //                    //if movable and turn not ended
-    //                    if (spawnInfoSelected.unit.gameObject.CompareTag("Troop") && !turnEnded)
-    //                    {
-    //                        mode = "move";
-    //                    }
-    //                }
-    //                //else if a unit is on the tile
-    //                else if (highlighted.GetComponent<Tile>().unit != null)
-    //                {
-    //                    //select unit
-    //                    unitSelected = highlighted.GetComponent<Tile>().unit.gameObject.GetComponent<IUnit>();
-
-    //                    //update info tab
-    //                    UIManager.instance.updateInfoTab(highlighted.unit, highlighted.unit.ownerID == id);
-
-    //                    //don't show health bar
-    //                    unitSelected.setHealthBar(false);
-
-    //                    //change color to show selection
-    //                    unitSelected.setImage(Color.grey);
-
-    //                    //if it is my unit
-    //                    if (highlighted.GetComponent<Tile>().unit.ownerID == id)
-    //                    {
-    //                        //if movable and turn not ended
-    //                        if (highlighted.GetComponent<Tile>().unit.gameObject.CompareTag("Troop")
-    //                            && !turnEnded)
-    //                        {
-    //                            mode = "move";
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //    //move
-    //    else if (mode == "move")
-    //    {
-    //        //highlight any tile
-    //        if (highlighted != newHighlighted)
-    //        {
-    //            if (highlighted != null)
-    //                highlighted.highlight(false);
-
-    //            highlighted = newHighlighted;
-
-    //            if (newHighlighted != null)
-    //            {
-    //                highlighted.highlight(true);
-    //            }
-    //            else
-    //            {
-    //                newHighlighted = null;
-    //            }
-    //        }
-
-    //        if (Input.GetMouseButtonDown(0))
-    //        {
-    //            //for existing troop
-    //            if (spawnInfoSelected == null)
-    //            {
-    //                //findPath
-    //                if (highlighted != null)
-    //                {
-    //                    highlighted.highlight(false);
-    //                    unitSelected.gameObject.GetComponent<Troop>().findPath(highlighted.GetComponent<Tile>());
-    //                }
-
-    //                //deselect
-    //                if (unitSelected != null)
-    //                {
-    //                    unitSelected.setImage(Color.white);
-    //                    unitSelected = null;
-    //                }
-    //            }
-    //            //for spawn troops
-    //            else
-    //            {
-    //                if (highlighted != null)
-    //                {
-    //                    highlighted.highlight(false);
-    //                    spawnInfoSelected.targetPathTile = highlighted;
-
-    //                    //display arrow
-
-    //                    // prevent edge case of despawn and find path
-    //                    if (spawnList.ContainsValue(spawnInfoSelected))
-    //                    {
-    //                        if (spawnInfoSelected.arrow != null)
-    //                            Destroy(spawnInfoSelected.arrow);
-
-    //                        Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
-    //                        cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, highlighted);
-    //                        if (cur.arrow != null)
-    //                        {
-    //                            spawnInfoSelected.arrow = Instantiate(cur.arrow);
-    //                            Destroy(cur.arrow);
-    //                        }
-    //                    }
-    //                }
-
-    //                //deselect
-    //                spawnInfoSelected.setSpawnImageColor(Config.spawnImageColor);
-    //                spawnInfoSelected = null;
-    //            }
-
-    //            UIManager.instance.hideInfoTab();
-
-    //            highlighted = null;
-
-    //            mode = "select";
-    //        }
-    //    }
-    //    //spawn
-    //    else if (mode == "spawn")
-    //    {
-    //        //highlight spawnable tiles
-    //        if (highlighted != newHighlighted)
-    //        {
-    //            if (highlighted != null)
-    //                highlighted.highlight(false);
-
-    //            highlighted = newHighlighted;
-
-    //            if (canSpawn(highlighted, toSpawnUnit))
-    //            {
-    //                highlighted.highlight(true);
-    //            }
-    //            else
-    //            {
-    //                highlighted = null;
-    //            }
-    //        }
-
-    //        //click to spawn
-    //        if (Input.GetMouseButtonDown(0))
-    //        {
-    //            //there is a highlighted tile and enough gold
-    //            if (highlighted != null && gold >= goldNeedToSpawn)
-    //            {
-    //                //deduct gold
-    //                gold -= goldNeedToSpawn;
-    //                UIManager.instance.updateGoldText();
-
-    //                //spawn an image
-    //                GameObject spawnImage = Instantiate(toSpawnImage,
-    //                highlighted.gameObject.transform.position, Quaternion.identity);
-    //                spawnImage.SetActive(true);
-
-    //                //add to spawn list
-    //                SpawnInfo spawnInfo = new SpawnInfo(highlighted, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
-    //                    spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2);
-
-    //                spawnList.Add(highlighted.pos, spawnInfo);
-
-    //                if (toSpawnUnit.GetComponent<Spell>() != null)
-    //                {
-    //                    spawnListSpell.Add(highlighted.pos, spawnInfo);
-    //                }
-
-    //                //add ship if necessary
-    //                if (spawnInfo.unit.gameObject.CompareTag("Troop") && spawnInfo.unit.gameObject.GetComponent<Ship>() == null)
-    //                {
-    //                    if (spawnInfo.spawnTile.unit != null && spawnInfo.spawnTile.terrain == "water")
-    //                    {
-    //                        spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.spawnTile.unit.gameObject.GetComponent<Ship>();
-    //                    }
-    //                }
-
-    //                //reset to prevent double spawn
-    //                highlighted.highlight(false);
-    //                highlighted = null;
-    //            }
-    //            else
-    //            {
-    //                //only change mode when didn't spawn correctly
-    //                mode = "select";
-
-    //                //clear selection
-    //                SpawnManager.instance.resetSpawnButtonImage();
-
-    //                //reset
-    //                toSpawnUnit = null;
-
-    //                //clear gray
-    //                foreach (Tile tile in visibleTiles)
-    //                {
-    //                    if (tile != null)
-    //                        tile.setGray(false);
-    //                }
-
-    //                //info tab
-    //                UIManager.instance.hideInfoTab();
-    //            }
-    //        }
-    //    }
-    //}
 
     #region Finding Tile depending on need
 
