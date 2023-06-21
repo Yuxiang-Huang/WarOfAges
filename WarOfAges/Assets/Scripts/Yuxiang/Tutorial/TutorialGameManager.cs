@@ -45,10 +45,10 @@ public class TutorialGameManager : GameManager
         player = PlayerController.instance;
         bot = BotController.instance;
 
-        allPlayersOriginal = new List<IController>();
+        allPlayersOriginal = new List<Controller>();
         allPlayersOriginal.Add(player);
         allPlayersOriginal.Add(bot);
-        allPlayers = new List<IController>(allPlayersOriginal);
+        allPlayers = new List<Controller>(allPlayersOriginal);
 
         // no need to check because only one player
         if (Config.sameSpawnPlaceTestMode)
@@ -102,7 +102,7 @@ public class TutorialGameManager : GameManager
         UIManager.instance.turnPhase();
 
         //all players spawn
-        foreach (IController player in allPlayersOriginal)
+        foreach (Controller player in allPlayersOriginal)
         {
             player.spawn();
         }
@@ -118,7 +118,7 @@ public class TutorialGameManager : GameManager
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
             //all players attack
-            foreach (IController player in allPlayersOriginal)
+            foreach (Controller player in allPlayersOriginal)
             {
                 player.attack();
             }
@@ -143,7 +143,7 @@ public class TutorialGameManager : GameManager
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
             //all players attack
-            foreach (IController player in allPlayersOriginal)
+            foreach (Controller player in allPlayersOriginal)
             {
                 player.attack();
             }
@@ -161,7 +161,7 @@ public class TutorialGameManager : GameManager
     public override void checkAttack()
     { 
         //all players check death
-        foreach (IController player in allPlayersOriginal)
+        foreach (Controller player in allPlayersOriginal)
         {
             player.checkDeath();
         }
@@ -187,7 +187,7 @@ public class TutorialGameManager : GameManager
         }
 
         //ask every playercontroller owner to update their info
-        foreach (IController player in allPlayers)
+        foreach (Controller player in allPlayers)
         {
             player.fillInfoTab();
         }

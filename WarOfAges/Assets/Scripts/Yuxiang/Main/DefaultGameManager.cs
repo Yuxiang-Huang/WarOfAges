@@ -91,13 +91,13 @@ public class DefaultGameManager : GameManager
         if (playerList.Count == PhotonNetwork.CurrentRoom.PlayerCount)
         {
             //sorted list depending on actor number to assign id
-            foreach (KeyValuePair<int, IController> kvp in playerList)
+            foreach (KeyValuePair<int, Controller> kvp in playerList)
             {
                 allPlayersOriginal.Add(kvp.Value);
             }
 
             //this one will change
-            allPlayers = new List<IController>(allPlayersOriginal);
+            allPlayers = new List<Controller>(allPlayersOriginal);
         }
     }
 

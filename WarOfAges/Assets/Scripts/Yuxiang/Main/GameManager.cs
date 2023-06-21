@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     public static GameManager instance;
 
-    public SortedDictionary<int, IController> playerList = new();
+    public SortedDictionary<int, Controller> playerList = new();
 
-    public List<IController> allPlayersOriginal = new List<IController>();
-    public List<IController> allPlayers = new List<IController>();
+    public List<Controller> allPlayersOriginal = new List<Controller>();
+    public List<Controller> allPlayers = new List<Controller>();
 
     public HashSet<Tile> spellTiles = new();
 

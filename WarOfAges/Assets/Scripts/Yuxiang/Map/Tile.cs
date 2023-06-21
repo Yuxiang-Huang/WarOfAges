@@ -53,7 +53,7 @@ public class Tile : MonoBehaviour
             if (ownerID != -1)
             {
                 //remove from other player's territory
-                IController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
+                Controller prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
 
                 prevOwner.territory.Remove(this);
 
@@ -118,7 +118,7 @@ public class Tile : MonoBehaviour
 
     public void setTerritoryColor()
     {
-        IController owner = GameManager.instance.allPlayersOriginal[ownerID];
+        Controller owner = GameManager.instance.allPlayersOriginal[ownerID];
 
         //set territory color to color of owner
         territoryColor.SetActive(true);
@@ -256,7 +256,7 @@ public class Tile : MonoBehaviour
         if (ownerID != -1)
         {
             //remove from other player's territory
-            IController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
+            Controller prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
 
             prevOwner.territory.Remove(this);
 

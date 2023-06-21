@@ -11,7 +11,7 @@ public interface IUnit
 
     int ownerID { get; }
 
-    public IController ownerController { get; }
+    public Controller ownerController { get; }
 
     Tile tile { get; }
 

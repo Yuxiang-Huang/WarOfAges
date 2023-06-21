@@ -13,7 +13,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
-    public IController ownerController { get; set; }
+    public Controller ownerController { get; set; }
 
     public Tile tile { get; set; }
 
