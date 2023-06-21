@@ -11276,7 +11276,15 @@ MonoBehaviour:
   lost: 0
   turnEnded: 0
   playerUIManager: {fileID: 0}
-  mode: 
+  spawnButtons:
+  - {fileID: 996705854}
+  - {fileID: 1190985328}
+  - {fileID: 1926760975}
+  - {fileID: 1524731019}
+  - {fileID: 1481958382}
+  - {fileID: 963833023}
+  - {fileID: 1051410392}
+  - {fileID: 660658620}
 --- !u!4 &1715823947
 Transform:
   m_ObjectHideFlags: 0

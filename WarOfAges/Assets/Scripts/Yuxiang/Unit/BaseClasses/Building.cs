@@ -81,16 +81,12 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     //can spawn troop on tiles around building
     public virtual void updateCanSpawn()
     {
-        // no need for bots
-        if (ownerController.gameObject.GetComponent<BotController>() == null)
+        foreach (Tile neighbor in tile.neighbors)
         {
-            foreach (Tile neighbor in tile.neighbors)
-            {
-                ownerController.spawnableTile.Add(neighbor);
+            ownerController.spawnableTile.Add(neighbor);
 
-                ownerController.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
-                    neighbor.transform.position - tile.transform.position;
-            }
+            ownerController.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
+                neighbor.transform.position - tile.transform.position;
         }
     }
 

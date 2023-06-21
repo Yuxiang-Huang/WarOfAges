@@ -4,6 +4,7 @@ using Photon.Pun;
 using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEditor;
 
 public class BotController : MonoBehaviourPunCallbacks, IController
 {
@@ -20,12 +21,6 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public PlayerUIManager playerUIManager;
 
-    [Header("Mouse Interaction")]
-    Tile highlighted;
-    public string mode;
-    public IUnit unitSelected;
-    public SpawnInfo spawnInfoSelected;
-
     //[Header("Belongings")]
     public List<Troop> allTroops { get; set; } = new List<Troop>();
     public List<Ship> allShips { get; set; } = new List<Ship>();
@@ -39,8 +34,10 @@ public class BotController : MonoBehaviourPunCallbacks, IController
     public int[,] extraViewTiles { get; set; }
 
     //[Header("Spawn")]
+    [SerializeField] List<SpawnButton> spawnButtons;
     public HashSet<Tile> spawnableTile { get; set; }
     public Vector2[,] spawnDirection { get; set; }
+
     public string toSpawnPath { get; set; }
     public GameObject toSpawnImage { get; set; }
     public GameObject toSpawnUnit { get; set; }
@@ -83,8 +80,6 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         id = newID;
 
         PV.RPC(nameof(startGame_all), RpcTarget.AllViaServer, newID);
-
-        mode = "start";
 
         // base tile is the tile with most land neighbors
         Tile[,] tiles = TileManager.instance.tiles;
@@ -160,13 +155,56 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public void takeActions()
     {
+        spawnButtons[0].selectSpawnUnitBot();
+
         // just spawn something now
+        foreach(Tile curTile in spawnableTile)
+        {
+            if (canSpawn(curTile, toSpawnUnit))
+            {
+                addToSpawnList(curTile);
+            }
+        }
+
         UIManager.instance.setEndTurn(id, true);
+    }
+
+    void addToSpawnList(Tile spawnTile)
+    {
+        //deduct gold
+        gold -= goldNeedToSpawn;
+        UIManager.instance.updateGoldText();
+
+        //spawn an image
+        GameObject spawnImage = Instantiate(toSpawnImage,
+        spawnTile.gameObject.transform.position, Quaternion.identity);
+        spawnImage.SetActive(true);
+
+        //add to spawn list
+        SpawnInfo spawnInfo = new SpawnInfo(spawnTile, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
+            spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2);
+
+        spawnList.Add(spawnTile.pos, spawnInfo);
+
+        // add to spell list if necessary
+        if (toSpawnUnit.GetComponent<Spell>() != null)
+        {
+            spawnListSpell.Add(spawnTile.pos, spawnInfo);
+        }
+
+        // add ship if necessary
+        if (spawnInfo.unit.gameObject.CompareTag("Troop") && spawnInfo.unit.gameObject.GetComponent<Ship>() == null)
+        {
+            if (spawnInfo.spawnTile.unit != null && spawnInfo.spawnTile.terrain == "water")
+            {
+                spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.spawnTile.unit.gameObject.GetComponent<Ship>();
+            }
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.RightShift))
         {
             foreach (Tile tile in TileManager.instance.tiles)
             {
@@ -589,45 +627,6 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public void stop()
     {
-        UIManager.instance.hideInfoTab();
-
-        if (mode == "spawn")
-        {
-            //set color of the spawn button selected back to white
-            SpawnManager.instance.resetSpawnButtonImage();
-
-            //clear gray
-            foreach (Tile tile in visibleTiles)
-            {
-                if (tile != null)
-                    tile.setGray(false);
-            }
-        }
-
-        else if (mode == "move")
-        {
-            //set color of the selected unit back to white and deselect
-            if (unitSelected != null)
-            {
-                unitSelected.setImage(Color.white);
-                unitSelected = null;
-            }
-        }
-
-        //clear selection
-        if (unitSelected != null)
-        {
-            unitSelected.setImage(Color.white);
-            unitSelected = null;
-        }
-
-        if (spawnInfoSelected != null)
-        {
-            spawnInfoSelected.setSpawnImageColor(Color.white);
-            spawnInfoSelected = null;
-        }
-
-        mode = "select";
         turnEnded = true;
     }
 

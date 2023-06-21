@@ -107,7 +107,7 @@ public class SpawnButton : MonoBehaviour
         lockObject.GetComponent<Image>().color = color;
     }
 
-    public void spawn()
+    public void selectSpawnUnitPlayer()
     {
         //able to spawn if unlocked
         if (unlocked)
@@ -115,7 +115,7 @@ public class SpawnButton : MonoBehaviour
             //not during taking turn phase
             if (!PlayerController.instance.turnEnded)
             {
-                SpawnManager.instance.spawn(displayImage, path,
+                SpawnManager.instance.selectSpawnUnit(displayImage, path,
                     goldNeedToSpawn * (int)Mathf.Pow(Config.ageCostFactor, PlayerController.instance.age),
                     spawnImage, spawnUnit);
                 UIManager.instance.updateInfoTabSpawn(spawnUnit.GetComponent<IUnit>());
@@ -142,6 +142,14 @@ public class SpawnButton : MonoBehaviour
             lockObject.SetActive(false);
             grayFilter.SetActive(false);
         }
+    }
+
+    public void selectSpawnUnitBot()
+    {
+        BotController.instance.toSpawnPath = path;
+        BotController.instance.toSpawnImage = spawnImage;
+        BotController.instance.goldNeedToSpawn = goldNeedToSpawn;
+        BotController.instance.toSpawnUnit = spawnUnit;
     }
 
     public void ageAdvanceUpdate()

@@ -416,6 +416,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
 
                     spawnList.Add(highlighted.pos, spawnInfo);
 
+                    // add to spell list if necessary
                     if (toSpawnUnit.GetComponent<Spell>() != null)
                     {
                         spawnListSpell.Add(highlighted.pos, spawnInfo);

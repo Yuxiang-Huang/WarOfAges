@@ -164,7 +164,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 195891942802153978}
         m_TargetAssemblyTypeName: SpawnButton, Assembly-CSharp
-        m_MethodName: spawn
+        m_MethodName: selectSpawnUnitPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
