@@ -8567,6 +8567,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb81fa71cb334a5797e66884a5a03e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allPlayersOriginal: []
+  allPlayers: []
   player: {fileID: 0}
   bot: {fileID: 0}
   numPlayerMoved: 0
@@ -10071,6 +10073,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6436b5b2616e48818b2aeff390d89ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allPlayersOriginal: []
+  allPlayers: []
   PV: {fileID: 0}
   numPlayerMoved: 0
   gameStarted: 0
@@ -11273,9 +11277,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 339d85c55ad784dce806e572ad6f5ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PV: {fileID: 0}
+  id: 0
   lost: 0
   turnEnded: 0
+  mainBase: {fileID: 0}
   playerUIManager: {fileID: 0}
+  mode: 
+  allTroops: []
+  allShips: []
+  allBuildings: []
+  allSpells: []
+  landTerritory: 0
+  toSpawnPath: 
+  toSpawnImage: {fileID: 0}
+  toSpawnUnit: {fileID: 0}
+  goldNeedToSpawn: 0
+  gold: 0
+  age: 0
+  goldNeedToAdvance: 320
+  shipNeedTiles: []
   spawnButtons:
   - {fileID: 996705854}
   - {fileID: 1190985328}

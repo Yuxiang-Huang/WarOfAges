@@ -72,7 +72,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a1ca0dd41f0a4a028f7bcc5a86eb4c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PV: {fileID: 0}
+  id: 0
   lost: 0
   turnEnded: 0
+  mainBase: {fileID: 0}
   playerUIManager: {fileID: 0}
   mode: 
+  allTroops: []
+  allShips: []
+  allBuildings: []
+  allSpells: []
+  landTerritory: 0
+  toSpawnPath: 
+  toSpawnImage: {fileID: 0}
+  toSpawnUnit: {fileID: 0}
+  goldNeedToSpawn: 0
+  gold: 0
+  age: 0
+  goldNeedToAdvance: 320

@@ -109,6 +109,15 @@ public class BotController : Controller
 
     public void takeActions()
     {
+        // upgrade age if possible
+        if (gold > goldNeedToAdvance && age < 5)
+        {
+            gold -= goldNeedToAdvance;
+            age++;
+            goldNeedToAdvance *= Config.ageCostFactor;
+            mainBase.upgrade();
+        }
+
         // troops directions (can be improved by not going somewhere another troop is already going)
         foreach (Troop troop in allTroops)
         {
@@ -127,6 +136,29 @@ public class BotController : Controller
             {
                 addToSpawnList(shipNeedTiles[i]);
                 shipNeedTiles.Remove(shipNeedTiles[i]);
+            }
+        }
+
+        // upgrade troops
+        foreach (Troop troop in allTroops)
+        {
+            if (troop.age < age && gold > troop.upgradeGold)
+            {
+                gold -= troop.upgradeGold;
+                troop.upgrade();
+            }
+        }
+
+        // upgrade buildings
+        foreach (Building building in allBuildings)
+        {
+            if (building.gameObject.GetComponent<MainBase>() == null)
+            {
+                if (building.age < age && gold > building.upgradeGold)
+                {
+                    gold -= building.upgradeGold;
+                    building.upgrade();
+                }
             }
         }
 
