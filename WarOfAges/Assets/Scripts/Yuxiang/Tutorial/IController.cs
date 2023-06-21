@@ -53,6 +53,8 @@ public interface IController
 
     public void spawn();
 
+    public void troopMove();
+
     public void attack();
 
     public void checkDeath();

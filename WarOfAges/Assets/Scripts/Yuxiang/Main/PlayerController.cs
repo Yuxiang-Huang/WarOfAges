@@ -674,11 +674,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
 
         UIManager.instance.updateGoldText();
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            troopMove();
-        }
-        else
+        if (!PhotonNetwork.OfflineMode)
         {
             Hashtable playerProperties = new Hashtable();
             playerProperties.Add("Spawned", true);
@@ -729,11 +725,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
             Debug.Log("end move");
         }
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            attack();
-        }
-        else
+        if (!PhotonNetwork.OfflineMode)
         {
             Hashtable playerProperties = new Hashtable();
             playerProperties.Add("Moved", true);
@@ -759,11 +751,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
             spell.countDown();
         }
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            checkDeath();
-        }
-        else
+        if (!PhotonNetwork.OfflineMode)
         {
             Hashtable playerProperties = new Hashtable();
             playerProperties.Add("Attacked", true);
@@ -811,12 +799,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
             }
         }
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            fillInfoTab();
-            GameManager.instance.startTurn();
-        }
-        else
+        if (!PhotonNetwork.OfflineMode)
         {
             Hashtable playerProperties = new Hashtable();
             playerProperties.Add("CheckedDeath", true);

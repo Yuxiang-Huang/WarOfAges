@@ -32,12 +32,13 @@ public class TutorialGameManager : GameManager
     //called when any player is ready
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
+        Debug.Log(targetPlayer);
+        Debug.Log(changedProps);
+
         if (!PhotonNetwork.IsMasterClient) return;
 
         //start
         if (changedProps.ContainsKey("Ready")) checkStart();
-
-        else if (changedProps.ContainsKey("Moved")) checkMove();
     }
 
     #region Begin Game
@@ -100,8 +101,8 @@ public class TutorialGameManager : GameManager
     public override void checkEndTurn()
     {
         // only one player so no need to check
-        UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Take Turns...");
-        UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
+        UIManager.instance.updateTimeText("Take Turns...");
+        UIManager.instance.turnPhase();
 
         //all players spawn
         foreach (IController player in allPlayersOriginal)
@@ -124,7 +125,7 @@ public class TutorialGameManager : GameManager
         else
         {
             // players move one by one
-            allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
+            allPlayers[numPlayerMoved].troopMove();
         }
     }
 
@@ -132,9 +133,13 @@ public class TutorialGameManager : GameManager
     {
         numPlayerMoved++;
 
+        Debug.Log(numPlayerMoved);
+
         //all players moved
         if (numPlayerMoved == allPlayers.Count)
         {
+            Debug.Log("end");
+
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
             StartCoroutine(nameof(delayAttack));
@@ -142,7 +147,8 @@ public class TutorialGameManager : GameManager
         else
         {
             //next player move
-            allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
+            allPlayers[numPlayerMoved].troopMove();
+            checkMove();
         }
     }
 
