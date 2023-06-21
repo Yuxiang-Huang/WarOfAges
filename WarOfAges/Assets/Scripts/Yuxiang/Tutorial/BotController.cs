@@ -328,15 +328,22 @@ public class BotController : Controller
     {
         //if (Config.botTestMode)
         //{
-            if (Input.GetKeyDown(KeyCode.RightShift))
+        //<
+        if (Input.GetKey(KeyCode.Comma) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            Config.botTestMode = true;
+            foreach (Tile tile in TileManager.instance.tiles)
             {
-                Config.botTestMode = true;
-                foreach (Tile tile in TileManager.instance.tiles)
-                {
-                    if (tile != null)
-                        tile.setDark(false);
-                }
+                if (tile != null)
+                    tile.setDark(false);
             }
+        }
+
+        //>
+        if (Input.GetKey(KeyCode.Period) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            TutorialManager.instance.tutorialCanvas.gameObject.SetActive(false);
+        }
         //}
     }
 

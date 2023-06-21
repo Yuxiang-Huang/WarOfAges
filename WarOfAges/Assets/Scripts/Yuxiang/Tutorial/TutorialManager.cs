@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager instance;
 
-    [SerializeField] Canvas tutorialCanvas;
+    public Canvas tutorialCanvas;
     [SerializeField] List<string> instructions;
     [SerializeField] TextMeshProUGUI instructionText;
     [SerializeField] int index;
