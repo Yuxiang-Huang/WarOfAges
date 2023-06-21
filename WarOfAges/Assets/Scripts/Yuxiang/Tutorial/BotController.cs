@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEditor;
+using static UnityEngine.GraphicsBuffer;
 
 public class BotController : MonoBehaviourPunCallbacks, IController
 {
@@ -166,7 +167,44 @@ public class BotController : MonoBehaviourPunCallbacks, IController
             }
         }
 
+        // troops directions (can be improved by not going somewhere another troop is already going)
+        foreach (Troop troop in allTroops)
+        {
+            troop.findPath(findClosestUnconqueredLandTile(troop.tile));
+        }
+
         UIManager.instance.setEndTurn(id, true);
+    }
+
+    Tile findClosestUnconqueredLandTile(Tile curTile)
+    {
+        //initiated a queue
+        Queue<Tile> tilesToLook = new Queue<Tile>();
+        tilesToLook.Enqueue(curTile);
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        //bfs
+        while (tilesToLook.Count != 0)
+        {
+            Tile nextTile = tilesToLook.Dequeue();
+
+            // return if land and unconquered
+            if (nextTile.terrain == "land" && nextTile.ownerID != id)
+                return nextTile;
+
+            foreach (Tile neighbor in nextTile.neighbors)
+            {
+                //not visited
+                if (!visited[neighbor.pos.x, neighbor.pos.y])
+                {
+                    tilesToLook.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return PlayerController.instance.mainBase.tile;
     }
 
     void addToSpawnList(Tile spawnTile)
