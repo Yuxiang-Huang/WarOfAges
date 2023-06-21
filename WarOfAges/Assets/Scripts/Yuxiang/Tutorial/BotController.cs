@@ -22,7 +22,8 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public PlayerUIManager playerUIManager;
 
-    //[Header("Belongings")]
+    [Header("Belongings")]
+    public List<Tile> shipNeedTiles;
     public List<Troop> allTroops { get; set; } = new List<Troop>();
     public List<Ship> allShips { get; set; } = new List<Ship>();
     public List<Building> allBuildings { get; set; } = new List<Building>();
@@ -34,7 +35,7 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public int[,] extraViewTiles { get; set; }
 
-    //[Header("Spawn")]
+    [Header("Spawn")]
     [SerializeField] List<SpawnButton> spawnButtons;
     public HashSet<Tile> spawnableTile { get; set; }
     public Vector2[,] spawnDirection { get; set; }
@@ -156,12 +157,32 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public void takeActions()
     {
-        spawnButtons[0].selectSpawnUnitBot();
-
-        // just spawn something now
-        foreach(Tile curTile in spawnableTile)
+        // troops directions (can be improved by not going somewhere another troop is already going)
+        foreach (Troop troop in allTroops)
         {
-            if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))
+            // don't move ships
+            if (troop.gameObject.GetComponent<Ship>() == null)
+                troop.findPathBot(findClosestUnconqueredLandTile(troop.tile));
+        }
+
+        // select ship
+        spawnButtons[2].selectSpawnUnitBot();
+
+        // spawn ships where it is needed
+        for (int i = shipNeedTiles.Count - 1; i >= 0; i--)
+        {
+            if (gold > goldNeedToSpawn && canSpawn(shipNeedTiles[i], toSpawnUnit))
+            {
+                addToSpawnList(shipNeedTiles[i]);
+                shipNeedTiles.Remove(shipNeedTiles[i]);
+            }
+        }
+
+        // just spawn Melees now
+        spawnButtons[0].selectSpawnUnitBot();
+        foreach (Tile curTile in spawnableTile)
+        {
+            if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit) && allTroops.Count < 1 && spawnList.Count < 1)
             {
                 addToSpawnList(curTile);
 
@@ -171,12 +192,6 @@ public class BotController : MonoBehaviourPunCallbacks, IController
                 // set path
                 spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
             }
-        }
-
-        // troops directions (can be improved by not going somewhere another troop is already going)
-        foreach (Troop troop in allTroops)
-        {
-            troop.findPath(findClosestUnconqueredLandTile(troop.tile));
         }
 
         UIManager.instance.setEndTurn(id, true);

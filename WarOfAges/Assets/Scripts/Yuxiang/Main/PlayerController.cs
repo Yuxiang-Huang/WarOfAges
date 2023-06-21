@@ -595,11 +595,11 @@ public class PlayerController : MonoBehaviourPunCallbacks, IController
         //update visibility, upgrade and sell if didn't lost
         if (!lost)
         {
-            List<Tile> tileList = visibleTiles.ToList();
-            for (int i = tileList.Count - 1; i >= 0; i--)
-            {
-                tileList[i].updateVisibility();
-            }
+            //List<Tile> tileList = visibleTiles.ToList();
+            //for (int i = tileList.Count - 1; i >= 0; i--)
+            //{
+            //    tileList[i].updateVisibility();
+            //}
 
             //upgrade and sell for other players
             foreach (IUnit unit in toUpgrade)

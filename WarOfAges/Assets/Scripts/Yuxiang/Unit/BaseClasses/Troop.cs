@@ -76,6 +76,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             if (tile.unit != null)
             {
                 ship = tile.unit.gameObject.GetComponent<Ship>();
+
+                Debug.Log(tile.gameObject.transform.position);
+
                 //reset path
                 if (ship.arrow != null)
                 {
@@ -216,6 +219,108 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         displayArrow();
     }
 
+    public virtual void findPathBot(Tile target)
+    {
+        //follow this troop if in my team
+        if (target.unit != null && target.unit.ownerID == ownerID)
+        {
+            toFollow = target.unit;
+        }
+        else
+        {
+            toFollow = null;
+        }
+
+        //same tile reset
+        if (target == tile)
+        {
+            path = new List<Tile>();
+
+            Destroy(arrow);
+
+            return;
+        }
+
+        float minDist = TileManager.instance.dist(target, tile);
+
+        //initiated a queue
+        Queue<List<Tile>> allPath = new Queue<List<Tile>>();
+
+        List<Tile> root = new() { tile };
+
+        allPath.Enqueue(root);
+
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        bool reach = false;
+
+        //bfs
+        while (allPath.Count != 0 && !reach)
+        {
+            List<Tile> cur = allPath.Dequeue();
+            Tile lastTile = cur[cur.Count - 1];
+
+            foreach (Tile curTile in lastTile.neighbors)
+            {
+                //not visited (Doesn't matter what terrain)
+                if (!visited[curTile.pos.x, curTile.pos.y])
+                {
+                    //no team building
+                    if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
+                        curTile.unit.ownerID != ownerID)
+                    {
+                        visited[curTile.pos.x, curTile.pos.y] = true;
+
+                        //check this tile dist
+                        List<Tile> dup = new List<Tile>(cur)
+                        {
+                            curTile
+                        };
+
+                        float curDist = TileManager.instance.dist(target, curTile);
+
+                        if (curDist < 0.01)
+                        {
+                            reach = true;
+                            path = dup;
+                            minDist = curDist;
+                        }
+                        else if (curDist < minDist)
+                        {
+                            minDist = curDist;
+                            path = dup;
+                        }
+
+                        allPath.Enqueue(dup);
+                    }
+                }
+            }
+        }
+
+        //a path is found
+        if (path.Count != 0)
+        {
+            //remove first tile
+            path.RemoveAt(0);
+        }
+
+        // add all water tile to be ship needed tiles
+        foreach (Tile curTile in path)
+        {
+            // if no water and no ship
+            if (curTile.terrain == "water" && curTile.unit == null
+                && !BotController.instance.spawnList.ContainsKey(curTile.pos))
+            {
+                BotController.instance.shipNeedTiles.Add(curTile);
+            }
+        }
+
+        // recalculate path (edge case where a ship can't be spawned on time)
+        findPath(target);
+    }
+
     public void follow()
     {
         if (toFollow != null)
@@ -315,8 +420,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public virtual void displayArrow()
     {
         // don't show arrow if bot
-        if (PhotonNetwork.OfflineMode && ownerID == 1)
-            return;
+        //if (PhotonNetwork.OfflineMode && ownerID == 1)
+        //    return;
 
         //destroy arrow
         if (arrow != null)
