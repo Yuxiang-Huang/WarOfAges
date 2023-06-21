@@ -164,6 +164,25 @@ public class BotController : MonoBehaviourPunCallbacks, IController
             if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))
             {
                 addToSpawnList(curTile);
+
+                // set destination for newly spawned troop
+                SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
+
+                // delete last arrow
+                if (spawnInfoSelected.arrow != null)
+                    Destroy(spawnInfoSelected.arrow);
+
+                // determine arrow
+                spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+                Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
+                cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile);
+
+                // create arrow
+                if (cur.arrow != null)
+                {
+                    spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                    Destroy(cur.arrow);
+                }
             }
         }
 
