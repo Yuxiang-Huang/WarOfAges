@@ -74,6 +74,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject askSurrenderBox;
     [SerializeField] GameObject surrenderButton;
     [SerializeField] GameObject leaveBtn;
+    [SerializeField] GameObject winStrip;
+    [SerializeField] TextMeshProUGUI winText;
 
     #endregion
 
@@ -528,4 +530,11 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
+    public void displayWinScreen(string name)
+    {
+        timerPaused = true;
+        winStrip.SetActive(true);
+        winText.text = "Congratulation! " + name + "won!!!";
+    }
 }
