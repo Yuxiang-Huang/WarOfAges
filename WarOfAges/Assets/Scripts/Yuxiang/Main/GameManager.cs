@@ -134,14 +134,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                // tutorial mode
-                if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("Tutorial") &&
-                (bool)PhotonNetwork.CurrentRoom.CustomProperties["Tutorial"])
-                {
-                    allPlayers[0].PV.RPC("startGame", allPlayers[0].PV.Owner, 0, TileManager.instance.spawnLocations[0]);
-                    return;
-                }
-
                 //shuffle to get spawn position
                 List<Vector2> randomSpawnLocations = new List<Vector2>();
                 while (TileManager.instance.spawnLocations.Count > 0)
