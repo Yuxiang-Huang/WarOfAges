@@ -138,6 +138,11 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     #endregion
 
+    public void takeActions()
+    {
+
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

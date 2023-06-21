@@ -37,18 +37,7 @@ public class TutorialGameManager : GameManager
         //start
         if (changedProps.ContainsKey("Ready")) checkStart();
 
-        #region turns
-
-        //start turn
-        else if (changedProps.ContainsKey("Spawned")) checkSpawn();
-
         else if (changedProps.ContainsKey("Moved")) checkMove();
-
-        else if (changedProps.ContainsKey("Attacked")) checkAttack();
-
-        else if (changedProps.ContainsKey("CheckedDeath")) checkDeath();
-
-        #endregion
     }
 
     #region Begin Game
@@ -82,20 +71,12 @@ public class TutorialGameManager : GameManager
 
     public override void startTurn()
     {
+        bot.takeActions();
+
         UIManager.instance.startTurnUI();
 
         //reset all vars
         numPlayerMoved = 0;
-        Hashtable playerProperties = new Hashtable();
-
-        //don't reset if lost
-        if (!PlayerController.instance.lost)
-            playerProperties.Add("EndTurn", false);
-
-        playerProperties.Add("Spawned", false);
-        playerProperties.Add("Attacked", false);
-        playerProperties.Add("Finished", false);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
 
         //skip if lost
         if (PlayerController.instance.lost) return;
@@ -125,28 +106,25 @@ public class TutorialGameManager : GameManager
         //all players spawn
         foreach (IController player in allPlayersOriginal)
         {
-            player.PV.RPC("spawn", player.PV.Owner);
+            player.spawn();
         }
+
+        checkSpawn();
     }
 
     public override void checkSpawn()
     {
-        //everyone is ready
-        var players = PhotonNetwork.CurrentRoom.Players;
-        if (players.All(p => p.Value.CustomProperties.ContainsKey("Spawned") && (bool)p.Value.CustomProperties["Spawned"]))
+        // edge case of 0 player left
+        if (allPlayers.Count == 0)
         {
-            // edge case of 0 player left
-            if (allPlayers.Count == 0)
-            {
-                UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
+            UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
-                StartCoroutine(nameof(delayAttack));
-            }
-            else
-            {
-                // players move one by one
-                allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
-            }
+            StartCoroutine(nameof(delayAttack));
+        }
+        else
+        {
+            // players move one by one
+            allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
         }
     }
 
@@ -177,51 +155,38 @@ public class TutorialGameManager : GameManager
         {
             player.PV.RPC(nameof(player.attack), player.PV.Owner);
         }
+
+        checkAttack();
     }
 
     public override void checkAttack()
-    {
-        //everyone is ready
-        var players = PhotonNetwork.CurrentRoom.Players;
-        if (players.All(p => p.Value.CustomProperties.ContainsKey("Attacked") && (bool)p.Value.CustomProperties["Attacked"]))
+    { 
+        //all players check death
+        foreach (IController player in allPlayersOriginal)
         {
-            //all players check death
-            foreach (IController player in allPlayersOriginal)
-            {
-                player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
-            }
+            player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
         }
     }
 
     public override void checkDeath()
     {
-        //end turn once
-        if (!turnEnded) return;
-
-        //everyone is ready
-        var players = PhotonNetwork.CurrentRoom.Players;
-        if (players.All(p => p.Value.CustomProperties.ContainsKey("CheckedDeath") && (bool)p.Value.CustomProperties["CheckedDeath"]))
+        if (allPlayers.Count > 0)
         {
-            turnEnded = false;
-
-            if (allPlayers.Count > 0)
-            {
-                //different player start every turn
-                allPlayers[0].startFirstIndicator(false);
-                allPlayers.Add(allPlayers[0]);
-                allPlayers.RemoveAt(0);
-                allPlayers[0].startFirstIndicator(true);
-            }
-
-            //ask every playercontroller owner to update their info
-            foreach (IController player in allPlayers)
-            {
-                player.PV.RPC(nameof(player.fillInfoTab), player.PV.Owner);
-            }
-
-            //next turn
-            startTurn();
+            //different player start every turn
+            allPlayers[0].startFirstIndicator(false);
+            allPlayers.Add(allPlayers[0]);
+            allPlayers.RemoveAt(0);
+            allPlayers[0].startFirstIndicator(true);
         }
+
+        //ask every playercontroller owner to update their info
+        foreach (IController player in allPlayers)
+        {
+            player.PV.RPC(nameof(player.fillInfoTab), player.PV.Owner);
+        }
+
+        //next turn
+        startTurn();
     }
 
     #endregion

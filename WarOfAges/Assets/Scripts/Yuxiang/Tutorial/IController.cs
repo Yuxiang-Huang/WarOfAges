@@ -51,6 +51,8 @@ public interface IController
 
     public void fillInfoTab();
 
+    public void spawn();
+
     public void attack();
 
     public void checkDeath();
