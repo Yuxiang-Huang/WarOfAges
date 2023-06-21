@@ -13,6 +13,8 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public IController ownerController { get; set; }
+
     public Tile tile { get; set; }
 
     public int age { get; set; }
@@ -44,6 +46,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
         string path, int age, int sellGold)
     {
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
 
         this.age = age;
@@ -128,11 +131,11 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     public void sell()
     {
         //add gold
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
         //remove from spell list
-        PlayerController.instance.allSpells.Remove(this);
+        ownerController.allSpells.Remove(this);
 
         //destroy
         PV.RPC(nameof(kill), RpcTarget.All);
@@ -142,9 +145,9 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     public void upgrade()
     {
         //deduct gold if owner
-        if (PlayerController.instance.id == ownerID)
+        if (ownerController.id == ownerID)
         {
-            PlayerController.instance.gold -= upgradeGold;
+            ownerController.gold -= upgradeGold;
             UIManager.instance.updateGoldText();
         }
 

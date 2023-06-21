@@ -11,12 +11,12 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public static BotController instance;
 
-    public int id;
+    public int id { get; set; }
 
     public bool lost;
     public bool turnEnded;
 
-    public MainBase mainBase;
+    public MainBase mainBase { get; set; }
 
     public PlayerUIManager playerUIManager;
 

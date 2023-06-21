@@ -14,6 +14,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public IController ownerController { get; set; }
+
     public int age { get; set; }
 
     [Header("UI")]
@@ -59,6 +61,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     {
         //setting ID, direction, age, gold
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         direction = startDirection;
         this.age = age;
         this.sellGold = sellGold;
@@ -366,7 +369,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         // count number of tiles moved
-        if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && PlayerController.instance.id == ownerID)
+        if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && ownerController.id == ownerID)
         {
             numOfTileMoved++;
         }
@@ -401,7 +404,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         //owner so animate movement
-        if (ownerID == PlayerController.instance.id)
+        if (ownerID == ownerController.id)
         {
             StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
             if (ship != null)
@@ -584,16 +587,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public void sell()
     {
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
-        PlayerController.instance.allTroops.Remove(this);
+        ownerController.allTroops.Remove(this);
         if (gameObject.GetComponent<Ship>() != null)
-            PlayerController.instance.allShips.Remove(gameObject.GetComponent<Ship>());
+            ownerController.allShips.Remove(gameObject.GetComponent<Ship>());
 
         destroy();
 
-        PlayerController.instance.mode = "select";
+        PlayerController playerController = ownerController.gameObject.GetComponent<PlayerController>();
+        if (playerController != null)
+            playerController.mode = "select";
     }
 
     [PunRPC]

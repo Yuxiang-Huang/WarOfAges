@@ -7,7 +7,11 @@ public interface IController
 {
     PhotonView PV { get; }
 
+    public int id { get; }
+
     public GameObject gameObject { get; }
+
+    public MainBase mainBase { get; }
 
     //[Header("Belongings")]
     public List<Troop> allTroops { get; set; }
@@ -50,4 +54,6 @@ public interface IController
     public void attack();
 
     public void checkDeath();
+
+    public void end();
 }

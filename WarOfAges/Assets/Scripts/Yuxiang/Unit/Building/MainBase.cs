@@ -28,6 +28,6 @@ public class MainBase : Building
 
         GameManager.instance.endTurn();
 
-        PlayerController.instance.end();
+        ownerController.end();
     }
 }
