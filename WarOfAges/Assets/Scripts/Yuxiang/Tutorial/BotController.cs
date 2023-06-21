@@ -70,6 +70,8 @@ public class BotController : MonoBehaviourPunCallbacks, IController
         PV = GetComponent<PhotonView>();
 
         instance = this;
+
+        gold = 40;
     }
 
     #region ID
@@ -140,7 +142,7 @@ public class BotController : MonoBehaviourPunCallbacks, IController
 
     public void takeActions()
     {
-
+        UIManager.instance.setEndTurn(id, true);
     }
 
     void Update()

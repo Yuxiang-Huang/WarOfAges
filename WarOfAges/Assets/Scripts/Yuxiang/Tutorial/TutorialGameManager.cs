@@ -32,9 +32,6 @@ public class TutorialGameManager : GameManager
     //called when any player is ready
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        Debug.Log(targetPlayer);
-        Debug.Log(changedProps);
-
         if (!PhotonNetwork.IsMasterClient) return;
 
         //start
@@ -126,6 +123,7 @@ public class TutorialGameManager : GameManager
         {
             // players move one by one
             allPlayers[numPlayerMoved].troopMove();
+            checkMove();
         }
     }
 
@@ -133,16 +131,18 @@ public class TutorialGameManager : GameManager
     {
         numPlayerMoved++;
 
-        Debug.Log(numPlayerMoved);
-
         //all players moved
         if (numPlayerMoved == allPlayers.Count)
         {
-            Debug.Log("end");
-
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
-            StartCoroutine(nameof(delayAttack));
+            //all players attack
+            foreach (IController player in allPlayersOriginal)
+            {
+                player.PV.RPC(nameof(player.attack), player.PV.Owner);
+            }
+
+            checkAttack();
         }
         else
         {
@@ -152,19 +152,6 @@ public class TutorialGameManager : GameManager
         }
     }
 
-    public override IEnumerator delayAttack()
-    {
-        yield return new WaitForSeconds(1f);
-
-        //all players attack
-        foreach (IController player in allPlayersOriginal)
-        {
-            player.PV.RPC(nameof(player.attack), player.PV.Owner);
-        }
-
-        checkAttack();
-    }
-
     public override void checkAttack()
     { 
         //all players check death
@@ -172,6 +159,8 @@ public class TutorialGameManager : GameManager
         {
             player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
         }
+
+        checkDeath();
     }
 
     public override void checkDeath()
@@ -185,10 +174,16 @@ public class TutorialGameManager : GameManager
             allPlayers[0].startFirstIndicator(true);
         }
 
+        // first time initilization for bot
+        if (UIManager.instance.getTurnNum() == 0)
+        {
+            bot.playerUIManager.PV.RPC("initilize", RpcTarget.All, "Bot", 1);
+        }
+
         //ask every playercontroller owner to update their info
         foreach (IController player in allPlayers)
         {
-            player.PV.RPC(nameof(player.fillInfoTab), player.PV.Owner);
+            player.fillInfoTab();
         }
 
         //next turn
