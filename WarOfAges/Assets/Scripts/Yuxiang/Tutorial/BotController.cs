@@ -28,8 +28,6 @@ public class BotController : Controller
         PV = GetComponent<PhotonView>();
 
         instance = this;
-
-        gold = 40;
     }
 
     #region ID
@@ -87,6 +85,16 @@ public class BotController : Controller
         allBuildings.Add(mainBase);
 
         mainBase.PV.RPC(nameof(mainBase.updateTerritory), RpcTarget.All);
+
+        // reveal all tiles in bot test mode
+        if (Config.botTestMode)
+        {
+            foreach (Tile tile in TileManager.instance.tiles)
+            {
+                if (tile != null)
+                    tile.setDark(false);
+            }
+        }
     }
 
     // count number of land tile neighbors, return 0 is tile is water
@@ -318,16 +326,21 @@ public class BotController : Controller
         gold -= goldNeedToSpawn;
         UIManager.instance.updateGoldText();
 
-        //spawn an image
-        GameObject spawnImage = Instantiate(toSpawnImage,
-        spawnTile.gameObject.transform.position, Quaternion.identity);
-        //set all ages inactive except the current one (need to do because age can be different from player's age)
-        foreach (Transform cur in spawnImage.transform)
+        GameObject spawnImage = null;
+        //spawn an image only in bot test mode
+        if (Config.botTestMode)
         {
-            cur.gameObject.SetActive(false);
+            //spawn an image
+            spawnImage = Instantiate(toSpawnImage,
+            spawnTile.gameObject.transform.position, Quaternion.identity);
+            //set all ages inactive except the current one (need to do because age can be different from player's age)
+            foreach (Transform cur in spawnImage.transform)
+            {
+                cur.gameObject.SetActive(false);
+            }
+            spawnImage.transform.GetChild(Config.numAges - age - 1).gameObject.SetActive(true);
+            spawnImage.SetActive(true);
         }
-        spawnImage.transform.GetChild(Config.numAges - age - 1).gameObject.SetActive(true);
-        spawnImage.SetActive(true);
 
         //add to spawn list
         SpawnInfo spawnInfo = new SpawnInfo(spawnTile, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
@@ -369,7 +382,8 @@ public class BotController : Controller
         //>
         if (Input.GetKey(KeyCode.Period) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
-            TutorialManager.instance.tutorialCanvas.gameObject.SetActive(false);
+            if (TutorialManager.instance != null)
+                TutorialManager.instance.tutorialCanvas.gameObject.SetActive(false);
         }
         //}
     }
@@ -442,7 +456,7 @@ public class BotController : Controller
 
     Tile findFarthestUnconqueredLandTile(Tile startingTile)
     {
-        Tile bestTile = mainBase.tile;
+        Tile bestTile = PlayerController.instance.mainBase.tile;
         float dist = Vector3.Magnitude(bestTile.transform.position - startingTile.transform.position);
 
         foreach (Tile curTile in territory)

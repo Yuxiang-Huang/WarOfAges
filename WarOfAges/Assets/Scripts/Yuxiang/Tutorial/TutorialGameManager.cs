@@ -117,12 +117,6 @@ public class TutorialGameManager : GameManager
         {
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
-            //all players attack
-            foreach (Controller player in allPlayersOriginal)
-            {
-                player.attack();
-            }
-
             checkAttack();
         }
         else
@@ -142,13 +136,7 @@ public class TutorialGameManager : GameManager
         {
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
-            //all players attack
-            foreach (Controller player in allPlayersOriginal)
-            {
-                player.attack();
-            }
-
-            checkAttack();
+            StartCoroutine(nameof(delayAttack));
         }
         else
         {
@@ -156,6 +144,19 @@ public class TutorialGameManager : GameManager
             allPlayers[numPlayerMoved].troopMove();
             checkMove();
         }
+    }
+
+    public override IEnumerator delayAttack()
+    {
+        yield return new WaitForSeconds(1f);
+
+        //all players attack
+        foreach (Controller player in allPlayersOriginal)
+        {
+            player.attack();
+        }
+
+        checkAttack();
     }
 
     public override void checkAttack()

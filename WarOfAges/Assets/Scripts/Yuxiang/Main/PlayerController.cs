@@ -37,10 +37,6 @@ public class PlayerController : Controller
         {
             gold = 40000000;
         }
-        else
-        {
-            gold = 40;
-        }
     }
 
     // Update is called once per frame

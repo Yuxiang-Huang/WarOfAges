@@ -306,6 +306,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         // recalculate path (edge case where a ship can't be spawned on time)
+        path = new List<Tile>();
         findPath(target);
     }
 
