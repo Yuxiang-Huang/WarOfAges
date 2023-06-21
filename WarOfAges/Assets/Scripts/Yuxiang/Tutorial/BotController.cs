@@ -178,21 +178,21 @@ public class BotController : MonoBehaviourPunCallbacks, IController
             }
         }
 
-        // just spawn Melees now
-        spawnButtons[0].selectSpawnUnitBot();
-        foreach (Tile curTile in spawnableTile)
-        {
-            if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit) && allTroops.Count < 1 && spawnList.Count < 1)
-            {
-                addToSpawnList(curTile);
+        //// just spawn Melees now
+        //spawnButtons[0].selectSpawnUnitBot();
+        //foreach (Tile curTile in spawnableTile)
+        //{
+        //    if (gold > goldNeedToSpawn && canSpawn(curTile, toSpawnUnit) && allTroops.Count < 1)
+        //    {
+        //        addToSpawnList(curTile);
 
-                // set destination for newly spawned troop
-                SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
+        //        // set destination for newly spawned troop
+        //        SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
 
-                // set path
-                spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
-            }
-        }
+        //        // set path
+        //        spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+        //    }
+        //}
 
         UIManager.instance.setEndTurn(id, true);
     }

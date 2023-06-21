@@ -355,6 +355,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             if (Config.debugTestMode)
                 Debug.Log("Just before boolean check");
 
+            Debug.Log(canMoveToTile(path[0]));
+
             //if can move to tile
             if (canMoveToTile(path[0]))
             {
@@ -448,8 +450,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         if (Config.debugTestMode)
             Debug.Log("method moveUpdate_RPC");
 
-        //leave water
-        if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
+        Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
+
+        // ship to ship
+        if (ship != null && nextTile.unit != null && nextTile.unit.gameObject.GetComponent<Ship>() != null &&
+            nextTile.unit.ownerID == ownerID)
+        {
+            tile.unit = ship;
+            ship.tile = tile;
+            ship = nextTile.unit.gameObject.GetComponent<Ship>();
+        }
+        // leave water
+        else if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
             //edge case when exchange tile
             //if (tile.unit == null)
@@ -457,17 +469,17 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             ship.tile = tile;
             ship = null;
         }
-        //leave land
-        else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
+        // leave land
+        else if (tile.terrain == "land" && nextTile.terrain == "water")
         {
-            if (TileManager.instance.tiles[nextTileX, nextTileY].unit == null)
+            if (nextTile.unit == null)
             {
                 Debug.Log("no ship exist bug?");
             }
             else
             {
                 //board a ship
-                ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+                ship = nextTile.unit.gameObject.GetComponent<Ship>();
             }
         }
 
@@ -481,7 +493,6 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         {
             numOfTileMoved++;
         }
-        Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
 
         // update direction
         if (nextTile.transform.position.x >= tile.transform.position.x)
@@ -585,8 +596,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //if on a ship
         if (ship != null)
         {
-            //good if no unit
-            return cur.unit == null;
+            //good if no unit or it is an empty team ship
+            return cur.unit == null || cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID;
         }
         else
         {
