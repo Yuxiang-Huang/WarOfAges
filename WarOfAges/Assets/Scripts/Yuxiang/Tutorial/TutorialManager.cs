@@ -234,6 +234,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
+
     void advance()
     {
         if (tutorialArrows[index] != null)

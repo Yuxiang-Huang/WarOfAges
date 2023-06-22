@@ -35,7 +35,7 @@ public class Speed : Troop
             GameObject target = targets.Values.Last().unit.gameObject;
             PV.RPC(nameof(flipDirection), RpcTarget.All, target.transform.position.x < transform.position.x);
             //damage proportioned to number of tiles moved
-            targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, damage * numOfTileMoved);
+            targets.Values.Last().unit.PV.RPC(nameof(takeDamage), RpcTarget.AllViaServer, Mathf.Max(damage, damage * numOfTileMoved));
         }
     }
 

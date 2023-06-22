@@ -365,7 +365,7 @@ public class BotController : Controller
     {
         //if (Config.botTestMode)
         //{
-        //<
+        //< to be in bot test mode
         if (Input.GetKey(KeyCode.Comma) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             Config.botTestMode = true;
@@ -376,11 +376,15 @@ public class BotController : Controller
             }
         }
 
-        //>
+        //> to end tutorial
         if (Input.GetKey(KeyCode.Period) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             if (TutorialManager.instance != null)
+            {
+                UIManager.instance.timerPaused = false;
                 TutorialManager.instance.tutorialCanvas.gameObject.SetActive(false);
+                Destroy(TutorialManager.instance);
+            }
         }
         //}
     }
