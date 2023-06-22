@@ -5291,7 +5291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: goldNeedToSpawn
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 195891942802153978, guid: 92c312100072046779c20a63ffefc397, type: 3}
       propertyPath: unitImages.Array.size

@@ -331,6 +331,11 @@ public class Controller : MonoBehaviour
     [PunRPC]
     public void checkDeath()
     {
+        if (Config.debugTestMode)
+        {
+            Debug.Log("resetMovement");
+        }
+
         //troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
@@ -366,6 +371,11 @@ public class Controller : MonoBehaviour
                 }
                 allBuildings.Remove(allBuildings[i]);
             }
+        }
+
+        if (Config.debugTestMode)
+        {
+            Debug.Log("end turn");
         }
 
         if (!PhotonNetwork.OfflineMode)
