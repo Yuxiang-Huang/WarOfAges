@@ -229,8 +229,6 @@ public class Speed : Troop
             //remove first tile
             path.RemoveAt(0);
         }
-
-        displayArrow();
     }
 
     public override void move()

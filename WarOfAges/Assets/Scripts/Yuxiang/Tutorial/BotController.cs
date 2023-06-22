@@ -193,15 +193,12 @@ public class BotController : Controller
         spawnButtons[2].selectSpawnUnitBot();
 
         // spawn ships where it is needed if second age
-        if (age > 1)
+        for (int i = shipNeedTiles.Count - 1; i >= 0; i--)
         {
-            for (int i = shipNeedTiles.Count - 1; i >= 0; i--)
+            if (gold >= goldNeedToSpawn && canSpawn(shipNeedTiles[i], toSpawnUnit))
             {
-                if (gold >= goldNeedToSpawn && canSpawn(shipNeedTiles[i], toSpawnUnit))
-                {
-                    addToSpawnList(shipNeedTiles[i]);
-                    shipNeedTiles.Remove(shipNeedTiles[i]);
-                }
+                addToSpawnList(shipNeedTiles[i]);
+                shipNeedTiles.Remove(shipNeedTiles[i]);
             }
         }
 
@@ -238,7 +235,7 @@ public class BotController : Controller
         // spawn troops and buildings
         foreach (Tile curTile in spawnableTile)
         {
-            int randomNum = Random.Range(0, age + 3);
+            int randomNum = Random.Range(0, age + 2);
 
             // not troop index, go again
             while (randomNum == 2 || randomNum > 4)
@@ -484,6 +481,6 @@ public class BotController : Controller
     public override void end()
     {
         base.end();
-        UIManager.instance.displayWinScreen("Name");
+        UIManager.instance.displayWinScreen("You");
     }
 }
