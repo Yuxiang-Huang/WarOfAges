@@ -5,15 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Lobby.unity
-    guid: d249388699ee14a169b1cb57c0c7bb48
   - enabled: 0
-    path: Assets/Scenes/Yuxiang Old.unity
-    guid: 4ec66f7bd8905480797377cd57c9b1df
+    path: 
+    guid: d249388699ee14a169b1cb57c0c7bb48
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 01563be5d7ba0c94bb9253d22b47e08d
   - enabled: 1
     path: Assets/Scenes/Yuxiang.unity
     guid: 50fae3e0886484b9082c8850af7fc949
