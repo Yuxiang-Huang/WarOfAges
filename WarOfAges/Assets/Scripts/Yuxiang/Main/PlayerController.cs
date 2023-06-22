@@ -407,6 +407,8 @@ public class PlayerController : Controller
     {
         UIManager.instance.hideInfoTab();
 
+        UIManager.instance.noSurredner();
+
         if (mode == "spawn")
         {
             //set color of the spawn button selected back to white

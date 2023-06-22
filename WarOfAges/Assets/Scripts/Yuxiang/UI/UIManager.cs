@@ -536,6 +536,6 @@ public class UIManager : MonoBehaviour
     {
         timerPaused = true;
         winStrip.SetActive(true);
-        winText.text = "Congratulation! " + name + "won!!!";
+        winText.text = "CONGRATULATION !" + name + " WIN!!!";
     }
 }

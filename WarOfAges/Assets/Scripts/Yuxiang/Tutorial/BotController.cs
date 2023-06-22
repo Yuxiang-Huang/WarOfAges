@@ -485,6 +485,6 @@ public class BotController : Controller
     public override void end()
     {
         base.end();
-        UIManager.instance.displayWinScreen("You");
+        UIManager.instance.displayWinScreen("YOU");
     }
 }
