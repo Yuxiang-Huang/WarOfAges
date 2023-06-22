@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI unitNameText;
     [SerializeField] TextMeshProUGUI unitHealthText;
     [SerializeField] TextMeshProUGUI unitDamageText;
+    [SerializeField] TextMeshProUGUI unitTypeText;
     [SerializeField] TextMeshProUGUI unitSellText;
     [SerializeField] TextMeshProUGUI unitUpgradeText;
     [SerializeField] TextMeshProUGUI unitHealText;
@@ -74,6 +75,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject askSurrenderBox;
     [SerializeField] GameObject surrenderButton;
     [SerializeField] GameObject leaveBtn;
+    [SerializeField] GameObject winStrip;
+    [SerializeField] TextMeshProUGUI winText;
 
     #endregion
 
@@ -150,7 +153,7 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    #region Turn (shouldn't be call by buttons) 
+    #region Turn
 
     //call by startTurn in gameManager
     public void startTurnUI()
@@ -212,7 +215,6 @@ public class UIManager : MonoBehaviour
             GameManager.instance.endTurn();
     }
 
-    //call by endTurn in gameManager
     public void endTurnUI()
     {
         localTurnEnded = true;
@@ -225,11 +227,14 @@ public class UIManager : MonoBehaviour
         //only if have time left
         if (curTimeUsed > 0)
             cancelTurnBtn.SetActive(true);
+
+        GameManager.instance.endTurn();
     }
 
-    //call by cancelEndTurn in gameManager
     public void cancelEndTurnUI()
     {
+        GameManager.instance.cancelEndTurn();
+
         localTurnEnded = false;
 
         //UI
@@ -276,7 +281,7 @@ public class UIManager : MonoBehaviour
     public void updateInfoTab(IUnit unit, bool myUnit)
     {
         infoTabUnit.SetActive(true);
-        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitSellText, unitUpgradeText, unitHealText);
+        unit.fillInfoTab(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, unitUpgradeText, unitHealText);
 
         //only display buttons if my units
         if (myUnit)
@@ -312,14 +317,14 @@ public class UIManager : MonoBehaviour
     public void updateInfoTabSpawn(IUnit unit)
     {
         infoTabUnit.SetActive(true);
-        unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, PlayerController.instance.age);
+        unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, PlayerController.instance.age);
     }
 
     //for spawn images
     public void updateInfoTab(SpawnInfo spawnInfo)
     {
         infoTabUnit.SetActive(true);
-        spawnInfo.unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitSellText, spawnInfo.age);
+        spawnInfo.unit.fillInfoTabSpawn(unitNameText, unitHealthText, unitDamageText, unitTypeText, unitSellText, spawnInfo.age);
         sellBtn.SetActive(true);
     }
 
@@ -496,9 +501,41 @@ public class UIManager : MonoBehaviour
         askSurrenderBox.SetActive(false);
     }
 
-    public void yesSurredner()
+    #region endGame
+
+    public void yesSurrender()
     {
         askSurrenderBox.SetActive(false);
-        GameManager.instance.surrender();
+        PlayerController.instance.mainBase.sell();
+        PlayerController.instance.toSell.Add(PlayerController.instance.mainBase);
+    }
+
+    public void leave()
+    {
+        StartCoroutine(nameof(leaveEnu));
+    }
+
+    public IEnumerator leaveEnu()
+    {
+        //disconnect before leaving
+        PhotonNetwork.LeaveRoom();
+
+        // can't leave lobby if tutorial
+        if (TutorialManager.instance == null)
+            PhotonNetwork.LeaveLobby();
+
+        PhotonNetwork.Disconnect();
+        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
+        Destroy(RoomManager.Instance.gameObject);
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    #endregion
+
+    public void displayWinScreen(string name)
+    {
+        timerPaused = true;
+        winStrip.SetActive(true);
+        winText.text = "Congratulation! " + name + "won!!!";
     }
 }

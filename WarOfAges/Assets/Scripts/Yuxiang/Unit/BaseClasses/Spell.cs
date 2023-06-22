@@ -13,6 +13,8 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public Controller ownerController { get; set; }
+
     public Tile tile { get; set; }
 
     public int age { get; set; }
@@ -44,6 +46,7 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
         string path, int age, int sellGold)
     {
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
 
         this.age = age;
@@ -90,18 +93,20 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
 
     #region UI
 
-    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         //can't be selected after spawn
     }
 
-    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
+    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
         healthText.text = "Full Health: n/a";
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Despawn";
     }
 
@@ -128,11 +133,11 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     public void sell()
     {
         //add gold
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
         //remove from spell list
-        PlayerController.instance.allSpells.Remove(this);
+        ownerController.allSpells.Remove(this);
 
         //destroy
         PV.RPC(nameof(kill), RpcTarget.All);
@@ -142,9 +147,9 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     public void upgrade()
     {
         //deduct gold if owner
-        if (PlayerController.instance.id == ownerID)
+        if (ownerController.id == ownerID)
         {
-            PlayerController.instance.gold -= upgradeGold;
+            ownerController.gold -= upgradeGold;
             UIManager.instance.updateGoldText();
         }
 

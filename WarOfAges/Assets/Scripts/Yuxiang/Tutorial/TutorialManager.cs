@@ -13,7 +13,7 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager instance;
 
-    [SerializeField] Canvas tutorialCanvas;
+    public Canvas tutorialCanvas;
     [SerializeField] List<string> instructions;
     [SerializeField] TextMeshProUGUI instructionText;
     [SerializeField] int index;
@@ -219,10 +219,10 @@ public class TutorialManager : MonoBehaviour
 
         if (index == 28)
         {
-            // exit when clicked
+            // end of tutorial when clicked
             if (Input.GetMouseButtonDown(0))
             {
-                endTutorial();
+                tutorialCanvas.gameObject.SetActive(false);
             }
         }
         else if (index > 22)
@@ -234,6 +234,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
+
     void advance()
     {
         if (tutorialArrows[index] != null)

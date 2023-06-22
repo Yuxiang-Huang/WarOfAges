@@ -14,6 +14,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public Controller ownerController { get; set; }
+
     public int age { get; set; }
 
     [Header("UI")]
@@ -59,6 +61,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     {
         //setting ID, direction, age, gold
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         direction = startDirection;
         this.age = age;
         this.sellGold = sellGold;
@@ -73,6 +76,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             if (tile.unit != null)
             {
                 ship = tile.unit.gameObject.GetComponent<Ship>();
+
                 //reset path
                 if (ship.arrow != null)
                 {
@@ -210,8 +214,100 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             path.RemoveAt(0);
         }
 
-        // edge case where sell while clicking on a tile to find path
         displayArrow();
+    }
+
+    public virtual void findPathBot(Tile target)
+    {
+        //same tile reset
+        if (target == tile)
+        {
+            path = new List<Tile>();
+
+            Destroy(arrow);
+
+            return;
+        }
+
+        float minDist = TileManager.instance.dist(target, tile);
+
+        //initiated a queue
+        Queue<List<Tile>> allPath = new Queue<List<Tile>>();
+
+        List<Tile> root = new() { tile };
+
+        allPath.Enqueue(root);
+
+
+        bool[,] visited = new bool[TileManager.instance.tiles.GetLength(0),
+                                   TileManager.instance.tiles.GetLength(1)];
+
+        bool reach = false;
+
+        //bfs
+        while (allPath.Count != 0 && !reach)
+        {
+            List<Tile> cur = allPath.Dequeue();
+            Tile lastTile = cur[cur.Count - 1];
+
+            foreach (Tile curTile in lastTile.neighbors)
+            {
+                //not visited (Doesn't matter what terrain)
+                if (!visited[curTile.pos.x, curTile.pos.y])
+                {
+                    //no team building
+                    if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
+                        curTile.unit.ownerID != ownerID)
+                    {
+                        visited[curTile.pos.x, curTile.pos.y] = true;
+
+                        //check this tile dist
+                        List<Tile> dup = new List<Tile>(cur)
+                        {
+                            curTile
+                        };
+
+                        float curDist = TileManager.instance.dist(target, curTile);
+
+                        if (curDist < 0.01)
+                        {
+                            reach = true;
+                            path = dup;
+                            minDist = curDist;
+                        }
+                        else if (curDist < minDist)
+                        {
+                            minDist = curDist;
+                            path = dup;
+                        }
+
+                        allPath.Enqueue(dup);
+                    }
+                }
+            }
+        }
+
+        //a path is found
+        if (path.Count != 0)
+        {
+            //remove first tile
+            path.RemoveAt(0);
+        }
+
+        // add all water tile to be ship needed tiles
+        foreach (Tile curTile in path)
+        {
+            // if no water and no ship
+            if (curTile.terrain == "water" && curTile.unit == null
+                && !BotController.instance.spawnList.ContainsKey(curTile.pos))
+            {
+                BotController.instance.shipNeedTiles.Add(curTile);
+            }
+        }
+
+        // recalculate path (edge case where a ship can't be spawned on time)
+        path = new List<Tile>();
+        findPath(target);
     }
 
     public void follow()
@@ -312,6 +408,12 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void displayArrow()
     {
+        // want to see arow for testing bot though
+        if (!Config.botTestMode)
+            // don't show arrow if bot
+            if (PhotonNetwork.OfflineMode && ownerID == 1)
+                return;
+
         //destroy arrow
         if (arrow != null)
         {
@@ -337,8 +439,18 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         if (Config.debugTestMode)
             Debug.Log("method moveUpdate_RPC");
 
-        //leave water
-        if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
+        Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
+
+        // ship to ship
+        if (ship != null && nextTile.unit != null && nextTile.unit.gameObject.GetComponent<Ship>() != null &&
+            nextTile.unit.ownerID == ownerID)
+        {
+            tile.unit = ship;
+            ship.tile = tile;
+            ship = nextTile.unit.gameObject.GetComponent<Ship>();
+        }
+        // leave water
+        else if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
         {
             //edge case when exchange tile
             //if (tile.unit == null)
@@ -346,17 +458,17 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             ship.tile = tile;
             ship = null;
         }
-        //leave land
-        else if (tile.terrain == "land" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "water")
+        // leave land
+        else if (tile.terrain == "land" && nextTile.terrain == "water")
         {
-            if (TileManager.instance.tiles[nextTileX, nextTileY].unit == null)
+            if (nextTile.unit == null)
             {
                 Debug.Log("no ship exist bug?");
             }
             else
             {
                 //board a ship
-                ship = TileManager.instance.tiles[nextTileX, nextTileY].unit.gameObject.GetComponent<Ship>();
+                ship = nextTile.unit.gameObject.GetComponent<Ship>();
             }
         }
 
@@ -366,11 +478,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         // count number of tiles moved
-        if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && PlayerController.instance.id == ownerID)
+        if (tile != TileManager.instance.tiles[nextTileX, nextTileY] && ownerController.id == ownerID)
         {
             numOfTileMoved++;
         }
-        Tile nextTile = TileManager.instance.tiles[nextTileX, nextTileY];
 
         // update direction
         if (nextTile.transform.position.x >= tile.transform.position.x)
@@ -400,8 +511,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Debug.Log("animate movement");
         }
 
-        //owner so animate movement
-        if (ownerID == PlayerController.instance.id)
+        //owner so animate movement and don't translate if bot
+        if (ownerID == ownerController.id && (!(PhotonNetwork.OfflineMode && ownerID == 1)))
         {
             StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
             if (ship != null)
@@ -474,8 +585,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         //if on a ship
         if (ship != null)
         {
-            //good if no unit
-            return cur.unit == null;
+            //good if no unit or it is an empty team ship
+            return cur.unit == null || cur.unit.gameObject.GetComponent<Ship>() != null && cur.unit.ownerID == ownerID;
         }
         else
         {
@@ -556,38 +667,50 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         imageRenderer.color = color;
     }
 
-    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-    TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    [PunRPC]
+    public void flipDirection(bool status)
+    {
+        imageRenderer.flipX = status;
+    }
+
+    public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         nameText.text = unitNames[age];
         healthText.text = "Health: " + health + " / " + fullHealth;
         damageText.text = "Damage: " + damage;
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
         healText.text = "Heal: " + getHealGold() + " Gold";
     }
 
-    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
+    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
         healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Despawn";
     }
 
     public void sell()
     {
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
-        PlayerController.instance.allTroops.Remove(this);
+        ownerController.allTroops.Remove(this);
         if (gameObject.GetComponent<Ship>() != null)
-            PlayerController.instance.allShips.Remove(gameObject.GetComponent<Ship>());
+            ownerController.allShips.Remove(gameObject.GetComponent<Ship>());
 
         destroy();
 
-        PlayerController.instance.mode = "select";
+        PlayerController playerController = ownerController.gameObject.GetComponent<PlayerController>();
+        if (playerController != null)
+            playerController.mode = "select";
     }
 
     [PunRPC]

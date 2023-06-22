@@ -76,7 +76,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(nameof(lockFlash));
     }
 
-    public void spawn(Image spawnButtonImage, string path, int goldNeedToSpawn, GameObject spawnImage, GameObject unit)
+    public void selectSpawnUnit(Image spawnButtonImage, string path, int goldNeedToSpawn, GameObject spawnImage, GameObject unit)
     {
         //image color transition
         if (lastSpawnButtonImage != null)

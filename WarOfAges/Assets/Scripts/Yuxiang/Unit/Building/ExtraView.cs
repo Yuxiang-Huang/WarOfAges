@@ -15,13 +15,13 @@ public class ExtraView : Building
         //reveal tiles
         foreach (Tile neighbor in neighbors3)
         {
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
+            ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
             neighbor.setDark(false);
         }
 
         foreach (Tile neighbor in tile.neighbors2)
         {
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
+            ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]++;
             neighbor.setDark(false);
         }
     }
@@ -82,13 +82,13 @@ public class ExtraView : Building
 
             foreach (Tile neighbor in neighbors3)
             {
-                PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+                ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
                 neighbor.updateVisibility();
             }
 
             foreach (Tile neighbor in tile.neighbors2)
             {
-                PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+                ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
                 neighbor.updateVisibility();
             }
         }
@@ -103,13 +103,13 @@ public class ExtraView : Building
 
         foreach (Tile neighbor in neighbors3)
         {
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+            ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
             neighbor.updateVisibility();
         }
 
         foreach (Tile neighbor in tile.neighbors2)
         {
-            PlayerController.instance.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
+            ownerController.extraViewTiles[neighbor.pos.x, neighbor.pos.y]--;
             neighbor.updateVisibility();
         }
 

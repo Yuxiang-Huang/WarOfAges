@@ -265,7 +265,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         int numPlayer = PhotonNetwork.CurrentRoom.PlayerCount;
 
         //choose spawn locations base on number of player
-        if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6)
+        if (numPlayer == 1 || numPlayer == 2 || numPlayer == 5 || numPlayer == 6 || PhotonNetwork.OfflineMode)
         {
             spawnLocations = new List<Vector2>(allSpawnLocations);
         }
@@ -317,7 +317,7 @@ public class TileManager : MonoBehaviourPunCallbacks
         //setting camera
         Camera.main.orthographicSize = (mapRadius + 1);
         Camera.main.transform.position = new Vector3(-mapRadius / 5, 0, -10);
-        CameraControler.maxZoom = Camera.main.orthographicSize;
+        CameraController.maxZoom = Camera.main.orthographicSize;
 
         //make map
         tiles = new Tile[rows, cols];

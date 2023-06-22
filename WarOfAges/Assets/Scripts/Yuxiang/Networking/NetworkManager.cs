@@ -189,6 +189,7 @@ public class NetworkManager: MonoBehaviourPunCallbacks
 
     public void StartTutorial()
     {
+        ScreenManager.Instance.DisplayScreen("Loading");
         StartCoroutine(nameof(StartTutorialEnu));
     }
 

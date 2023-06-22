@@ -31,8 +31,8 @@ public class PlayerUIManager : MonoBehaviour
     public void initilize(string name, int colorIndex)
     {
         gameObject.SetActive(true);
-        if (name == "")
-            nameText.text = "Name";
+        if (PhotonNetwork.OfflineMode && name != "Bot")
+            nameText.text = "Player";
         else
             nameText.text = name;
         sideColor.GetComponent<Image>().color = TileManager.instance.ownerColors[colorIndex];

@@ -13,6 +13,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public int ownerID { get; set; }
 
+    public Controller ownerController { get; set; }
+
     public Tile tile { get; set; }
 
     public int age { get; set; }
@@ -46,6 +48,7 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
         string path, int age, int sellGold)
     {
         ownerID = playerID;
+        ownerController = GameManager.instance.allPlayersOriginal[ownerID];
         tile = TileManager.instance.tiles[startingtTileX, startingtTileY];
         tile.updateStatus(ownerID, this);
 
@@ -80,9 +83,9 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     {
         foreach (Tile neighbor in tile.neighbors)
         {
-            PlayerController.instance.spawnable[neighbor.pos.x, neighbor.pos.y] = true;
+            ownerController.spawnableTile.Add(neighbor);
 
-            PlayerController.instance.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
+            ownerController.spawnDirection[neighbor.pos.x, neighbor.pos.y] =
                 neighbor.transform.position - tile.transform.position;
         }
     }
@@ -94,23 +97,27 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     #region UI
 
-    public virtual void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    public virtual void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
         nameText.text = unitNames[age];
         healthText.text = "Health: " + health + " / " + fullHealth;
         damageText.text = "Damage: " + damage;
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Sell: " + sellGold + " Gold";
         upgradeText.text = "Upgrade: " + upgradeGold + " Gold";
         healText.text = "Heal: " + getHealGold() + " Gold";
     }
 
-    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age)
+    public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age)
     {
         nameText.text = unitNames[age];
-        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, PlayerController.instance.age);
+        healthText.text = "Full Health: " + fullHealth * (int)Mathf.Pow(Config.ageUnitFactor, age);
         damageText.text = "Damage: " + damage * (int)Mathf.Pow(Config.ageUnitFactor, age);
+        string typeName = ToString();
+        typeText.text = "Type: " + typeName.Substring(0, typeName.IndexOf("("));
         sellText.text = "Despawn";
     }
 
@@ -158,10 +165,10 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public virtual void sell()
     {
-        PlayerController.instance.gold += sellGold;
+        ownerController.gold += sellGold;
         UIManager.instance.updateGoldText();
 
-        PlayerController.instance.allBuildings.Remove(this);
+        ownerController.allBuildings.Remove(this);
 
         foreach (Tile neighbor in tile.neighbors)
         {

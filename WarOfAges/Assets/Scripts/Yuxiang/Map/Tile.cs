@@ -53,7 +53,7 @@ public class Tile : MonoBehaviour
             if (ownerID != -1)
             {
                 //remove from other player's territory
-                PlayerController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
+                Controller prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
 
                 prevOwner.territory.Remove(this);
 
@@ -118,7 +118,7 @@ public class Tile : MonoBehaviour
 
     public void setTerritoryColor()
     {
-        PlayerController owner = GameManager.instance.allPlayersOriginal[ownerID];
+        Controller owner = GameManager.instance.allPlayersOriginal[ownerID];
 
         //set territory color to color of owner
         territoryColor.SetActive(true);
@@ -195,7 +195,7 @@ public class Tile : MonoBehaviour
         }
 
         //can't be spawn anymore
-        PlayerController.instance.spawnable[pos.x, pos.y] = false;
+        PlayerController.instance.spawnableTile.Remove(TileManager.instance.tiles[pos.x, pos.y]);
     }
 
     public void updateVisibility()
@@ -256,7 +256,7 @@ public class Tile : MonoBehaviour
         if (ownerID != -1)
         {
             //remove from other player's territory
-            PlayerController prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
+            Controller prevOwner = GameManager.instance.allPlayersOriginal[ownerID];
 
             prevOwner.territory.Remove(this);
 

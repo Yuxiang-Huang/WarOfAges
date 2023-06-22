@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControler : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     [SerializeField] float keyboardMovementSpeed;
     [SerializeField] float keyboardZoomSpeed;

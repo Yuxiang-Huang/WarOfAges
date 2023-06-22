@@ -15,10 +15,10 @@ public class MainBase : Building
         }
     }
 
-    public override void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
+    public override void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
+        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
     {
-        base.fillInfoTab(nameText, healthText, damageText, sellText, upgradeText, healText);
+        base.fillInfoTab(nameText, healthText, damageText, typeText, sellText, upgradeText, healText);
         sellText.text = "Sell: ∞ Gold";
     }
 
@@ -28,6 +28,6 @@ public class MainBase : Building
 
         GameManager.instance.endTurn();
 
-        PlayerController.instance.end();
+        ownerController.end();
     }
 }

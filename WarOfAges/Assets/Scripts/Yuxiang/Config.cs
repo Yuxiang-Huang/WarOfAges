@@ -8,6 +8,7 @@ public class Config
     public static bool moreMoneyTestMode = false;
     public static bool debugTestMode = true;
     public static bool tutorialMode = false;
+    public static bool botTestMode = false;
 
     //time factors
     public static float troopMovementTime = 0.5f;

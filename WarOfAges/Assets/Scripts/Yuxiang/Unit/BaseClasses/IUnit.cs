@@ -11,6 +11,8 @@ public interface IUnit
 
     int ownerID { get; }
 
+    public Controller ownerController { get; }
+
     Tile tile { get; }
 
     GameObject gameObject { get; }
@@ -26,10 +28,10 @@ public interface IUnit
     public void setHealthBar(bool status);
 
     public void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-        TextMeshProUGUI damageText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText);
+        TextMeshProUGUI damageText, TextMeshProUGUI unitTypeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText);
 
     public void fillInfoTabSpawn(TextMeshProUGUI nameText, TextMeshProUGUI healthText,
-       TextMeshProUGUI damageText, TextMeshProUGUI sellText, int age);
+       TextMeshProUGUI damageText, TextMeshProUGUI typeText, TextMeshProUGUI sellText, int age);
 
     public void setImage(Color color);
 

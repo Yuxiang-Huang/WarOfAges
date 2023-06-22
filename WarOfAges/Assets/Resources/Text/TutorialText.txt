@@ -54,4 +54,4 @@ You will have to overtake their territory, eliminate their troops and buildings,
 
 If your base is still standing when every other player's base is destroyed, you will have won the game!<br><br>Click anywhere to continue.
 
-Best of luck!<br><br>Click to exit tutorial.
+Try to defeat this bot. Best of luck!<br><br>Click to end tutorial.

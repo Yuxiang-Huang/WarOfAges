@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 6277366795765440734}
   - component: {fileID: 706000752323417328}
   m_Layer: 0
-  m_Name: LongRange
+  m_Name: Long Range
   m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
