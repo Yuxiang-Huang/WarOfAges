@@ -167,8 +167,6 @@ public class TutorialManager : MonoBehaviour
             if (PlayerController.instance.allTroops[0].arrow != null)
             {
                 advance();
-                // timer on
-                UIManager.instance.timerPaused = false;
             }
         }
 
@@ -199,24 +197,6 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 21)
-        {
-            // advance when it is the fourth turn
-            if (UIManager.instance.getTurnNum() > 3)
-            {
-                advance();
-            }
-        }
-
-        if (index == 22)
-        {
-            // advance when it is the fourth turn
-            if (UIManager.instance.getTurnNum() > 3)
-            {
-                advance();
-            }
-        }
-
         if (index == 28)
         {
             // end of tutorial when clicked
@@ -225,7 +205,7 @@ public class TutorialManager : MonoBehaviour
                 tutorialCanvas.gameObject.SetActive(false);
             }
         }
-        else if (index > 22)
+        else if (index > 20)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))

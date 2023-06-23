@@ -303,7 +303,7 @@ public class BotController : Controller
                         Destroy(spawnInfoSelected.arrow);
 
                     Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
-                    cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile);
+                    cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile, id);
                     if (cur.arrow != null)
                     {
                         spawnInfoSelected.arrow = Instantiate(cur.arrow);

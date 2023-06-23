@@ -600,9 +600,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
     }
 
-    public void displayArrowForSpawn(Tile location, Tile target)
+    public void displayArrowForSpawn(Tile location, Tile target, int correctID)
     {
         tile = location;
+
+        ownerID = correctID;
 
         findPath(target);
 

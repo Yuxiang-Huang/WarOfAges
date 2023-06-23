@@ -9,7 +9,7 @@ public interface IUnit
 {
     PhotonView PV { get; }
 
-    int ownerID { get; }
+    int ownerID { get; set; }
 
     public Controller ownerController { get; }
 

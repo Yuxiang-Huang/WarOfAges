@@ -267,7 +267,7 @@ public class PlayerController : Controller
                                 Destroy(spawnInfoSelected.arrow);
 
                             Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
-                            cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, highlighted);
+                            cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, highlighted, id);
                             if (cur.arrow != null)
                             {
                                 spawnInfoSelected.arrow = Instantiate(cur.arrow);
