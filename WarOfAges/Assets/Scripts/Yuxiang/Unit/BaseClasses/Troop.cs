@@ -75,13 +75,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //spawned on a ship
             if (tile.unit != null)
             {
-                ship = tile.unit.gameObject.GetComponent<Ship>();
-
-                //reset path
-                if (ship.arrow != null)
-                {
-                    Destroy(ship.arrow);
-                }
+                tile.unit.gameObject.GetComponent<Ship>().path = new List<Tile>();
             }
         }
 
@@ -353,7 +347,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                 PV.RPC(nameof(removeTileUnit), RpcTarget.All);
                 PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
 
-                path.RemoveAt(0);
+                if (path.Count > 0)
+                    path.RemoveAt(0);
             }
             //ask it to move first
             //edge case when ship moved away
@@ -376,7 +371,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
                     PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, path[0].pos.x, path[0].pos.y);
 
-                    path.RemoveAt(0);
+                    if (path.Count > 0)
+                        path.RemoveAt(0);
                 }
                 else
                 {
@@ -457,6 +453,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             tile.unit = ship;
             ship.tile = tile;
             ship = null;
+
+            // reset path
+            path = new List<Tile>();
         }
         // leave land
         else if (tile.terrain == "land" && nextTile.terrain == "water")

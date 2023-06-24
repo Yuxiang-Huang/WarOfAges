@@ -203,12 +203,13 @@ public class Controller : MonoBehaviour
                     //destroy arrowed used for path finding
                     Destroy(info.arrow);
 
-                    //a ship is spawned
+                    // a ship is spawned
                     if (newUnit.GetComponent<Ship>() != null)
                     {
                         allShips.Add(newUnit.GetComponent<Ship>());
                     }
 
+                    // initialize
                     newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
                         id, info.spawnTile.pos.x, info.spawnTile.pos.y,
                         spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
@@ -220,9 +221,9 @@ public class Controller : MonoBehaviour
                         newUnit.GetComponent<Troop>().findPath(info.targetPathTile);
                     }
 
-                    //reset unit
-                    if (info.unit.gameObject.TryGetComponent<Troop>(out var mayeTroop))
-                        mayeTroop.ship = null;
+                    // reset spawn unit
+                    if (info.unit.gameObject.TryGetComponent<Troop>(out var spawnTroop))
+                        spawnTroop.ship = null;
                 }
                 else if (newUnit.CompareTag("Building"))
                 {

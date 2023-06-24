@@ -328,9 +328,15 @@ public class PlayerController : Controller
                     highlighted.gameObject.transform.position, Quaternion.identity);
                     spawnImage.SetActive(true);
 
+                    // clear ship arrow if spawn on ship
+                    if (highlighted.unit != null && highlighted.unit.gameObject.GetComponent<Ship>() != null)
+                    {
+                        Destroy(highlighted.unit.gameObject.GetComponent<Ship>().arrow);
+                    }
+
                     //add to spawn list
                     SpawnInfo spawnInfo = new SpawnInfo(highlighted, toSpawnPath, toSpawnUnit.GetComponent<IUnit>(),
-                        spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2);
+                    spawnImage, age, goldNeedToSpawn, goldNeedToSpawn / 2);
 
                     spawnList.Add(highlighted.pos, spawnInfo);
 
