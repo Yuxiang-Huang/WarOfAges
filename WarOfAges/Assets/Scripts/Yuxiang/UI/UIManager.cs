@@ -140,6 +140,12 @@ public class UIManager : MonoBehaviour
     // don't show until everyone place down base
     public void startGameAll()
     {
+        // set player UI active
+        for (int i = 0; i < GameManager.instance.allPlayersOriginal.Count; i++)
+        {
+            playerUIManagerList[i].gameObject.SetActive(true);
+        }
+
         // show shop
         Shop.SetActive(true);
                 
@@ -158,12 +164,6 @@ public class UIManager : MonoBehaviour
     //call by startTurn in gameManager
     public void startTurnUI()
     {
-        if (turnNum == 0)
-        {
-            //UI start game all when first turn
-            startGameAll();
-        }
-
         turnNum++;
         turnNumText.text = "Turn " + turnNum;
 
@@ -217,6 +217,12 @@ public class UIManager : MonoBehaviour
 
     public void endTurnUI()
     {
+        if (turnNum == 0)
+        {
+            //UI start game all when first turn
+            startGameAll();
+        }
+
         localTurnEnded = true;
 
         turnBtn.SetActive(false);

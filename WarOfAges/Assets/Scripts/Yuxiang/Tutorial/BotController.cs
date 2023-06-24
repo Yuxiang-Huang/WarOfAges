@@ -10,11 +10,11 @@ public class BotController : Controller
 {
     public static BotController instance;
 
-    [Header("Belongings")]
     public List<Tile> shipNeedTiles;
 
-    [Header("Spawn")]
     [SerializeField] List<SpawnButton> spawnButtons;
+
+    [SerializeField] List<Tile> tilesAssigned;
 
     private void Start()
     {
@@ -181,18 +181,24 @@ public class BotController : Controller
             }
         }
 
-        // troops directions (can be improved by not going somewhere another troop is already going)
+        tilesAssigned = new List<Tile>();
+
+        // troops directions
         foreach (Troop troop in allTroops)
         {
             // don't move ships
             if (troop.gameObject.GetComponent<Ship>() == null)
-                troop.findPathBot(findClosestUnconqueredLandTile(troop.tile));
+                // speed will go farther
+                if (troop.gameObject.GetComponent<Speed>() != null)
+                    troop.findPathBot(findFarthestUnconqueredLandTile(troop.tile));
+                else
+                    troop.findPathBot(findClosestUnconqueredLandTile(troop.tile));
         }
 
         // select ship
         spawnButtons[2].selectSpawnUnitBot();
 
-        // spawn ships where it is needed if second age
+        // spawn ships where it is needed
         for (int i = shipNeedTiles.Count - 1; i >= 0; i--)
         {
             if (gold >= goldNeedToSpawn && canSpawn(shipNeedTiles[i], toSpawnUnit))
@@ -437,9 +443,12 @@ public class BotController : Controller
         {
             Tile nextTile = tilesToLook.Dequeue();
 
-            // return if land and unconquered
+            // return if unconquered land and not assigned
             if (nextTile.terrain == "land" && nextTile.ownerID != id)
+            {
+                tilesAssigned.Add(nextTile);
                 return nextTile;
+            }
 
             foreach (Tile neighbor in nextTile.neighbors)
             {
@@ -462,7 +471,8 @@ public class BotController : Controller
 
         foreach (Tile curTile in territory)
         {
-            if (curTile.terrain == "land" && curTile.ownerID != id)
+            // unconquered land that is not assigned yet
+            if (curTile.terrain == "land" && curTile.ownerID != id && !tilesAssigned.Contains(curTile))
             {
                 float curDist = Vector3.Magnitude(curTile.transform.position - startingTile.transform.position);
                 if (curDist > dist)
@@ -472,6 +482,7 @@ public class BotController : Controller
                 }
             }
         }
+        tilesAssigned.Add(bestTile);
         return bestTile;
     }
 

@@ -30,7 +30,6 @@ public class PlayerUIManager : MonoBehaviour
     [PunRPC]
     public void initilize(string name, int colorIndex)
     {
-        gameObject.SetActive(true);
         if (PhotonNetwork.OfflineMode && name != "Bot")
             nameText.text = "Player";
         else
