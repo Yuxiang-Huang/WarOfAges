@@ -336,13 +336,14 @@ public class Controller : MonoBehaviour
             Debug.Log("resetMovement");
         }
 
-        //troops check death and reset movement
+        // troops check death and reset movement
         foreach (Troop troop in allTroops)
         {
             troop.checkDeath();
             troop.resetMovement();
         }
 
+        // remove dead troop from list
         for (int i = allTroops.Count - 1; i >= 0; i--)
         {
             if (allTroops[i].health <= 0)
@@ -353,7 +354,7 @@ public class Controller : MonoBehaviour
             }
         }
 
-        //buildings
+        // buildings
         foreach (Building building in allBuildings)
         {
             building.checkDeath();

@@ -279,6 +279,10 @@ public class BotController : Controller
                 }
             }
 
+            // no long range until second age
+            if (age == 0)
+                randomNum = 0;
+
             // select the corresponding troop
             spawnButtons[randomNum].selectSpawnUnitBot();
 

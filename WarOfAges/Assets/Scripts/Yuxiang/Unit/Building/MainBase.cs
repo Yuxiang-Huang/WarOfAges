@@ -14,20 +14,4 @@ public class MainBase : Building
             neigbhor.updateStatus(ownerID, null);
         }
     }
-
-    public override void fillInfoTab(TextMeshProUGUI nameText, TextMeshProUGUI healthText, TextMeshProUGUI damageText,
-        TextMeshProUGUI typeText, TextMeshProUGUI sellText, TextMeshProUGUI upgradeText, TextMeshProUGUI healText)
-    {
-        base.fillInfoTab(nameText, healthText, damageText, typeText, sellText, upgradeText, healText);
-        sellText.text = "Sell: ∞ Gold";
-    }
-
-    public override void sell()
-    {
-        base.sell();
-
-        GameManager.instance.endTurn();
-
-        ownerController.end();
-    }
 }

@@ -305,8 +305,8 @@ public class UIManager : MonoBehaviour
             if (!GameManager.instance.unsellableUnits.Contains(unit))
                 sellBtn.SetActive(true);
 
-            // can't sell main base unless tutorial
-            if (TutorialManager.instance == null && unit.gameObject.GetComponent<MainBase>() != null)
+            // can't sell main base
+            if (unit.gameObject.GetComponent<MainBase>() != null)
                 sellBtn.SetActive(false);
 
             //able to upgrade if lower age
@@ -542,6 +542,6 @@ public class UIManager : MonoBehaviour
     {
         timerPaused = true;
         winStrip.SetActive(true);
-        winText.text = "CONGRATULATION !" + name + " WIN!!!";
+        winText.text = "CONGRATULATION! " + name + " WIN!!!";
     }
 }

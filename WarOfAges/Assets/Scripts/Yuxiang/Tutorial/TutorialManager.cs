@@ -206,7 +206,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        else if (index > 23 && index < 28)
+        else if (index > 23 && index < 29)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -215,7 +215,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        else if (index == 28)
+        else if (index == 29)
         {
             // end of tutorial when clicked
             if (Input.GetMouseButtonDown(0))

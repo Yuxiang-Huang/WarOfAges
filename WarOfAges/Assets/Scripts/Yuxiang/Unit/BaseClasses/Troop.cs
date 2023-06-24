@@ -710,8 +710,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
         destroy();
 
-        PlayerController playerController = ownerController.gameObject.GetComponent<PlayerController>();
-        if (playerController != null)
+        // set user mode to select
+        if (ownerController.gameObject.TryGetComponent<PlayerController>(out var playerController))
             playerController.mode = "select";
     }
 

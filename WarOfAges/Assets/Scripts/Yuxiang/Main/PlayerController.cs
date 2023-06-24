@@ -46,6 +46,10 @@ public class PlayerController : Controller
 
         Tile newHighlighted = null;
 
+        // no action when turn ended
+        if (turnEnded)
+            return;
+
         if (TileManager.instance.tiles != null)
         {
             //tile at mousePosition
@@ -373,7 +377,6 @@ public class PlayerController : Controller
             }
         }
     }
-
 
     [PunRPC]
     public override void startGame(int newID, Vector2 spawnLocation)
