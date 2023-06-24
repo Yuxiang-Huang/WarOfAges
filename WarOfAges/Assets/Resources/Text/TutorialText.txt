@@ -26,7 +26,7 @@ Let's end our turn again. Our troop will then spawn onto the map!
 
 Now that we have a troop, we can use it to claim more territory. A tile becomes our territory once a troop moves onto it.<br><br>Click anywhere to continue.
 
-To move our troop, simply click on it and then click on a destination. This can be an adjacent tile, a far-away tile, or even another troop. For now, pick an adjacent land tile outside our territory.
+To move our troop, simply click on it and then click on a destination. This can be an adjacent tile, a far-away tile, or even another troop. For now, pick a land tile outside our territory.
 
 The red arrow indicates where the troop plans to move on its next turn. To cancel, simply set its destination to the tile it is already on.<br><br>Click anywhere to continue.
 
@@ -34,17 +34,17 @@ Let's just end our turn to see it move!
 
 Great! We have a new piece of territory, and our income has increased.<br><br>Click anywhere to continue.
 
+You can also move troops that hasn't been spawned yet in the same way.<br><br>Click anywhere to continue.
+
+After each turn ended, each player will spawn simultaneously, move in the order shown by the star, and then the units will attack automatically.<br><br>Click anywhere to continue.
+
 We always start off in the Stone Age. As a result, all the <b>units</b> in our shop will belong to the Stone Age.<br><br>Click anywhere to continue.
 
 Once we have enough gold, we can advance to the next age! This will <b>upgrade</b> all units in the shop to a stronger version, but they will cost more gold.<br><br>Click anywhere to continue. 
 
 Note that units on your map do not advance with the ages. We will need to click on it and manually upgrade it with gold.<br><br>Click anywhere to continue.
 
-When advancing to a new age, we are allowed to unlock a new type of unit! We entered the Stone Age when we started the game, so we have actually had a free unit unlock since the game began! Let's unlock the third unit, the ship type. 
-
-Go ahead and spawn a ship on a water tile within your territory. The ship can be moved along water and carries troops.
-
-You may try out its mechanics throughout this tutorial (move our troop onto the ship then move the ship).<br><br>Click anywhere to continue.
+When advancing to a new age, we are allowed to unlock a new type of unit! We entered the Stone Age when we started the game, so we have actually had a free unit unlock since the game began! Try unlock an unit.
 
 As the game progresses, you will have to learn how each unit works and where they may be placed. I can't hold your hand forever.<br><br>Click anywhere to continue.
 
@@ -53,5 +53,7 @@ And as you explore the map, you will inevitably encounter other players.<br><br>
 You will have to overtake their territory, eliminate their troops and buildings, and ultimately destroy their base while keeping your own safe.<br><br>Click anywhere to continue.
 
 If your base is still standing when every other player's base is destroyed, you will have won the game!<br><br>Click anywhere to continue.
+
+You can zoom in or out using - and +. You can also move the camera using wasd or arrows keys.<br><br>Click anywhere to continue.
 
 Try to defeat this bot. Best of luck!<br><br>Click to end tutorial.

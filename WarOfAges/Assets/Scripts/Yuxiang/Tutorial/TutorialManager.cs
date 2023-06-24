@@ -71,7 +71,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 1)
+        else if (index == 1)
         {
             // advance when base is placed
             if (PlayerController.instance.mainBase != null)
@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 2 || index == 3 || index == 4)
+        else if (index == 2 || index == 3 || index == 4)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -89,7 +89,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 5)
+        else if (index == 5)
         {
             // advance when it is the second turn
             if (UIManager.instance.getTurnNum() > 1)
@@ -98,7 +98,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 6 || index == 7)
+        else if (index == 6 || index == 7)
         {   
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -107,7 +107,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 8)
+        else if (index == 8)
         {
             // advance when a spawnButton is selected
             if (PlayerController.instance.toSpawnUnit != null)
@@ -116,7 +116,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 9)
+        else if (index == 9)
         {
             // advance when a unit is spawned
             if (PlayerController.instance.spawnList.Count != 0)
@@ -125,7 +125,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 10)
+        else if (index == 10)
         {
             // advance when the spawnButton is deselected
             if (PlayerController.instance.toSpawnUnit == null)
@@ -134,7 +134,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 11)
+        else if (index == 11)
         {   
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -143,7 +143,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 12)
+        else if (index == 12)
         {
             // advance when it is the third turn
             if (UIManager.instance.getTurnNum() > 2)
@@ -152,7 +152,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 13)
+        else if (index == 13)
         {   
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -161,7 +161,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 14)
+        else if (index == 14)
         {
             // advance when troop has an arrow
             if (PlayerController.instance.allTroops[0].arrow != null)
@@ -170,7 +170,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 15)
+        else if (index == 15)
         {   
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -179,7 +179,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 16)
+        else if (index == 16)
         {
             // advance when it is the fourth turn
             if (UIManager.instance.getTurnNum() > 3)
@@ -188,7 +188,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index > 16 && index <= 20)
+        else if (index > 16 && index < 23)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
@@ -197,20 +197,30 @@ public class TutorialManager : MonoBehaviour
             }
         }
 
-        if (index == 28)
+        else if (index == 23)
         {
-            // end of tutorial when clicked
-            if (Input.GetMouseButtonDown(0))
+            // advance when a unit is unlocked
+            if (SpawnManager.instance.keys == 0)
             {
-                tutorialCanvas.gameObject.SetActive(false);
+                advance();
             }
         }
-        else if (index > 20)
+
+        else if (index > 23 && index < 28)
         {
             // advance when clicked
             if (Input.GetMouseButtonDown(0))
             {
                 advance();
+            }
+        }
+
+        else if (index == 28)
+        {
+            // end of tutorial when clicked
+            if (Input.GetMouseButtonDown(0))
+            {
+                tutorialCanvas.gameObject.SetActive(false);
             }
         }
     }

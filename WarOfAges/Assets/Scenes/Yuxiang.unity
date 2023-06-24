@@ -292,11 +292,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 2023594455}
   - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 802809337}
   - {fileID: 1892085162}
-  - {fileID: 0}
-  - {fileID: 1586148273}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -9864,11 +9862,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
---- !u!1 &1586148273 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 810541920989922801, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
-  m_PrefabInstance: {fileID: 1586148272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1586148274 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 810541920989922802, guid: 4161c4e7eae394c1eb9cfa7ed76ebeac, type: 3}
@@ -11443,6 +11436,7 @@ MonoBehaviour:
   - {fileID: 963833023}
   - {fileID: 1051410392}
   - {fileID: 660658620}
+  tilesAssigned: []
 --- !u!4 &1715823947
 Transform:
   m_ObjectHideFlags: 0
