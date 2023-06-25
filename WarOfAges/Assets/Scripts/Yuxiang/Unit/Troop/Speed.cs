@@ -75,8 +75,9 @@ public class Speed : Troop
 
             foreach (Tile curTile in lastTile.neighbors)
             {
-                //not visited and no unit (Doesn't matter what terrain)
-                if (!visited[curTile.pos.x, curTile.pos.y] && curTile.unit == null)
+                //not visited and no unit exclude ship (Doesn't matter what terrain)
+                if (!visited[curTile.pos.x, curTile.pos.y] && (curTile.unit == null
+                    || curTile.unit.gameObject.GetComponent<Ship>() == null))
                 {
                     //no team building
                     if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
@@ -187,8 +188,8 @@ public class Speed : Troop
                     (ship != null ||
                     curTile.unit != null && curTile.unit.ownerID == ownerID))))
                 {
-                    // no unit here
-                    if (curTile.unit == null)
+                    // no unit here exclude ship
+                    if (curTile.unit == null || curTile.unit.gameObject.GetComponent<Ship>() == null)
                     {
                         //no team building
                         if (curTile.unit == null || !curTile.unit.gameObject.CompareTag("Building") ||
@@ -229,6 +230,8 @@ public class Speed : Troop
             //remove first tile
             path.RemoveAt(0);
         }
+
+        displayArrow();
     }
 
     public override void move()
