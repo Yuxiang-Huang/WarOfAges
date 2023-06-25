@@ -148,7 +148,8 @@ public class TutorialGameManager : GameManager
 
     public override IEnumerator delayAttack()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForEndOfFrame();
+        //yield return new WaitForSeconds(1f);
 
         //all players attack
         foreach (Controller player in allPlayersOriginal)

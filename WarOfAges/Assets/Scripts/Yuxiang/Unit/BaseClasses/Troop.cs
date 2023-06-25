@@ -656,7 +656,10 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public void setHealthBar(bool status)
     {
-        healthbar.gameObject.SetActive(status);
+        if (healthbar.gameObject == null)
+            Debug.Log("Health bar issue!!!");
+        else
+            healthbar.gameObject.SetActive(status);
     }
 
     public void checkDeath()
@@ -680,8 +683,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             tile.unit = null;
         }
         Destroy(arrow);
-        Destroy(healthbar.gameObject);
         Destroy(this.gameObject);
+        Destroy(healthbar.gameObject);
     }
 
     public bool notFullHealth()

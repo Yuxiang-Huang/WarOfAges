@@ -446,6 +446,9 @@ public class PlayerController : Controller
         }
 
         mode = "select";
+
+        highlighted = null;
+
         turnEnded = true;
     }
 }

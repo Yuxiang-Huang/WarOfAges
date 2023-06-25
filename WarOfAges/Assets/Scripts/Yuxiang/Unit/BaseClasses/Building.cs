@@ -132,7 +132,10 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
 
     public void setHealthBar(bool status)
     {
-        healthbar.gameObject.SetActive(status);
+        if (healthbar.gameObject == null)
+            Debug.Log("Health bar issue!!!");
+        else
+            healthbar.gameObject.SetActive(status);
     }
 
     [PunRPC]
@@ -159,8 +162,8 @@ public class Building : MonoBehaviourPunCallbacks, IUnit
     public void destroy()
     {
         tile.unit = null;
-        Destroy(healthbar.gameObject);
         Destroy(this.gameObject);
+        Destroy(healthbar.gameObject);
     }
 
     public virtual void sell()
