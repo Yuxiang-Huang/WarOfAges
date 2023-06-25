@@ -189,8 +189,9 @@ public class Controller : MonoBehaviour
 
         foreach (SpawnInfo info in spawnList.Values)
         {
-            //skip skills
-            if (!spawnListSpell.ContainsKey(info.spawnTile.pos))
+            //skip skills and ship
+            if (!spawnListSpell.ContainsKey(info.spawnTile.pos) &&
+                info.unit.gameObject.GetComponent<Ship>() == null)
             {
                 //spawn unit and initiate
                 GameObject newUnit = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", info.unitName),
@@ -202,12 +203,6 @@ public class Controller : MonoBehaviour
 
                     //destroy arrowed used for path finding
                     Destroy(info.arrow);
-
-                    // a ship is spawned
-                    if (newUnit.GetComponent<Ship>() != null)
-                    {
-                        allShips.Add(newUnit.GetComponent<Ship>());
-                    }
 
                     // initialize
                     newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
@@ -238,6 +233,44 @@ public class Controller : MonoBehaviour
                 Destroy(info.spawnImage);
             }
         }
+
+        // spawn ships afterwards so the path is found in the same way
+        foreach (SpawnInfo info in spawnList.Values)
+        {
+            // ship only
+            if (info.unit.gameObject.GetComponent<Ship>() != null)
+            {
+                //spawn unit and initiate
+                GameObject newUnit = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", info.unitName),
+                info.spawnTile.gameObject.transform.position, Quaternion.identity);
+
+                allTroops.Add(newUnit.GetComponent<Troop>());
+
+                //destroy arrowed used for path finding
+                Destroy(info.arrow);
+
+                // add to ship list
+                allShips.Add(newUnit.GetComponent<Ship>());
+
+                // initialize
+                newUnit.GetComponent<Troop>().PV.RPC("Init", RpcTarget.All,
+                    id, info.spawnTile.pos.x, info.spawnTile.pos.y,
+                    spawnDirection[info.spawnTile.pos.x, info.spawnTile.pos.y],
+                    info.unitName, info.age, info.sellGold);
+
+                //transfer path
+                if (info.targetPathTile != null)
+                {
+                    newUnit.GetComponent<Troop>().findPath(info.targetPathTile);
+                }
+
+                // reset spawn unit
+                if (info.unit.gameObject.TryGetComponent<Troop>(out var spawnTroop))
+                    spawnTroop.ship = null;
+                }
+
+                Destroy(info.spawnImage);
+            }
 
         //clear list
         spawnList = new Dictionary<Vector2, SpawnInfo>();
