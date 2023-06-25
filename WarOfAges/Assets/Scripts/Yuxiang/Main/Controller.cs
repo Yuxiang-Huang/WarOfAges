@@ -262,18 +262,18 @@ public class Controller : MonoBehaviour
 
                 Destroy(info.spawnImage);
             }
+        }
 
-            //clear list
-            spawnList = new Dictionary<Vector2, SpawnInfo>();
+        //clear list
+        spawnList = new Dictionary<Vector2, SpawnInfo>();
 
-            UIManager.instance.updateGoldText();
+        UIManager.instance.updateGoldText();
 
-            if (!PhotonNetwork.OfflineMode)
-            {
-                Hashtable playerProperties = new Hashtable();
-                playerProperties.Add("Spawned", true);
-                PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-            }
+        if (!PhotonNetwork.OfflineMode)
+        {
+            Hashtable playerProperties = new Hashtable();
+            playerProperties.Add("Spawned", true);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
         }
     }
 
