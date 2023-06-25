@@ -15,7 +15,7 @@ public class SpawnInfo
 
     public int sellGold;
 
-    public IUnit unit;
+    public IUnit unit { get; }
 
     public int age;
 

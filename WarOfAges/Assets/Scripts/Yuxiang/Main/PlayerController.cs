@@ -346,15 +346,6 @@ public class PlayerController : Controller
                         spawnListSpell.Add(highlighted.pos, spawnInfo);
                     }
 
-                    //add ship if necessary
-                    if (spawnInfo.unit.gameObject.CompareTag("Troop") && spawnInfo.unit.gameObject.GetComponent<Ship>() == null)
-                    {
-                        if (spawnInfo.spawnTile.unit != null && spawnInfo.spawnTile.terrain == "water")
-                        {
-                            spawnInfo.unit.gameObject.GetComponent<Troop>().ship = spawnInfo.spawnTile.unit.gameObject.GetComponent<Ship>();
-                        }
-                    }
-
                     //reset to prevent double spawn
                     highlighted.highlight(false);
                     highlighted = null;

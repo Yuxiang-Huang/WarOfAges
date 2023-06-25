@@ -75,7 +75,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             //spawned on a ship
             if (tile.unit != null)
             {
-                tile.unit.gameObject.GetComponent<Ship>().path = new List<Tile>();
+                ship = tile.unit.gameObject.GetComponent<Ship>();
+                ship.path = new List<Tile>();
             }
         }
 
@@ -601,11 +602,23 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
 
     public void displayArrowForSpawn(Tile location, Tile target, int correctID)
     {
+        // set tile, id, and ship
         tile = location;
 
         ownerID = correctID;
 
+        if (gameObject.GetComponent<Ship>() == null)
+        {
+            if (tile.unit != null && tile.terrain == "water")
+            {
+                gameObject.GetComponent<Troop>().ship = tile.unit.gameObject.GetComponent<Ship>();
+            }
+        }
+
         findPath(target);
+
+        // reset ship
+        ship = null;
 
         displayArrow();
 
