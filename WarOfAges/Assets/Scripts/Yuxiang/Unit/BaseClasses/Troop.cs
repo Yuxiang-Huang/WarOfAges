@@ -528,8 +528,8 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             Debug.Log("animate movement");
         }
 
-        //owner so animate movement and don't translate if bot
-        if (ownerID == ownerController.id && (!(PhotonNetwork.OfflineMode && ownerID == 1)))
+        // local so animate movement
+        if (ownerID == PlayerController.instance.id)
         {
             StartCoroutine(TranslateOverTime(transform.position, tile.transform.position, Config.troopMovementTime));
             if (ship != null)
