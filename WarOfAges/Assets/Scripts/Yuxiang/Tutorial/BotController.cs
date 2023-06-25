@@ -132,18 +132,21 @@ public class BotController : Controller
             // try spawn AOE
             spawnButtons[7].selectSpawnUnitBot();
 
-            // try attack main base first
-            Tile bestTile = PlayerController.instance.mainBase.tile;
-            foreach (Tile neighbor in bestTile.neighbors)
+            if (gold >= goldNeedToSpawn)
             {
-                if (neighbor.ownerID == id && canSpawn(bestTile, toSpawnUnit))
+                // try attack main base first
+                Tile bestTile = PlayerController.instance.mainBase.tile;
+                foreach (Tile neighbor in bestTile.neighbors)
                 {
-                    // attack if possible
-                    addToSpawnList(bestTile);
+                    if (neighbor.ownerID == id && canSpawn(bestTile, toSpawnUnit))
+                    {
+                        // attack if possible
+                        addToSpawnList(bestTile);
 
-                    gold -= goldNeedToSpawn;
+                        gold -= goldNeedToSpawn;
 
-                    break;
+                        break;
+                    }
                 }
             }
 

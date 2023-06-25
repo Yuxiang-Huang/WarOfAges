@@ -267,19 +267,6 @@ public class Controller : MonoBehaviour
         //clear list
         spawnList = new Dictionary<Vector2, SpawnInfo>();
 
-        UIManager.instance.updateGoldText();
-
-        if (!PhotonNetwork.OfflineMode)
-        {
-            Hashtable playerProperties = new Hashtable();
-            playerProperties.Add("Spawned", true);
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
-        }
-    }
-
-    [PunRPC]
-    public void troopMove()
-    {
         //spawn spell now after all troops are spawned
         foreach (SpawnInfo info in spawnListSpell.Values)
         {
@@ -298,6 +285,19 @@ public class Controller : MonoBehaviour
 
         spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
 
+        UIManager.instance.updateGoldText();
+
+        if (!PhotonNetwork.OfflineMode)
+        {
+            Hashtable playerProperties = new Hashtable();
+            playerProperties.Add("Spawned", true);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
+        }
+    }
+
+    [PunRPC]
+    public void troopMove()
+    {
         foreach (Troop troop in allTroops)
         {
             if (troop.GetComponent<Ship>() == null)

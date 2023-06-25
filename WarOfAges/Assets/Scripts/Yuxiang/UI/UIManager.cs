@@ -369,6 +369,10 @@ public class UIManager : MonoBehaviour
             Destroy(spawnInfo.spawnImage);
             PlayerController.instance.spawnList.Remove(spawnInfo.spawnTile.pos);
 
+            // also remove from spell list when needed
+            if (spawnInfo.unit.gameObject.GetComponent<Spell>() != null)
+                PlayerController.instance.spawnListSpell.Remove(spawnInfo.spawnTile.pos);
+
             //return gold
             PlayerController.instance.gold += spawnInfo.spawnGold;
             updateGoldText();

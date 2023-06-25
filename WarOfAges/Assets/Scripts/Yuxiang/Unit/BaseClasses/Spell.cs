@@ -127,44 +127,18 @@ public class Spell : MonoBehaviourPunCallbacks, IUnit
     [PunRPC]
     public void takeDamage(int incomingDamage)
     {
-        health -= incomingDamage;
+        // spell doesn't take damage
     }
 
     public void sell()
     {
-        //add gold
-        ownerController.gold += sellGold;
-        UIManager.instance.updateGoldText();
-
-        //remove from spell list
-        ownerController.allSpells.Remove(this);
-
-        //destroy
-        PV.RPC(nameof(kill), RpcTarget.All);
+        // can't sell spells after spawn
     }
 
     [PunRPC]
     public void upgrade()
     {
-        //deduct gold if owner
-        if (ownerController.id == ownerID)
-        {
-            ownerController.gold -= upgradeGold;
-            UIManager.instance.updateGoldText();
-        }
-
-        //damage double when age increase
-        damage *= Config.ageUnitFactor;
-
-        //update sell gold
-        sellGold *= Config.ageCostFactor;
-        upgradeGold *= Config.ageCostFactor;
-
-        //image
-        unitImages[age].SetActive(false);
-        age++;
-        unitImages[age].SetActive(true);
-        imageRenderer = unitImages[age].GetComponent<SpriteRenderer>();
+        // can't upgrade spells
     }
 
     //can't heal a spell
