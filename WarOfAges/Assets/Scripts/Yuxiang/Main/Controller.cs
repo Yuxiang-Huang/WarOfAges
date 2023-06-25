@@ -298,15 +298,16 @@ public class Controller : MonoBehaviour
 
         spawnListSpell = new Dictionary<Vector2, SpawnInfo>();
 
-        //ships move first
+        foreach (Troop troop in allTroops)
+        {
+            if (troop.GetComponent<Ship>() == null)
+                troop.move();
+        }
+
+        // ships move after 
         foreach (Ship ship in allShips)
         {
             ship.move();
-        }
-
-        foreach (Troop troop in allTroops)
-        {
-            troop.move();
         }
 
         //recalculate path for followers

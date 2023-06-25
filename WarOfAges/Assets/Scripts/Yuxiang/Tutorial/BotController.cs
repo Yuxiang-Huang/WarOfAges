@@ -238,86 +238,89 @@ public class BotController : Controller
             }
         }
 
-        // spawn troops and buildings
-        foreach (Tile curTile in spawnableTile)
+        if (!Config.botNoInterfereMode)
         {
-            int randomNum = Random.Range(0, age + 2);
-
-            // not troop index, go again
-            while (randomNum == 2 || randomNum > 4)
+            // spawn troops and buildings
+            foreach (Tile curTile in spawnableTile)
             {
-                // ship turn to money
-                if (randomNum == 2)
+                int randomNum = Random.Range(0, age + 2);
+
+                // not troop index, go again
+                while (randomNum == 2 || randomNum > 4)
                 {
-                    spawnButtons[5].selectSpawnUnitBot();
-
-                    // spawn money building farthest away from player base
-                    Tile safestTile = findLandTileUsingComparator(farther);
-                    if (gold >= goldNeedToSpawn && canSpawn(safestTile, toSpawnUnit))
-                        addToSpawnList(safestTile);
-                }
-                // the tower
-                else if (randomNum == 6)
-                {
-                    spawnButtons[6].selectSpawnUnitBot();
-
-                    // spawn money building closest to player base
-                    Tile closeTile = findLandTileUsingComparator(closer);
-                    if (gold >= goldNeedToSpawn && canSpawn(closeTile, toSpawnUnit))
-                        addToSpawnList(closeTile);
-                }
-
-                // money or AOE -> choose either speed or health
-                if (randomNum == 5 || randomNum == 7)
-                {
-                    randomNum = Random.Range(3, 5);
-                }
-                // random pick again
-                else
-                {
-                    randomNum = Random.Range(0, age + 3);
-                }
-            }
-
-            // no long range until second age
-            if (age == 0)
-                randomNum = 0;
-
-            // select the corresponding troop
-            spawnButtons[randomNum].selectSpawnUnitBot();
-
-            // check condition for spawning
-            if (gold >= goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))// && allTroops.Count < 2)
-            {
-                addToSpawnList(curTile);
-
-                // set destination for newly spawned troop
-                SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
-
-                // set path
-                if (randomNum == 3)
-                {
-                    // speed go far
-                    spawnInfoSelected.targetPathTile = findFarthestUnconqueredLandTile(curTile);
-                }
-                else
-                {
-                    // other troop go close
-                    spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
-                }
-
-                // arrows in bot test mode
-                if (Config.botTestMode)
-                {
-                    if (spawnInfoSelected.arrow != null)
-                        Destroy(spawnInfoSelected.arrow);
-
-                    Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
-                    cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile, id);
-                    if (cur.arrow != null)
+                    // ship turn to money
+                    if (randomNum == 2)
                     {
-                        spawnInfoSelected.arrow = Instantiate(cur.arrow);
-                        Destroy(cur.arrow);
+                        spawnButtons[5].selectSpawnUnitBot();
+
+                        // spawn money building farthest away from player base
+                        Tile safestTile = findLandTileUsingComparator(farther);
+                        if (gold >= goldNeedToSpawn && canSpawn(safestTile, toSpawnUnit))
+                            addToSpawnList(safestTile);
+                    }
+                    // the tower
+                    else if (randomNum == 6)
+                    {
+                        spawnButtons[6].selectSpawnUnitBot();
+
+                        // spawn money building closest to player base
+                        Tile closeTile = findLandTileUsingComparator(closer);
+                        if (gold >= goldNeedToSpawn && canSpawn(closeTile, toSpawnUnit))
+                            addToSpawnList(closeTile);
+                    }
+
+                    // money or AOE -> choose either speed or health
+                    if (randomNum == 5 || randomNum == 7)
+                    {
+                        randomNum = Random.Range(3, 5);
+                    }
+                    // random pick again
+                    else
+                    {
+                        randomNum = Random.Range(0, age + 3);
+                    }
+                }
+
+                // no long range until second age
+                if (age == 0)
+                    randomNum = 0;
+
+                // select the corresponding troop
+                spawnButtons[randomNum].selectSpawnUnitBot();
+
+                // check condition for spawning
+                if (gold >= goldNeedToSpawn && canSpawn(curTile, toSpawnUnit))// && allTroops.Count < 2)
+                {
+                    addToSpawnList(curTile);
+
+                    // set destination for newly spawned troop
+                    SpawnInfo spawnInfoSelected = spawnList[curTile.pos];
+
+                    // set path
+                    if (randomNum == 3)
+                    {
+                        // speed go far
+                        spawnInfoSelected.targetPathTile = findFarthestUnconqueredLandTile(curTile);
+                    }
+                    else
+                    {
+                        // other troop go close
+                        spawnInfoSelected.targetPathTile = findClosestUnconqueredLandTile(curTile);
+                    }
+
+                    // arrows in bot test mode
+                    if (Config.botTestMode)
+                    {
+                        if (spawnInfoSelected.arrow != null)
+                            Destroy(spawnInfoSelected.arrow);
+
+                        Troop cur = spawnInfoSelected.unit.gameObject.GetComponent<Troop>();
+                        cur.displayArrowForSpawn(spawnInfoSelected.spawnTile, spawnInfoSelected.targetPathTile, id);
+                        if (cur.arrow != null)
+                        {
+                            spawnInfoSelected.arrow = Instantiate(cur.arrow);
+                            Destroy(cur.arrow);
+                        }
                     }
                 }
             }

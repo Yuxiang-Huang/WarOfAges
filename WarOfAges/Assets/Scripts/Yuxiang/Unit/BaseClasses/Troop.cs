@@ -308,10 +308,14 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
     public void follow()
     {
         if (toFollow != null)
+        {
             findPath(toFollow.tile);
+        }
 
         if (arrow != null)
+        {
             Destroy(arrow);
+        }
     }
 
     public virtual void move()
@@ -384,6 +388,15 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
                     PV.RPC(nameof(updateTileUnit), RpcTarget.All);
                     tile.unit = this;
 
+                    //still conquer water when not move if not ship
+                    if (gameObject != null)
+                    {
+                        if (gameObject.GetComponent<Ship>() == null)
+                            if (tile.terrain == "land")
+                                foreach (Tile neighbor in tile.neighbors)
+                                    neighbor.tryWaterConquer();
+                    }
+
                     // clear follow
                     toFollow = null;
                 }
@@ -398,7 +411,9 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             if (gameObject != null)
             {
                 if (gameObject.GetComponent<Ship>() == null)
-                    PV.RPC(nameof(moveUpdate_RPC), RpcTarget.All, tile.pos.x, tile.pos.y);
+                    if (tile.terrain == "land")
+                        foreach (Tile neighbor in tile.neighbors)
+                            neighbor.tryWaterConquer();
             }                
         }
     }
@@ -445,6 +460,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             tile.unit = ship;
             ship.tile = tile;
             ship = nextTile.unit.gameObject.GetComponent<Ship>();
+            ship.path = new List<Tile>();
         }
         // leave water
         else if (tile.terrain == "water" && TileManager.instance.tiles[nextTileX, nextTileY].terrain == "land")
@@ -469,6 +485,7 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
             {
                 //board a ship
                 ship = nextTile.unit.gameObject.GetComponent<Ship>();
+                ship.path = new List<Tile>();
             }
         }
 
@@ -484,11 +501,11 @@ public class Troop : MonoBehaviourPunCallbacks, IUnit
         }
 
         // update direction
-        if (nextTile.transform.position.x >= tile.transform.position.x)
+        if (nextTile.transform.position.x > tile.transform.position.x)
         {
             imageRenderer.flipX = false;
         }
-        else
+        else if (nextTile.transform.position.x < tile.transform.position.x)
         {
             imageRenderer.flipX = true;
         }
