@@ -4,9 +4,9 @@ public class Config
 {
     //test 
     public static bool offlineMode = false;
-    public static bool sameSpawnPlaceTestMode = true;
+    public static bool sameSpawnPlaceTestMode = false;
     public static bool moreMoneyTestMode = false;
-    public static bool debugTestMode = false;
+    public static bool debugTestMode = true;
     public static bool tutorialMode = false;
     public static bool botTestMode = false;
     public static bool botNoInterfereMode = false;

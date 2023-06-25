@@ -11,22 +11,22 @@ public class AOE : Spell
     {
         base.Init(playerID, startingtTileX, startingtTileY, path, age, sellGold);
 
-        if (tile.unit != null && tile.unit != ownerController.mainBase.GetComponent<IUnit>())
+        //make all units in range unsellable
+        if (tile.unit != null)
         {
             GameManager.instance.unsellableUnits.Add(tile.unit);
         }
 
-        //make all units in range unsellable
         foreach (Tile neighbor in tile.neighbors)
         {
-            if (neighbor.unit != null && neighbor.unit != ownerController.mainBase.GetComponent<IUnit>())
+            if (neighbor.unit != null)
             {
                 GameManager.instance.unsellableUnits.Add(neighbor.unit);
             }
         }
         foreach (Tile neighbor in tile.neighbors2)
         {
-            if (neighbor.unit != null && neighbor.unit != ownerController.mainBase.GetComponent<IUnit>())
+            if (neighbor.unit != null)
             {
                 GameManager.instance.unsellableUnits.Add(neighbor.unit);
             }
