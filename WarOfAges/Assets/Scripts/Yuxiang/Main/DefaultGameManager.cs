@@ -16,6 +16,9 @@ public class DefaultGameManager : GameManager
     [SerializeField] bool gameStarted;
     public bool turnEnded;
 
+    [SerializeField] bool onQueue;
+    [SerializeField] Hashtable curProps;
+
     private void Awake()
     {
         instance = this;
@@ -64,21 +67,32 @@ public class DefaultGameManager : GameManager
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
+        curProps = changedProps;
+
+        StartCoroutine(nameof(waitOnQueue));
+    }
+
+    IEnumerator waitOnQueue()
+    {
+        yield return new WaitUntil(() => !onQueue);
+
+        onQueue = true;
+
         //start
-        if (changedProps.ContainsKey("Ready")) checkStart();
+        if (curProps.ContainsKey("Ready")) checkStart();
 
         #region turns
 
         //start turn
-        else if (changedProps.ContainsKey("EndTurn")) checkEndTurn();
+        else if (curProps.ContainsKey("EndTurn")) checkEndTurn();
 
-        else if (changedProps.ContainsKey("Spawned")) checkSpawn();
+        else if (curProps.ContainsKey("Spawned")) checkSpawn();
 
-        else if (changedProps.ContainsKey("Moved")) checkMove();
+        else if (curProps.ContainsKey("Moved")) checkMove();
 
-        else if (changedProps.ContainsKey("Attacked")) checkAttack();
+        else if (curProps.ContainsKey("Attacked")) checkAttack();
 
-        else if (changedProps.ContainsKey("CheckedDeath")) checkDeath();
+        else if (curProps.ContainsKey("CheckedDeath")) checkDeath();
 
         #endregion
     }
@@ -104,13 +118,19 @@ public class DefaultGameManager : GameManager
     public override void checkStart()
     {
         //only start game once
-        if (gameStarted) return;
+        if (gameStarted)
+        {
+            onQueue = false;
+            return;
+        }
 
         //master client start game once when everyone is ready
         var players = PhotonNetwork.PlayerList;
         if (players.All(p => p.CustomProperties.ContainsKey("Ready") && (bool)p.CustomProperties["Ready"]))
         {
             gameStarted = true;
+
+            onQueue = false;
 
             Tile[,] tiles = TileManager.instance.tiles;
 
@@ -139,6 +159,10 @@ public class DefaultGameManager : GameManager
                     allPlayers[i].PV.RPC("startGame", allPlayers[i].PV.Owner, i, randomSpawnLocations[i]);
                 }
             }
+        }
+        else
+        {
+            onQueue = false;
         }
     }
 
@@ -188,13 +212,18 @@ public class DefaultGameManager : GameManager
     public override void checkEndTurn()
     {
         //edge case of cancel when just ended
-        if (turnEnded) return;
+        if (turnEnded)
+        {
+            onQueue = false;
+            return;
+        }
 
         //everyone is ready
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("EndTurn") && (bool)p.Value.CustomProperties["EndTurn"]))
         {
             turnEnded = true;
+            onQueue = false;
 
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Take Turns...");
             UIManager.instance.PV.RPC(nameof(UIManager.instance.turnPhase), RpcTarget.All);
@@ -205,6 +234,10 @@ public class DefaultGameManager : GameManager
                 player.PV.RPC("spawn", player.PV.Owner);
             }
         }
+        else
+        {
+            onQueue = false;
+        }
     }
 
     public override void checkSpawn()
@@ -213,6 +246,8 @@ public class DefaultGameManager : GameManager
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("Spawned") && (bool)p.Value.CustomProperties["Spawned"]))
         {
+            onQueue = false;
+
             // edge case of 0 player left
             if (allPlayers.Count == 0)
             {
@@ -226,6 +261,10 @@ public class DefaultGameManager : GameManager
                 allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
             }
         }
+        else
+        {
+            onQueue = false;
+        }
     }
 
     public override void checkMove()
@@ -235,12 +274,16 @@ public class DefaultGameManager : GameManager
         //all players moved
         if (numPlayerMoved == allPlayers.Count)
         {
+            onQueue = false;
+
             UIManager.instance.PV.RPC(nameof(UIManager.instance.updateTimeText), RpcTarget.All, "Combating...");
 
             StartCoroutine(nameof(delayAttack));
         }
         else
         {
+            onQueue = false;
+
             //next player move
             allPlayers[numPlayerMoved].PV.RPC("troopMove", allPlayers[numPlayerMoved].PV.Owner);
         }
@@ -263,24 +306,35 @@ public class DefaultGameManager : GameManager
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("Attacked") && (bool)p.Value.CustomProperties["Attacked"]))
         {
+            onQueue = false;
+
             //all players check death
             foreach (PlayerController player in allPlayersOriginal)
             {
                 player.PV.RPC(nameof(player.checkDeath), player.PV.Owner);
             }
         }
+        else
+        {
+            onQueue = false;
+        }
     }
 
     public override void checkDeath()
     {
         //end turn once
-        if (!turnEnded) return;
+        if (!turnEnded)
+        {
+            onQueue = false;
+            return;
+        }
 
         //everyone is ready
         var players = PhotonNetwork.CurrentRoom.Players;
         if (players.All(p => p.Value.CustomProperties.ContainsKey("CheckedDeath") && (bool)p.Value.CustomProperties["CheckedDeath"]))
         {
             turnEnded = false;
+            onQueue = false;
 
             if (allPlayers.Count > 0)
             {
@@ -299,6 +353,10 @@ public class DefaultGameManager : GameManager
 
             //next turn
             PV.RPC(nameof(startTurn), RpcTarget.AllViaServer);
+        }
+        else
+        {
+            onQueue = false;
         }
     }
 

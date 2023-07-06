@@ -212,7 +212,7 @@ public class UIManager : MonoBehaviour
 
         //only if local turn didn't end
         if (!localTurnEnded)
-            GameManager.instance.endTurn();
+            endTurnUI();
     }
 
     public void endTurnUI()
